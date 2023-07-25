@@ -1,7 +1,21 @@
+const bcrypt = require("bcryptjs");
 const express = require("express");
 const app = express();
 const port = 4000;
-
+const session = require("express-session");
+require("dotenv").config();
+app.use(express.json());
+app.use(
+    session({
+      secret: process.env.SESSION_SECRET,
+      resave: false,
+      saveUninitialized: false,
+      cookie: {
+        maxAge: 3600000, 
+      },
+    })
+  );
+//--------------------------------------welcome-------------------------------
 app.get("/", (req, res) => {
   res.send("Welcome to Nature's Call!");
 });
