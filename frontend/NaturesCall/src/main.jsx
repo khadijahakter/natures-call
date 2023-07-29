@@ -17,33 +17,33 @@ const router = createBrowserRouter([
       {
         path: "/",
         element: <App/>,
-        children: [
-          {
-            path: "/",
-            element : <Searched/>
-          }
-        ]
+        // children: [
+        //   {
+        //     path: "/",
+        //     element : <Searched/>
+        //   }
+        // ]
       },
-      {
-        path: "/signup",
-        element: <Signup/>,
-      },
-      {
-        path: "/login",
-        element: <Login/>,
-      },
-      {
-        path: "/bathrooms/:bathroomid",
-        element: <Bathroom/>,
-      },
-      {
-        path: "/users/:userid",
-        element: <Profilepg/>,
-      },
-      {
-        path: "/ReviewForm",
-        element: <ReviewForm/>,
-      },
+      // {
+      //   path: "/signup",
+      //   element: <Signup/>,
+      // },
+      // {
+      //   path: "/login",
+      //   element: <Login/>,
+      // },
+      // {
+      //   path: "/bathrooms/:bathroomid",
+      //   element: <Bathroom/>,
+      // },
+      // {
+      //   path: "/users/:userid",
+      //   element: <Profilepg/>,
+      // },
+      // {
+      //   path: "/ReviewForm",
+      //   element: <ReviewForm/>,
+      // },
       
     ],
     
