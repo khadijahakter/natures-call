@@ -1,13 +1,18 @@
+
 'use strict';
 const {
   Model
 } = require('sequelize');
+
 module.exports = (sequelize, DataTypes) => {
+
   class User extends Model {
     static associate(models) {
       this.hasMany(models.Review);
     }
+
   }
+
   User.init({
     name: DataTypes.STRING,
     email: DataTypes.STRING,
@@ -18,8 +23,9 @@ module.exports = (sequelize, DataTypes) => {
     } 
   }, {
     sequelize,
-    modelName: 'User',
-    tableName: 'users',
+    modelName: "User",
+    tableName: "users",
   });
   return User;
 };
+

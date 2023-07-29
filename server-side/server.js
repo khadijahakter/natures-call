@@ -3,6 +3,10 @@ const express = require("express");
 const app = express();
 const port = 4000;
 const session = require("express-session");
+const Sequelize = require('sequelize');
+const {User} = require("./models"); // Replace the path with the correct one for your project
+// const {Bathroom, Review, User} = require("./models"); // Replace the path with the correct one for your project
+
 require("dotenv").config();
 //-----------------------login auth---------------------------------------------
 
@@ -37,12 +41,10 @@ app.get("/", (req, res) => {
     const hashedPass = await bcrypt.hash(req.body.password, 10);
   
     try {
-      const user = await User.create({ //json format: name, email, and password
+      const user = await User.create({ 
         name: req.body.name,
         email: req.body.email,
         password: hashedPass,
-        createdAt : new Date(),
-        updatedAt : new Date(),
         photo:req.body.photo
 
       });
@@ -56,6 +58,8 @@ app.get("/", (req, res) => {
         },
       });
     } catch (error) {
+
+      console.error(error);
       if (error.name === "SequelizeValidationError") {
         return res
           .status(422)
@@ -64,8 +68,10 @@ app.get("/", (req, res) => {
       res.status(500).json({
         message: "Error occurred while creating user",
         error: error,
+        
       });
     }
+
   });
   //login using credentials--------------------------------------------- (name email and pass)
   app.post("/login", async (req, res) => {
