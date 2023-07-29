@@ -3,9 +3,13 @@ import NavBar from "./NavBar";
 export default function About(){
     return(
         <>
-        <NavBar/>
+       
         <div className="text-center"> 
             <h1>Our Vision</h1>
+            <img src="image_path" alt="alternative_text">
+
+            
+            </img>
             <p>we want to create a bathroom website</p>
         </div>
         
