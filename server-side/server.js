@@ -4,7 +4,7 @@ const app = express();
 const port = 4000;
 const session = require("express-session");
 const Sequelize = require('sequelize');
-const {User} = require("./models"); // Replace the path with the correct one for your project
+const {User, Bathroom} = require("./models"); // Replace the path with the correct one for your project
 // const {Bathroom, Review, User} = require("./models"); // Replace the path with the correct one for your project
 
 require("dotenv").config();
@@ -122,6 +122,19 @@ app.delete("/logout", (req, res) => {
   });
 });
 //------------------------------------------------------------------------------
+
+//get all of our databases bathrooms
+app.get("/bathrooms", async (req, res) => {
+  try {
+    const allbathrooms = await Bathroom.findAll();
+
+
+    res.status(200).json(allbathrooms);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send({ message: err.message });
+  }
+});
 
 
 

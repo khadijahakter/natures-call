@@ -20,7 +20,7 @@ module.exports = {
     // Seed data for reviews table
     await queryInterface.bulkInsert('reviews', [
       {
-        UserId: 1,
+        ReviewId: 1,
         bathroomId: 1,
         content: 'This is a great bathroom!',
         photo: 'https://example.com/bathroom.jpg',
