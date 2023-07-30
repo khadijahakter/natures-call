@@ -9,8 +9,25 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      location: {
-        type: Sequelize.STRING
+      sourceid: { 
+        type: Sequelize.STRING,
+        allowNull:false
+      },
+      address: { 
+        type: Sequelize.STRING,
+        allowNull:true
+      },
+      lat: { 
+        type: Sequelize.STRING,
+        allowNull:true
+      },
+      lng: { 
+        type: Sequelize.STRING,
+        allowNull:true
+      },
+      name: { 
+        type: Sequelize.STRING,
+        allowNull:true
       },
       rating: {
         type: Sequelize.INTEGER
