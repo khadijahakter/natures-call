@@ -14,29 +14,98 @@ module.exports = (sequelize, DataTypes) => {
     profileId: DataTypes.INTEGER,
     bathroomId: DataTypes.INTEGER,
     content: DataTypes.STRING,
-    photo: DataTypes.STRING,
-    wheelchair: DataTypes.INTEGER,
-    unisex: DataTypes.INTEGER,
-    emergencyCord: DataTypes.INTEGER,
-    emergencyButton: DataTypes.INTEGER,
-    petFriendly: DataTypes.INTEGER,
-    requiresKey: DataTypes.INTEGER,
-    handDryer: DataTypes.INTEGER,
-    feminineProducts: DataTypes.INTEGER,
-    toiletCovers: DataTypes.INTEGER,
-    bidet: DataTypes.INTEGER,
-    singleStall: DataTypes.INTEGER,
-    multipleStall: DataTypes.INTEGER,
-    changingTable: DataTypes.INTEGER,
-    trashCan: DataTypes.INTEGER,
-    goodFlooring: DataTypes.INTEGER,
-    airFreshener: DataTypes.INTEGER,
-    automatic: DataTypes.INTEGER,
-    coatHook: DataTypes.INTEGER,
-    brailleSign: DataTypes.INTEGER,
-    hotWater: DataTypes.INTEGER,
-    firstAid: DataTypes.INTEGER,
-    sharpsDisposal: DataTypes.INTEGER
+    photo: {
+      type : DataTypes.STRING,
+      allowNull: true
+    },
+    wheelchair:{ 
+      type: DataTypes.INTEGER,
+      allowNull:true
+    },
+    unisex:{ 
+      type: DataTypes.INTEGER,
+      allowNull:true
+    },
+    emergencyCord:{ 
+      type: DataTypes.INTEGER,
+      allowNull:true
+    },
+    emergencyButton:{ 
+      type: DataTypes.INTEGER,
+      allowNull:true
+    },
+    petFriendly:{ 
+      type: DataTypes.INTEGER,
+      allowNull:true
+    },
+    requiresKey: { 
+      type: DataTypes.INTEGER,
+      allowNull:true
+    },
+    handDryer: { 
+      type: DataTypes.INTEGER,
+      allowNull:true
+    },
+    feminineProducts: { 
+      type: DataTypes.INTEGER,
+      allowNull:true
+    },
+    toiletCovers:{ 
+      type: DataTypes.INTEGER,
+      allowNull:true
+    },
+    bidet: { 
+      type: DataTypes.INTEGER,
+      allowNull:true
+    },
+    singleStall: { 
+      type: DataTypes.INTEGER,
+      allowNull:true
+    },
+    multipleStall: { 
+      type: DataTypes.INTEGER,
+      allowNull:true
+    },
+    changingTable: { 
+      type: DataTypes.INTEGER,
+      allowNull:true
+    },
+    trashCan: { 
+      type: DataTypes.INTEGER,
+      allowNull:true
+    },
+    goodFlooring: { 
+      type: DataTypes.INTEGER,
+      allowNull:true
+    },
+    airFreshener: { 
+      type: DataTypes.INTEGER,
+      allowNull:true
+    },
+    automatic: { 
+      type: DataTypes.INTEGER,
+      allowNull:true
+    },
+    coatHook: { 
+      type: DataTypes.INTEGER,
+      allowNull:true
+    },
+    brailleSign:{ 
+      type: DataTypes.INTEGER,
+      allowNull:true
+    },
+    hotWater: { 
+      type: DataTypes.INTEGER,
+      allowNull:true
+    },
+    firstAid: { 
+      type: DataTypes.INTEGER,
+      allowNull:true
+    },
+    sharpsDisposal: { 
+      type: DataTypes.INTEGER,
+      allowNull:true
+    },
   }, {
     sequelize,
     modelName: 'Review',
