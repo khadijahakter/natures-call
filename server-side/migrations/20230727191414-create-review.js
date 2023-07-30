@@ -3,7 +3,7 @@
 module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable('reviews', {
-      id: {
+      UserId: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
