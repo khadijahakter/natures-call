@@ -9,7 +9,12 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Bathroom.init({
-    sourceid: { 
+    bathroomId: {
+      type: DataTypes.INTEGER,
+      primaryKey: true, 
+      autoIncrement: true,
+      allowNull: false,
+    },    sourceid: { 
       type: DataTypes.STRING,
       allowNull:false
     },
@@ -30,7 +35,6 @@ module.exports = (sequelize, DataTypes) => {
       allowNull:true
     },
     rating: DataTypes.INTEGER,
-    bathroomId: DataTypes.INTEGER,
     content: DataTypes.STRING,
     photo:{ 
       type: DataTypes.STRING,
