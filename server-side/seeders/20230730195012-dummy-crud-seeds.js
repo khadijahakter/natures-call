@@ -6,7 +6,6 @@ module.exports = {
     await queryInterface.bulkInsert('bathrooms', [
       {
         sourceid: 'bathroom1',
-        bathroomId: 1,
         address: '123 Main St',
         lat: '40.123456',
         lng: '-74.654321',
@@ -21,8 +20,6 @@ module.exports = {
     // Seed data for reviews table
     await queryInterface.bulkInsert('reviews', [
       {
-        ReviewId: 1,
-        bathroomId: 1,
         content: 'This is a great bathroom!',
         photo: 'https://example.com/bathroom.jpg',
         wheelchair: 1,

@@ -32,9 +32,6 @@ module.exports = {
       rating: {
         type: Sequelize.INTEGER
       },
-      bathroomId: {
-        type: Sequelize.INTEGER
-      },
       content: {
         type: Sequelize.STRING
       },

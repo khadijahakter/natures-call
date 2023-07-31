@@ -9,13 +9,6 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      userId: {
-        type: Sequelize.INTEGER
-
-      },
-      bathroomId: {
-        type: Sequelize.INTEGER
-      },
       content: {
         type: Sequelize.STRING
       },

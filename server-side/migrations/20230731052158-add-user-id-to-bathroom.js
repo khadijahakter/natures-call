@@ -7,7 +7,7 @@ module.exports = {
       type: Sequelize.INTEGER,
       references: {
         model: "users", // you can use the table name here not model
-        key: "id", // primary key
+        key: "UserId", // primary key
       },
       onUpdate: "CASCADE", //
       onDelete: "SET NULL", //
