@@ -5,54 +5,62 @@ import {
   RouterProvider,
 } from "react-router-dom";
 import App from './App.jsx'
+import NavBar from './routes/NavBar.jsx'
 import './index.css'
-import Navbar from './NavBar.jsx';
+
+import{
+  createBrowserRouter,
+  RouterProvider,
+  Route,
+
+}from "react-router-dom"
+import ErrorPage from './ErrorPage.jsx'
+import About from './routes/About.jsx'
+import Popup from './routes/Popup.jsx'
+import Signup,{ action as signupAction } from './Auth/Signup.jsx'
+import Login , { action as loginAction } from './Auth/Login.jsx'
+
+
+
 
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Navbar/>,
-    children : [
+
+    element: <NavBar/>,
+    errorElement:<ErrorPage/>,
+    children:[
       {
-        path: "/",
-        element: <App/>,
-        // children: [
-        //   {
-        //     path: "/",
-        //     element : <Searched/>
-        //   }
-        // ]
+        index :true,
+        element:<App/>
       },
-      // {
-      //   path: "/signup",
-      //   element: <Signup/>,
-      // },
-      // {
-      //   path: "/login",
-      //   element: <Login/>,
-      // },
-      // {
-      //   path: "/bathrooms/:bathroomid",
-      //   element: <Bathroom/>,
-      // },
-      // {
-      //   path: "/users/:userid",
-      //   element: <Profilepg/>,
-      // },
-      // {
-      //   path: "/ReviewForm",
-      //   element: <ReviewForm/>,
-      // },
-      
+      {
+        index: true,
+        element: <Login />,
+        action: loginAction,
+      },
+      {
+        index: true,
+        element: <Signup />,
+        action: signupAction,
+      },
+     
+      {
+        path:"/about",
+        element:<About/>
+      },
+
     ],
-    
   },
-])
-
-
-ReactDOM.createRoot(document.getElementById("root")).render(
+  
+]);
+ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <RouterProvider router={router} />
-  </React.StrictMode>
-);
+  </React.StrictMode>,
+)
+
+
+
+
