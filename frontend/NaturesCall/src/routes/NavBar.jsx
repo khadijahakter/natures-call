@@ -25,62 +25,52 @@ function NavBar({ items }) {
         console.log("after: ",hasAcc)
     }
    
- 
-  return (
-    <>
-    
-    <div className=" text-lg flex space-x-5 content-center bg-cyan-900">
-        {/* /style={({ isActive }) => ({ color: "red" })} */}
-        
-    <NavLink  className=" p-10 outline-black text-black" to={`/`}>Natures Call</NavLink>
-    <NavLink className=" p-10 outline-black text-black" to={`/about`}>About</NavLink>
-    <button className="bg-cyan-900 text-black" onClick={showPopup}>Login/Signup</button>
-
-   <div className="z-10 ">
-    {hasAcc?(
-    <Popup
-      isVisible={isPopup}
-      hidePopup={hidePopup}
-    >
+    const Signup = () => {
+      return (
+        <Popup isVisible={isPopup} hidePopup={hidePopup}>
+          
+          <form id="poster-form">
       <h2 className="text-center font-black mt-0"><strong>Sign Up</strong></h2>
-      <form id="poster-form">
-       <input type="text" id="form-quote" placeholder="Create Email"/>
-       <br/>
-       <br/>
-       <input type="text" id="form-quote" placeholder="Create User Name"/>
-       <br/>
-       <br/>
-       <input type="text" id="form-quote" placeholder="Create Password"/>
-    
+        <input type="text" id="form-quote" placeholder="Create Email" />
+        <br />
+        <br />
+        <input type="text" id="form-quote" placeholder="Create User Name" />
+        <br />
+        <br />
+        <input type="text" id="form-quote" placeholder="Create Password" />
       </form>
-      <br/>
-     <div className="text-center"> <button className="" onClick={hidePopup}>Sign Up</button></div>
-      <br/>
-      <br/>
-      <p className="text-center">------------ or ------------</p>
-      <br/>
-      
-      <p>Already have an account?<button onClick={HasAcc} > Login</button></p>
-      
-
-    </Popup>
-
-        ):(
-          <Popup
+          <br />
+          <div className="text-center">
+            <button className="" onClick={hidePopup}>
+              Sign Up
+            </button>
+          </div>
+          <br />
+          <br />
+          <p className="text-center">------------ or ------------</p>
+          <br />
+    
+          <p>
+            Already have an account?
+            <button onClick={HasAcc}>Login</button>
+          </p>
+        </Popup>
+      );
+    };
+    const Login=()=>{
+      return(
+        <Popup
           isVisible={isPopup}
           hidePopup={hidePopup}
         >
-          <h2 className="text-center font-black mt-0"><strong>Login</strong></h2>
-          <form id="poster-form">
-           <input type="text" id="form-quote" placeholder=" Email"/>
-           <br/>
-           <br/>
           
-           
-           <input type="text" id="form-quote" placeholder=" Password"/>
-        
-          </form>
-         
+          <form id="poster-form">
+      <h2 className="text-center font-black mt-0"><strong>Login</strong></h2>
+        <input type="text" id="form-quote" placeholder=" Email"/>
+        <br/>
+        <br/>
+        <input type="text" id="form-quote" placeholder=" Password"/>
+      </form>
          
           <br/>
           <div className="text-center"><button className="" onClick={hidePopup}>Login</button></div>
@@ -96,6 +86,26 @@ function NavBar({ items }) {
           
     
         </Popup>
+      );
+      
+    }
+ 
+  return (
+    <>
+    
+    <div className=" text-lg flex space-x-5 content-center bg-cyan-900">
+        {/* /style={({ isActive }) => ({ color: "red" })} */}
+        
+    <NavLink  className=" p-10 outline-black text-black" to={`/`}>Natures Call</NavLink>
+    <NavLink className=" p-10 outline-black text-black" to={`/about`}>About</NavLink>
+    <button className="bg-cyan-900 text-black" onClick={showPopup}>Login/Signup</button>
+
+   <div className="z-10 ">
+    {hasAcc?(
+    <Signup/>
+
+        ):(
+          <Login/>
         )
     }
     </div>
