@@ -15,7 +15,16 @@ function NavBar({ items }) {
   
     const hidePopup = () => {
       setIsPopup(false);
+      setHasAcc(true);
     }
+    const [hasAcc,setHasAcc]=useState(false);
+
+    
+    const HasAcc=()=>{
+        setHasAcc(false);
+        console.log("after: ",hasAcc)
+    }
+   
  
   return (
     <>
@@ -28,6 +37,7 @@ function NavBar({ items }) {
     <button className="bg-cyan-900 text-black" onClick={showPopup}>Login/Signup</button>
 
    <div className="z-10 ">
+    {hasAcc?(
     <Popup
       isVisible={isPopup}
       hidePopup={hidePopup}
@@ -44,17 +54,50 @@ function NavBar({ items }) {
     
       </form>
       <br/>
-      <a className="text-center">forgot password?</a>
-      <br/>
-      <button className="" onClick={hidePopup}>Sign Up</button>
+     <div className="text-center"> <button className="" onClick={hidePopup}>Sign Up</button></div>
       <br/>
       <br/>
-      <p>------------ or ------------</p>
+      <p className="text-center">------------ or ------------</p>
       <br/>
-      <p>Already have an account?<a> Login</a></p>
+      
+      <p>Already have an account?<button onClick={HasAcc} > Login</button></p>
       
 
     </Popup>
+
+        ):(
+          <Popup
+          isVisible={isPopup}
+          hidePopup={hidePopup}
+        >
+          <h2 className="text-center font-black mt-0"><strong>Login</strong></h2>
+          <form id="poster-form">
+           <input type="text" id="form-quote" placeholder=" Email"/>
+           <br/>
+           <br/>
+          
+           
+           <input type="text" id="form-quote" placeholder=" Password"/>
+        
+          </form>
+         
+         
+          <br/>
+          <div className="text-center"><button className="" onClick={hidePopup}>Login</button></div>
+          <br/>
+         
+          
+          <a className="text-center">forgot password?</a>
+      
+      <br/>
+          <p className="text-center">------------ or ------------</p>
+          <br/>
+          <p className="text-center">Sign in with Google</p>
+          
+    
+        </Popup>
+        )
+    }
     </div>
 
   
