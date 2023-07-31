@@ -11,7 +11,6 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Review.init({
-   id : DataTypes.INTEGER,
     bathroomId: DataTypes.INTEGER,
     content: DataTypes.STRING,
     photo: {
