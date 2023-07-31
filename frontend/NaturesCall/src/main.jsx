@@ -11,6 +11,9 @@ import{
 }from "react-router-dom"
 import ErrorPage from './ErrorPage.jsx'
 import About from './routes/About.jsx'
+import Popup from './routes/Popup.jsx'
+import Signup,{ action as signupAction } from './Auth/Signup.jsx'
+import Login , { action as loginAction } from './Auth/Login.jsx'
 
 const router = createBrowserRouter([
   {
@@ -19,13 +22,24 @@ const router = createBrowserRouter([
     errorElement:<ErrorPage/>,
     children:[
       {
-        path:"/",
+        index :true,
         element:<App/>
       },
       {
+        index: true,
+        element: <Login />,
+        action: loginAction,
+      },
+      {
+        index: true,
+        element: <Signup />,
+        action: signupAction,
+      },
+     
+      {
         path:"/about",
         element:<About/>
-      }
+      },
 
     ],
   },

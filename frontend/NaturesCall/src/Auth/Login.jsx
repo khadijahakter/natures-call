@@ -25,9 +25,9 @@ export async function action({ request }) {
 }
 
 
-const Login = ({ hidePopup }) => {
+const Login = ({ hidePopup ,isPopup,HasAcc}) => {
   return (
-    <Popup method="post" isVisible={true} hidePopup={hidePopup}>
+    <Popup method="post" isVisible={isPopup} hidePopup={hidePopup} >
       
       <Form method="post" className="selection:bg-blue-200 flex flex-col gap-2">
       <h2 className="text-black text-center text-xl">Login</h2>
@@ -58,7 +58,7 @@ const Login = ({ hidePopup }) => {
 
       
       <br/>
-      <div className="text-center"><button className="" onClick={hidePopup}>Login</button></div>
+      <div className="text-center"><button className="" onClick={HasAcc}>Back</button></div>
       <br/>
       
       <a className="text-center">forgot password?</a>
@@ -70,6 +70,10 @@ const Login = ({ hidePopup }) => {
     </Popup>
   );
 }
+
+
+
+
 
 export default Login;
 

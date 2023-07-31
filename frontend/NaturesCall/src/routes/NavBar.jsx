@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { Link,NavLink } from "react-router-dom";
 import Popup from "./Popup";
 import { Outlet } from "react-router-dom";
+import Signup from "../Auth/Signup";
+import Login from "../Auth/Login";
 
 
 
@@ -21,74 +23,11 @@ function NavBar({ items }) {
 
     
     const HasAcc=()=>{
-        setHasAcc(false);
+        setHasAcc(!hasAcc);
         console.log("after: ",hasAcc)
     }
    
-    const Signup = () => {
-      return (
-        <Popup isVisible={isPopup} hidePopup={hidePopup}>
-          
-          <form id="poster-form">
-      <h2 className="text-center font-black mt-0"><strong>Sign Up</strong></h2>
-        <input type="text" id="form-quote" placeholder="Create Email" />
-        <br />
-        <br />
-        <input type="text" id="form-quote" placeholder="Create User Name" />
-        <br />
-        <br />
-        <input type="text" id="form-quote" placeholder="Create Password" />
-      </form>
-          <br />
-          <div className="text-center">
-            <button className="" onClick={hidePopup}>
-              Sign Up
-            </button>
-          </div>
-          <br />
-          <br />
-          <p className="text-center">------------ or ------------</p>
-          <br />
-    
-          <p>
-            Already have an account?
-            <button onClick={HasAcc}>Login</button>
-          </p>
-        </Popup>
-      );
-    };
-    const Login=()=>{
-      return(
-        <Popup
-          isVisible={isPopup}
-          hidePopup={hidePopup}
-        >
-          
-          <form id="poster-form">
-      <h2 className="text-center font-black mt-0"><strong>Login</strong></h2>
-        <input type="text" id="form-quote" placeholder=" Email"/>
-        <br/>
-        <br/>
-        <input type="text" id="form-quote" placeholder=" Password"/>
-      </form>
-         
-          <br/>
-          <div className="text-center"><button className="" onClick={hidePopup}>Login</button></div>
-          <br/>
-         
-          
-          <a className="text-center">forgot password?</a>
-      
-      <br/>
-          <p className="text-center">------------ or ------------</p>
-          <br/>
-          <p className="text-center">Sign in with Google</p>
-          
-    
-        </Popup>
-      );
-      
-    }
+    console.log("hasAcc value: ",hasAcc)
  
   return (
     <>
@@ -101,13 +40,7 @@ function NavBar({ items }) {
     <button className="bg-cyan-900 text-black" onClick={showPopup}>Login/Signup</button>
 
    <div className="z-10 ">
-    {hasAcc?(
-    <Signup/>
-
-        ):(
-          <Login/>
-        )
-    }
+    {hasAcc?(<Login HasAcc={HasAcc}  isPopup={isPopup} hidePopup={hidePopup}/>):( <Signup HasAcc={HasAcc}  isPopup={isPopup} hidePopup={hidePopup}/>)}
     </div>
 
   

@@ -21,9 +21,10 @@ export async function action({ request }) {
   return redirect("/");
 }
 
-const Signup = ({ hidePopup }) => {
+const Signup = ({ hidePopup ,isPopup,HasAcc}) => {
+   
   return (
-    <Popup isVisible={true} hidePopup={hidePopup}>
+    <Popup isVisible={isPopup} hidePopup={hidePopup}>
       
       <Form method="post" className="selection:bg-blue-200 flex flex-col gap-2">
       <h1 className="text-black text-center text-xl">Create Account</h1>
@@ -61,11 +62,7 @@ const Signup = ({ hidePopup }) => {
       ></input>
     </Form> 
       <br />
-      <div className="text-center">
-        <button className="" onClick={hidePopup}>
-          Sign Up
-        </button>
-      </div>
+      
       <br />
       <br />
       <p className="text-center">------------ or ------------</p>
@@ -73,7 +70,7 @@ const Signup = ({ hidePopup }) => {
 
       <p>
         Already have an account?
-        <button onClick={hidePopup}>Login</button>
+        <button onClick={HasAcc}>Login</button>
       </p>
     </Popup>
   );
