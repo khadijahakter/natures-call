@@ -1,8 +1,13 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
+import {
+  createBrowserRouter,
+  RouterProvider,
+} from "react-router-dom";
 import App from './App.jsx'
 import NavBar from './routes/NavBar.jsx'
 import './index.css'
+
 import{
   createBrowserRouter,
   RouterProvider,
@@ -15,9 +20,14 @@ import Popup from './routes/Popup.jsx'
 import Signup,{ action as signupAction } from './Auth/Signup.jsx'
 import Login , { action as loginAction } from './Auth/Login.jsx'
 
+
+
+
+
 const router = createBrowserRouter([
   {
     path: "/",
+
     element: <NavBar/>,
     errorElement:<ErrorPage/>,
     children:[
@@ -50,3 +60,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
     <RouterProvider router={router} />
   </React.StrictMode>,
 )
+
+
+
+
