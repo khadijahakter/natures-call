@@ -6,6 +6,7 @@ const session = require("express-session");
 const Sequelize = require('sequelize');
 const { User, Bathroom, Review } = require("./models"); // Replace the path with the correct one for your project
 // const {Bathroom, Review, User} = require("./models"); // Replace the path with the correct one for your project
+const cron = require('node-cron');
 const axios = require('axios');
 
 require("dotenv").config();
@@ -23,15 +24,31 @@ app.use((req, res, next) => {
 
 app.use(express.json());
 app.use(
-  session({
-    secret: process.env.SESSION_SECRET,
-    resave: false,
-    saveUninitialized: false,
-    cookie: {
-      maxAge: 3600000,
-    },
+
+    session({
+      secret: process.env.SESSION_SECRET,
+      resave: false,
+      saveUninitialized: false,
+      cookie: {
+        maxAge: 3600000, 
+      },
+    })
+  );
+
+  
+
+const cors = require("cors");
+
+app.use(
+  cors({
+    origin: "http://localhost:5173",
+    allowedHeaders: ["Content-Type", "Authorization"],
+    methods: ["GET", "POST", "PATCH", "DELETE"],
   })
 );
+
+// ...routes
+
 //--------------------------------------welcome-------------------------------
 app.get("/", (req, res) => {
   res.send("Welcome to Nature's Call!");
@@ -369,6 +386,12 @@ app.get("/:userId/reviews", async (req, res) => {
     console.error(err);
     res.status(500).send({ message: err.message });
   }
+});
+
+// -- cronjob scheduling --
+cron.schedule('0 0 * * 1', () => {
+  console.log('running a task every minute');
+  getAllBathrooms();
 });
 
 app.listen(port, () => {

@@ -1,6 +1,6 @@
 import React from "react";
-import Popup from "../routes/Popup";
-import { Form, redirect } from "react-router-dom";
+
+import { Form, redirect,Link } from "react-router-dom";
 
 
 
@@ -18,16 +18,17 @@ export async function action({ request }) {
 
   if (!response.ok) {
     // invalid credentials, remain on login page
+    alert("incorrect ")
     return null;
   }
-
+    alert("successfully Logged in");
   return redirect("/");
 }
 
 
-const Login = ({ hidePopup ,isPopup,HasAcc}) => {
+const Login = () => {
   return (
-    <Popup method="post" isVisible={isPopup} hidePopup={hidePopup} >
+    <>
       
       <Form method="post" className="selection:bg-blue-200 flex flex-col gap-2">
       <h2 className="text-black text-center text-xl">Login</h2>
@@ -58,7 +59,7 @@ const Login = ({ hidePopup ,isPopup,HasAcc}) => {
 
       
       <br/>
-      <div className="text-center"><button className="" onClick={HasAcc}>Back</button></div>
+      <Link to={"/signup"}>Back</Link>
       <br/>
       
       <a className="text-center">forgot password?</a>
@@ -67,7 +68,7 @@ const Login = ({ hidePopup ,isPopup,HasAcc}) => {
       <p className="text-center">------------ or ------------</p>
       <br/>
       <p className="text-center">Sign in with Google</p>
-    </Popup>
+    </>
   );
 }
 
