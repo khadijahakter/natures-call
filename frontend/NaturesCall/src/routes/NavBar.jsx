@@ -1,33 +1,35 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { Link,NavLink } from "react-router-dom";
-import Popup from "./Popup";
+
 import { Outlet } from "react-router-dom";
-import Signup from "../Auth/Signup";
-import Login from "../Auth/Login";
 
 
 
 
-function NavBar({ items }) {
-    const [isPopup,setIsPopup]=useState(false);
-  
-    const showPopup = () => {
-      setIsPopup(true);
-    }
-  
-    const hidePopup = () => {
-      setIsPopup(false);
-      setHasAcc(true);
-    }
-    const [hasAcc,setHasAcc]=useState(false);
 
-    
-    const HasAcc=()=>{
-        setHasAcc(!hasAcc);
-        console.log("after: ",hasAcc)
-    }
+function NavBar() {
    
-    console.log("hasAcc value: ",hasAcc)
+  const [displayBathrooms,setDisplayBathrooms]=useState([]);
+  useEffect(()=>{
+
+    async function fetchBathrooms(){
+      
+    const response= await fetch("http://localhost:4000/bathrooms");
+    
+    const displayBathrooms =await response.json();
+    setDisplayBathrooms(displayBathrooms);
+     
+     
+    
+    
+    return displayBathrooms;
+    
+    }
+    
+    fetchBathrooms();
+    
+    },[])
+  
  
   return (
     <>
@@ -37,15 +39,27 @@ function NavBar({ items }) {
         
     <NavLink  className=" p-10 outline-black text-black" to={`/`}>Natures Call</NavLink>
     <NavLink className=" p-10 outline-black text-black" to={`/about`}>About</NavLink>
-    <button className="bg-cyan-900 text-black" onClick={showPopup}>Login/Signup</button>
+    <NavLink className="bg-cyan-900 text-black" to={`/signup`} >Login/Signup</NavLink>
 
-   <div className="z-10 ">
-    {hasAcc?(<Login HasAcc={HasAcc}  isPopup={isPopup} hidePopup={hidePopup}/>):( <Signup HasAcc={HasAcc}  isPopup={isPopup} hidePopup={hidePopup}/>)}
-    </div>
+  
 
   
 </div>
-<Outlet/>
+<ul className='ml-10'>
+        {displayBathrooms.map(bathroom => (
+          <li >
+          
+            <h3 >{bathroom.name}</h3>
+        
+            
+            <p><strong>rating: </strong>{bathroom.rating}</p>
+            <p><strong>Address: </strong> {bathroom.address}</p>
+            
+            </li>
+        
+        ))}
+    </ul>
+   <Outlet/> 
 
     </>
   );
