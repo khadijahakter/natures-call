@@ -9,12 +9,7 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Bathroom.init({
-    bathroomId: {
-      type: DataTypes.INTEGER,
-      primaryKey: true, 
-      autoIncrement: true,
-      allowNull: false,
-    },    sourceid: { 
+    sourceid: { 
       type: DataTypes.STRING,
       allowNull:false
     },

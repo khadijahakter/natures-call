@@ -79,7 +79,7 @@ module.exports = {
         firstAid: 1,
         sharpsDisposal: 0,
         UserId: 2, // Foreign key reference to the user
-        bathroomId: 2, // Foreign key reference to the bathroom
+        BathroomId: 2, // Foreign key reference to the bathroom
         createdAt: new Date(),
         updatedAt: new Date(),
       },
@@ -109,7 +109,7 @@ module.exports = {
         firstAid: 0,
         sharpsDisposal: 1,
         UserId: 1, // Foreign key reference to the user
-        bathroomId: 2, // Foreign key reference to the bathroom
+        BathroomId: 2, // Foreign key reference to the bathroom
         createdAt: new Date(),
         updatedAt: new Date(),
       },

@@ -4,7 +4,7 @@ const app = express();
 const port = 4000;
 const session = require("express-session");
 const Sequelize = require('sequelize');
-const {User, Bathroom} = require("./models"); // Replace the path with the correct one for your project
+const {User, Bathroom, Review} = require("./models"); // Replace the path with the correct one for your project
 // const {Bathroom, Review, User} = require("./models"); // Replace the path with the correct one for your project
 
 require("dotenv").config();
@@ -205,6 +205,28 @@ app.get("/bathrooms/:bathroomId", async (req, res) => {
       res.status(500).send({message: err.message});
     }
   });
+
+//get all reviews for a single bathroom 
+// bathrooms/bathroomId/reviews
+app.get("/bathrooms/:bathroomId/reviews", async (req, res) => {
+
+  const bathroomId = parseInt(req.params.bathroomId, 10)
+  console.log(bathroomId);
+
+  try {
+
+  //testing 
+  // const allReviews = await Review.findAll();
+  // res.status(200).json(allReviews);
+
+  const bathroomReviews = await Review.findAll({where: {BathroomId : bathroomId}});
+  res.status(200).json(bathroomReviews);
+
+  } catch (err) {
+    console.error(err);
+    res.status(500).send({ message: err.message });
+  }
+});
 
 
 app.listen(port, () => {
