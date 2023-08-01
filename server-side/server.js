@@ -6,6 +6,7 @@ const session = require("express-session");
 const Sequelize = require('sequelize');
 const { User, Bathroom, Review } = require("./models"); // Replace the path with the correct one for your project
 // const {Bathroom, Review, User} = require("./models"); // Replace the path with the correct one for your project
+const cron = require('node-cron');
 const axios = require('axios');
 
 require("dotenv").config();
@@ -369,6 +370,12 @@ app.get("/:userId/reviews", async (req, res) => {
     console.error(err);
     res.status(500).send({ message: err.message });
   }
+});
+
+// -- cronjob scheduling --
+cron.schedule('0 0 * * 1', () => {
+  console.log('running a task every minute');
+  getAllBathrooms();
 });
 
 app.listen(port, () => {
