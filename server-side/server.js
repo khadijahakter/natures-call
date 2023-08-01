@@ -4,7 +4,7 @@ const app = express();
 const port = 4000;
 const session = require("express-session");
 const Sequelize = require('sequelize');
-const {User} = require("./models"); // Replace the path with the correct one for your project
+const {User, Bathroom, Review} = require("./models"); // Replace the path with the correct one for your project
 // const {Bathroom, Review, User} = require("./models"); // Replace the path with the correct one for your project
 
 require("dotenv").config();
@@ -122,8 +122,27 @@ app.delete("/logout", (req, res) => {
   });
 });
 //------------------------------------------------------------------------------
+//----------------------- Fetch data from API and insert into the database -----------------------
+/*
+app.get("/fetch-data-from-api", async (req, res) => {
+  try {
+    // Replace 'API_ENDPOINT' with the actual API URL you want to fetch data from
+    const apiEndpoint = 'API_ENDPOINT';
+
+    // Fetch data from the API
+    const response = await fetch(apiEndpoint);
+    const data = await response.json();
 
 
+    console.log(data);
+    res.status(200).json({ message: "Data fetched from API and inserted into the database successfully" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "An error occurred while fetching data from the API" });
+  }
+});
+*/
+//-----------------------------------------------------------------------------------------
 
 app.listen(port, () => {
   console.log(`Server is running at http://localhost:${port}`);
