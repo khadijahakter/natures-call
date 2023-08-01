@@ -31,6 +31,20 @@ app.use(
       },
     })
   );
+
+  
+
+const cors = require("cors");
+
+app.use(
+  cors({
+    origin: "http://localhost:5173",
+    allowedHeaders: ["Content-Type", "Authorization"],
+    methods: ["GET", "POST", "PATCH", "DELETE"],
+  })
+);
+
+// ...routes
 //--------------------------------------welcome-------------------------------
 app.get("/", (req, res) => {
   res.send("Welcome to Nature's Call!");

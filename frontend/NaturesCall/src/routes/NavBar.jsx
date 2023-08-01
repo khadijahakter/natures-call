@@ -9,7 +9,7 @@ import Login from "../Auth/Login";
 
 
 function NavBar({ items }) {
-    const [isPopup,setIsPopup]=useState(false);
+    const [isPopup,setIsPopup]=useState(true);
   
     const showPopup = () => {
       setIsPopup(true);
@@ -37,15 +37,15 @@ function NavBar({ items }) {
         
     <NavLink  className=" p-10 outline-black text-black" to={`/`}>Natures Call</NavLink>
     <NavLink className=" p-10 outline-black text-black" to={`/about`}>About</NavLink>
-    <button className="bg-cyan-900 text-black" onClick={showPopup}>Login/Signup</button>
+    <NavLink className="bg-cyan-900 text-black" to={`/signup`} >Login/Signup</NavLink>
 
-   <div className="z-10 ">
+   {/* <div className="z-10 ">
     {hasAcc?(<Login HasAcc={HasAcc}  isPopup={isPopup} hidePopup={hidePopup}/>):( <Signup HasAcc={HasAcc}  isPopup={isPopup} hidePopup={hidePopup}/>)}
-    </div>
+    </div> */}
 
   
 </div>
-<Outlet/>
+  <Outlet/>
 
     </>
   );
