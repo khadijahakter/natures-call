@@ -9,11 +9,32 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Bathroom.init({
-    location: DataTypes.STRING,
+    sourceid: { 
+      type: DataTypes.STRING,
+      allowNull:false
+    },
+    address: { 
+      type: DataTypes.STRING,
+      allowNull:true
+    },
+    lat: { 
+      type: DataTypes.STRING,
+      allowNull:true
+    },
+    lng: { 
+      type: DataTypes.STRING,
+      allowNull:true
+    },
+    name: { 
+      type: DataTypes.STRING,
+      allowNull:true
+    },
     rating: DataTypes.INTEGER,
-    bathroomId: DataTypes.INTEGER,
     content: DataTypes.STRING,
-    photo: DataTypes.STRING,
+    photo:{ 
+      type: DataTypes.STRING,
+      allowNull:true
+    },
     wheelchair:{ 
       type: DataTypes.INTEGER,
       allowNull:true
