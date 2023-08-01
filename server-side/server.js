@@ -215,7 +215,7 @@ app.get("/bathrooms/:bathroomId/reviews", async (req, res) => {
 
   try {
 
-  //testing 
+  //testing  
   // const allReviews = await Review.findAll();
   // res.status(200).json(allReviews);
 
@@ -225,6 +225,46 @@ app.get("/bathrooms/:bathroomId/reviews", async (req, res) => {
   } catch (err) {
     console.error(err);
     res.status(500).send({ message: err.message });
+  }
+});
+
+//creating review for specific bathroom
+app.post("/bathrooms/:bathroomId/reviews", async (req, res) => {
+  const bathroomId = parseInt(req.params.bathroomId, 10);
+
+  try {
+    const review = await Review.create({
+      content: req.body.content,
+      photo: req.body.photo,
+      wheelchair: req.body.wheelchair,
+      unisex: req.body.unisex,
+      emergencyCord: req.body.emergencyCord,
+      emergencyButton: req.body.emergencyButton,
+      petFriendly: req.body.petFriendly,
+      requiresKey: req.body.requiresKey,
+      handDryer: req.body.handDryer,
+      feminineProducts: req.body.feminineProducts,
+      toiletCovers: req.body.toiletCovers,
+      bidet: req.body.bidet,
+      singleStall: req.body.singleStall,
+      multipleStall: req.body.multipleStall,
+      changingTable: req.body.changingTable,
+      trashCan: req.body.trashCan,
+      goodFlooring: req.body.goodFlooring,
+      airFreshener: req.body.airFreshener,
+      automatic: req.body.automatic,
+      coatHook: req.body.coatHook,
+      brailleSign: req.body.brailleSign,
+      hotWater: req.body.hotWater,
+      firstAid: req.body.firstAid,
+      sharpsDisposal: req.body.sharpsDisposal,
+      bathroomId: bathroomId,
+    });
+
+    res.status(201).json(review);
+  } catch (error) {
+    console.error("Error creating review:", error);
+    res.status(500).json({ message: "An error occurred while creating the review" });
   }
 });
 
