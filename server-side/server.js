@@ -230,8 +230,9 @@ app.get("/bathrooms/:bathroomId/reviews", async (req, res) => {
 
 //creating review for specific bathroom
 app.post("/bathrooms/:bathroomId/reviews", async (req, res) => {
-  const bathroomId = parseInt(req.params.bathroomId, 10);
-
+ 
+const bathroomId = parseInt(req.params.bathroomId, 10);
+//user id = session user
   try {
     const review = await Review.create({
       content: req.body.content,
@@ -258,7 +259,7 @@ app.post("/bathrooms/:bathroomId/reviews", async (req, res) => {
       hotWater: req.body.hotWater,
       firstAid: req.body.firstAid,
       sharpsDisposal: req.body.sharpsDisposal,
-      bathroomId: bathroomId,
+      BathroomId: bathroomId,
     });
 
     res.status(201).json(review);
@@ -267,6 +268,28 @@ app.post("/bathrooms/:bathroomId/reviews", async (req, res) => {
     res.status(500).json({ message: "An error occurred while creating the review" });
   }
 });
+
+//get all reviews from a user
+app.get("/:userId/reviews", async (req, res) => {
+
+  const userId = parseInt(req.params.userId, 10)
+  console.log(userId);
+
+  try {
+
+  //testing  
+  // const allReviews = await Review.findAll();
+  // res.status(200).json(allReviews);
+
+  const userReviews = await Review.findAll({where: {UserId : userId}});
+  res.status(200).json(userReviews);
+
+  } catch (err) {
+    console.error(err);
+    res.status(500).send({ message: err.message });
+  }
+});
+
 
 
 app.listen(port, () => {
