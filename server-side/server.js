@@ -31,6 +31,16 @@ app.use(
       },
     })
   );
+
+  //middleware function that checks if you are logged in, used as param in crud ops
+const authenticateUser = (req, res, next) => {
+  console.log("authenticattinggggg");
+if (!req.session.userId) {
+  return res.status(401).json({ message: 'You must be logged in to view this page.' });
+}
+next();
+};
+
 //--------------------------------------welcome-------------------------------
 app.get("/", (req, res) => {
   res.send("Welcome to Nature's Call!");
@@ -143,7 +153,7 @@ app.get("/bathrooms/:bathroomId", async (req, res) => {
   console.log(bathroomId);
 
   try {
-    const bathroom = await Bathroom.findOne({ where: { bathroomId: bathroomId } });
+    const bathroom = await Bathroom.findOne({ where: { id: bathroomId } });
 
     if (bathroom) {
       res.status(200).json(bathroom);
@@ -229,7 +239,7 @@ app.get("/bathrooms/:bathroomId/reviews", async (req, res) => {
 });
 
 //creating review for specific bathroom
-app.post("/bathrooms/:bathroomId/reviews", async (req, res) => {
+app.post("/bathrooms/:bathroomId/reviews", authenticateUser, async (req, res) => {
  
 const bathroomId = parseInt(req.params.bathroomId, 10);
 //user id = session user
@@ -270,7 +280,7 @@ const bathroomId = parseInt(req.params.bathroomId, 10);
 });
 
 //get all reviews from a user
-app.get("/:userId/reviews", async (req, res) => {
+app.get("/:userId/reviews", authenticateUser, async (req, res) => {
 
   const userId = parseInt(req.params.userId, 10)
   console.log(userId);
@@ -289,6 +299,8 @@ app.get("/:userId/reviews", async (req, res) => {
     res.status(500).send({ message: err.message });
   }
 });
+
+
 
 
 
