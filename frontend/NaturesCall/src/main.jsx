@@ -15,7 +15,7 @@ import About from './routes/About.jsx'
 import Popup from './routes/Popup.jsx'
 import Signup, { action as signupAction } from './Auth/Signup.jsx'
 import Login, { action as loginAction } from './Auth/Login.jsx'
-
+import BathroomPage, {loader as bathroomLoader} from './BathroomPage.jsx';
 
 
 
@@ -48,12 +48,15 @@ const router = createBrowserRouter([
         element: <Signup />,
         action: signupAction,
       },
-
       {
         path:"/about",
         element:<About/>
       },
-
+      {
+        path:"/bathrooms/:id",
+        element:<BathroomPage/>,
+        loader: bathroomLoader
+      },
     ],
   },
 
