@@ -9,6 +9,8 @@ const {User, Bathroom, Review} = require("./models"); // Replace the path with t
 const axios = require("axios");
 require("dotenv").config();
 const cors = require("cors");
+const cron = require('node-cron');
+
 
 app.use(
   cors({
@@ -501,7 +503,11 @@ app.delete("/bathrooms/:bathroomId/:reviewsId", authenticateUser, async (req, re
     console.error(err);
   }
 });
-
+// -- cronjob scheduling --
+cron.schedule('0 0 * * 1', () => {
+  console.log('running a task every minute');
+  getAllBathrooms();
+});
 app.listen(port, () => {
   console.log(`Server is running at http://localhost:${port}`);
 });
