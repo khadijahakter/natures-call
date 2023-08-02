@@ -104,7 +104,7 @@ const getAllBathrooms = async () => {
   }
 };
 
-getAllBathrooms(); // Pass req if it's needed for the function
+
 
 //-----------------------login auth---------------------------------------------
 
