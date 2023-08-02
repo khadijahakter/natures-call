@@ -6,8 +6,106 @@ const session = require("express-session");
 const Sequelize = require('sequelize');
 const {User, Bathroom, Review} = require("./models"); // Replace the path with the correct one for your project
 // const {Bathroom, Review, User} = require("./models"); // Replace the path with the correct one for your project
-
+const axios = require("axios");
 require("dotenv").config();
+const cors = require("cors");
+const cron = require('node-cron');
+
+
+app.use(
+  cors({
+    origin: "http://localhost:5173",
+    allowedHeaders: ["Content-Type", "Authorization"],
+    methods: ["GET", "POST", "PATCH", "DELETE"],
+  })
+);
+
+
+
+// --- fetching from api ---
+const getAllBathrooms = async () => {
+  let page = 1;
+  const perPage = 10;
+
+  while (true) {
+    const options = {
+      method: 'GET',
+      url: 'https://public-bathrooms.p.rapidapi.com/all',
+      params: {
+        lat: '40.730610',
+        lng: '-73.935242',
+        page: page.toString(),
+        per_page: perPage.toString(),
+        offset: '0',
+        ada: 'false',
+        unisex: 'false'
+      },
+      headers: {
+      //  'X-RapidAPI-Key': '831c853957mshc77689e0a4a42aap148651jsn97b41cae877a',
+      'X-RapidAPI-Key': '137ac3c14amsh0c46764884bab1ap1cae9ejsn41d15eeab940',
+        'X-RapidAPI-Host': 'public-bathrooms.p.rapidapi.com'
+      }
+    };
+
+    try {
+      const response = await axios.request(options);
+      if (response.data && response.data.length > 0) {
+        for (const bathroom of response.data) {
+          var wheelchair_accessible = +bathroom.accessible;
+          var unisex = +bathroom.unisex;
+          var changingTable = +bathroom.changing_table;
+          const newbathroom = await Bathroom.create({
+            sourceid: bathroom.id,
+            address: bathroom.street + ', ' + bathroom.city + ', ' + bathroom.state, // Assuming these fields exist
+            lat: bathroom.latitude,
+            lng: bathroom.longitude,
+            name: bathroom.name,
+            rating: null, // Assuming this comes from your request or some other source
+            content: null,
+            photo: null,
+            wheelchair: wheelchair_accessible,
+            unisex: unisex,
+            emergencyCord: null,
+            emergencyButton: null,
+            petFriendly: null,
+            requiresKey: null,
+            handDryer: null,
+            feminineProducts: null,
+            toiletCovers: null,
+            bidet: null,
+            singleStall: null,
+            multipleStall: null,
+            changingTable: changingTable, // Assuming this field exists
+            trashCan: null,
+            goodFlooring: null,
+            airFreshener: null,
+            automatic: null,
+            coatHook: null,
+            brailleSign: null,
+            hotWater: null,
+            firstAid: null,
+            sharpsDisposal: null,
+            createdAt: new Date(),
+            updatedAt: new Date(),
+            UserId: null,
+          });
+          console.log(newbathroom);
+        }
+
+      } else {
+        break; // No more data, exit the loop
+      }
+    } catch (error) {
+      console.error(error);
+      break; // Error occurred, exit the loop
+    }
+
+    page += 1;
+  }
+};
+
+getAllBathrooms(); // Pass req if it's needed for the function
+
 //-----------------------login auth---------------------------------------------
 
 //prints to the console what request was made and the status returned
@@ -184,7 +282,7 @@ app.get("/bathrooms/user/:userId", authenticateUser, async (req, res) => {
   }
 });
   //create a bathroom --- based on user Id ------------------------
-  app.post("/bathrooms",  async (req, res) => {
+  app.post("/bathrooms", authenticateUser,  async (req, res) => {
  try{
         const userId = req.session.userId;
 
@@ -405,8 +503,11 @@ app.delete("/bathrooms/:bathroomId/:reviewsId", authenticateUser, async (req, re
     console.error(err);
   }
 });
-
+// -- cronjob scheduling --
+cron.schedule('0 0 * * 1', () => {
+  console.log('running a task every minute');
+  getAllBathrooms();
+});
 app.listen(port, () => {
   console.log(`Server is running at http://localhost:${port}`);
 });
-

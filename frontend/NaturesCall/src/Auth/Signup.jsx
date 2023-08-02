@@ -1,30 +1,38 @@
 import React from "react";
-import Popup from "../routes/Popup";
-import { Form, redirect } from "react-router-dom";
+
+import { Form, redirect,Link} from "react-router-dom";
 
 export async function action({ request }) {
-  const formData = await request.formData();
-
-  const response = await fetch("http://localhost:4000/signup", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(formData),
-  });
-
-  if (!response.ok) {
-    // invalid submission, remain on signup page
-    return null;
+    const formData = await request.formData();
+  
+    // Convert formData to a JSON-serializable object
+    const formDataObj = {};
+    for (const [name, value] of formData.entries()) {
+      formDataObj[name] = value;
+    }
+  
+    const response = await fetch("http://localhost:4000/signup", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formDataObj), // Use the JSON-serializable object
+    });
+  
+    if (!response.ok) {
+      // Invalid submission, remain on the signup page
+      alert("something went wrong");
+      return null;
+    }
+    alert("successfully Signed up");
+    return redirect("/");
   }
 
-  return redirect("/");
-}
-
-const Signup = ({ hidePopup ,isPopup,HasAcc}) => {
+const Signup = () => {
+    
    
   return (
-    <Popup isVisible={isPopup} hidePopup={hidePopup}>
+    <>
       
       <Form method="post" className="selection:bg-blue-200 flex flex-col gap-2">
       <h1 className="text-black text-center text-xl">Create Account</h1>
@@ -70,9 +78,11 @@ const Signup = ({ hidePopup ,isPopup,HasAcc}) => {
 
       <p>
         Already have an account?
-        <button onClick={HasAcc}>Login</button>
+        <Link to={"/login"}>Login</Link>
       </p>
-    </Popup>
+      <Link to={"/"}>Back</Link>
+      </>
+    
   );
 }
 
