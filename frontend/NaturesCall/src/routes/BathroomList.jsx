@@ -22,7 +22,7 @@ export default function BathroomList() {
           {displayBathrooms.map(bathroom => (
             <li className="flex flex-col border p-4 rounded-lg">
               <h3 className="text-xl font-bold">{bathroom.name}</h3>
-              <p className="text-sm text-gray-600">
+              <p className="text-sm text-blue-600">
                 <strong className="font-medium">Rating: </strong>
                 {bathroom.rating}
               </p>
