@@ -167,13 +167,12 @@ app.get("/bathrooms/:bathroomId", async (req, res) => {
 });
 
   //create a bathroom --- based on user Id ------------------------
-  app.post("/bathrooms", authenticateUser, async (req, res) => {
+  app.post("/bathrooms",  async (req, res) => {
  try{
         const userId = req.session.userId;
 
         const newbathroom = await Bathroom.create({
         sourceid: req.body.sourceid,
-        UserId: req.session.userId, // Set the UserId to the logged-in user's ID
         address: req.body.address,
         lat: req.body.lat,
         lng: req.body.lng,
@@ -205,6 +204,7 @@ app.get("/bathrooms/:bathroomId", async (req, res) => {
         sharpsDisposal: req.body.sharpsDisposal,
         createdAt: new Date(),
         updatedAt: new Date(),
+        UserId: req.session.userId, // Set the UserId to the logged-in user's ID
       });
   
 

@@ -6,6 +6,7 @@ module.exports = (sequelize, DataTypes) => {
   class Bathroom extends Model {
     static associate(models) {
       this.hasMany(models.Review);
+      this.belongsTo(models.User);
     }
   }
   Bathroom.init({
