@@ -381,6 +381,45 @@ app.get("/bathrooms/:bathroomId/reviews", async (req, res) => {
     res.status(500).send({ message: err.message });
   }
 });
+//bathroom filter
+
+// Assuming you have Sequelize imported and the Bathroom model defined
+
+const { Op, literal } = require("sequelize");
+
+app.post("/nearby", async (req, res) => {
+  const userLat = parseFloat(req.body.lat);
+  const userLong = parseFloat(req.body.long);
+  const maxDistance = 500;
+
+  try {
+    const userBathrooms = await Bathroom.findAll({
+      where: {
+        lat: {
+          [Op.and]: [
+            literal(`CAST(lat AS NUMERIC) >= ${userLat - 0.009 * maxDistance}`),
+            literal(`CAST(lat AS NUMERIC) <= ${userLat + 0.009 * maxDistance}`),
+          ],
+        },
+        lng: {
+          [Op.and]: [
+            literal(`CAST(lng AS NUMERIC) >= ${userLong - 0.009 * maxDistance}`),
+            literal(`CAST(lng AS NUMERIC) <= ${userLong + 0.009 * maxDistance}`),
+          ],
+        },
+      },
+    });
+
+    res.status(200).json(userBathrooms);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send({ message: err.message });
+  }
+});
+
+
+
+
 
 //creating review for specific bathroom
 app.post("/bathrooms/:bathroomId/reviews",  authenticateUser, async (req, res) => {
