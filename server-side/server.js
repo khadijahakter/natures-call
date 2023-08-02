@@ -165,7 +165,24 @@ app.get("/bathrooms/:bathroomId", async (req, res) => {
     res.status(500).send({ message: err.message });
   }
 });
+//get all bathrooms the user posted based on user Id
 
+
+
+app.get("/bathrooms/user/:userId", authenticateUser, async (req, res) => {
+  const userId = parseInt(req.params.userId, 10);
+
+  try {
+    const userBathrooms = await Bathroom.findAll({
+      where: { UserId: userId },
+    });
+
+    res.status(200).json(userBathrooms);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send({ message: err.message });
+  }
+});
   //create a bathroom --- based on user Id ------------------------
   app.post("/bathrooms",  async (req, res) => {
  try{
