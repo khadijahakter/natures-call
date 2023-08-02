@@ -4,10 +4,10 @@ import { useState } from "react";
 
 import { GoogleMap, useJsApiLoader,Marker } from "@react-google-maps/api";
 const containerStyle = {
-  width:'400px',
-  height:'400px'
-  // width: '100%',
-  // height: '100vh'
+  // width:'1600px',
+  // height:'1600px'
+  width: '100%',
+  height: '100vh'
 };
 
 
@@ -15,7 +15,7 @@ const center = {
   lat: 40.7128,
   lng: -74.0060
 };
-function App() {
+export default function Map() {
   const [geocoder, setGeocoder] = useState(null);
   const [lat, setLat]=useState(null);
   const [long, setLong]=useState(null);
@@ -106,10 +106,7 @@ function App() {
 }
 
 
-
-
-
-export default React.memo(App);
+// export default React.memo(App);
 
 
  
