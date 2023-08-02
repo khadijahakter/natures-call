@@ -42,7 +42,7 @@ const getAllBathrooms = async () => {
       },
       headers: {
       //  'X-RapidAPI-Key': '831c853957mshc77689e0a4a42aap148651jsn97b41cae877a',
-      'X-RapidAPI-Key': '0ba52e89e7msh6aa06d6b9d1c96ap159478jsn64be0573d843',
+      'X-RapidAPI-Key': '137ac3c14amsh0c46764884bab1ap1cae9ejsn41d15eeab940',
         'X-RapidAPI-Host': 'public-bathrooms.p.rapidapi.com'
       }
     };
