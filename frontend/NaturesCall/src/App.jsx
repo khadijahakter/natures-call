@@ -17,6 +17,9 @@ const center = {
 };
 function App() {
   const [geocoder, setGeocoder] = useState(null);
+  const [lat, setLat]=useState(null);
+  const [long, setLong]=useState(null);
+  const [address, setAddress]=useState('');
   
 // map is already set
 // 2. grab geocode value and pass this value into the chatgpt onGeocode() function
@@ -43,7 +46,7 @@ function App() {
   }, [])
 
   const onGeocode = () => {
-    const address = '33 beard street'; // Replace with the address you want to geocode
+    //const address = '33 beard street'; // Replace with the address you want to geocode
     if (geocoder) {
       geocoder.geocode({ address: address }, (results, status) => {
         if (status === window.google.maps.GeocoderStatus.OK && results[0]) {
@@ -54,8 +57,8 @@ function App() {
             map: map,
           });
           // Log the latitude and longitude to the console
-        console.log('Latitude:', location.lat());
-        console.log('Longitude:', location.lng());
+        setLat(location.lat())
+        setLong(location.lng())
         } else {
           console.error("Geocode was not successful for the following reason:", status);
         }
@@ -80,7 +83,17 @@ function App() {
 
         <></>
       </GoogleMap>
-      <button onClick={onGeocode}>Geocode</button>
+      <div>
+          <input
+            type="text"
+            value={address}
+            onChange={(e) => setAddress(e.target.value)}
+            placeholder="Enter address"
+          />
+          <button onClick={onGeocode}>Geocode Address</button>
+        </div>
+      <p>Latitude: {lat}</p>
+        <p>Longitude: {long}</p>
 
       </div>
       
