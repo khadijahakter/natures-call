@@ -376,7 +376,35 @@ app.delete("/bathrooms/:bathroomId/:reviewsId", authenticateUser, async (req, re
     res.status(500).send({ message: err.message });
   }
 });
+//edit a review 
 
+ app.patch("/bathrooms/:bathroomId/:reviewId", authenticateUser, async (req, res) => {
+  const reviewId = parseInt(req.params.reviewId, 10);
+ try {
+    const record = await Review.findOne({ where: { id: reviewId } });
+    if (record && record.UserId !== parseInt(req.session.userId, 10)) {
+      return res
+        .status(403)
+        .json({ message: "You are not authorized to perform that action." });
+    }
+
+    const [numberOfAffectedRows, affectedRows] = await Review.update(
+      req.body,
+      { where: { id: reviewId }, returning: true }
+    );
+  if (numberOfAffectedRows > 0) {
+      res.status(200).json(affectedRows[0]);
+    } else {
+      res.status(404).send({ message: "Comment not found" });
+    }
+  } catch (err) {
+    if (err.name === "SequelizeValidationError") {
+      return res.status(422).json({ errors: err.errors.map((e) => e.message) });
+    }
+    res.status(500).send({ message: err.message });
+    console.error(err);
+  }
+});
 
 app.listen(port, () => {
   console.log(`Server is running at http://localhost:${port}`);
