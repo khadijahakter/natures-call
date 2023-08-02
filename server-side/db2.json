@@ -1,42 +1,82 @@
 [
   {
+    "id": 20112,
     "lat": 41.9704655,
-    "lng": -73.9862419
+    "lng": -73.9862419,
+    "name": "Petsmart",
+    "changintable": false,
+    "unisex": false
   },
   {
+    "id": 5205,
     "lat": 41.9647963,
-    "lng": -73.9896775
+    "lng": -73.9896775,
+    "name": "Chipotle Grill",
+    "changintable": false,
+    "unisex": false
   },
   {
+    "id": 832,
     "lat": 41.964896,
-    "lng": -73.988809
+    "lng": -73.988809,
+    "name": "Mother Earth's Storehouse",
+    "changintable": false,
+    "unisex": true
   },
   {
+    "id": 64671,
     "lat": 41.9612507,
-    "lng": -73.9908986
+    "lng": -73.9908986,
+    "name": "1091 Ulster Ave, Kingston, NY 12401, USA",
+    "changintable": false,
+    "unisex": true
   },
   {
+    "id": 20109,
     "lat": 41.959665,
-    "lng": -73.99307499999999
+    "lng": -73.99307499999999,
+    "name": "Stewarts",
+    "changintable": false,
+    "unisex": true
   },
   {
+    "id": 43056,
     "lat": 41.9832673,
-    "lng": -74.0857836
+    "lng": -74.0857836,
+    "name": "Blue Mountain Bistro To Go",
+    "changintable": false,
+    "unisex": true
   },
   {
+    "id": 29902,
     "lat": 42.0495599,
-    "lng": -74.0586427
+    "lng": -74.0586427,
+    "name": "Woodstock Day School",
+    "changintable": false,
+    "unisex": true
   },
   {
+    "id": 20115,
     "lat": 41.9347619,
-    "lng": -74.0194921
+    "lng": -74.0194921,
+    "name": "Stockade Tavern",
+    "changintable": false,
+    "unisex": true
   },
   {
+    "id": 43373,
     "lat": 41.9339609,
-    "lng": -74.0194775
+    "lng": -74.0194775,
+    "name": "Hudson Valley LGBTQ Community Center",
+    "changintable": true,
+    "unisex": true
   },
   {
+    "id": 47625,
     "lat": 41.9339609,
-    "lng": -74.0194775
+    "lng": -74.0194775,
+    "name": "Hudson Valley LGBTQ Community Center",
+    "changintable": false,
+    "unisex": true
   }
 ]

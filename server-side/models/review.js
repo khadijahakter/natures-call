@@ -7,12 +7,10 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       this.belongsTo(models.Bathroom);
       this.belongsTo(models.User);
-    
+
     }
   }
   Review.init({
-    profileId: DataTypes.INTEGER,
-    bathroomId: DataTypes.INTEGER,
     content: DataTypes.STRING,
     photo: {
       type : DataTypes.STRING,

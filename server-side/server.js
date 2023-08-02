@@ -121,29 +121,247 @@ app.delete("/logout", (req, res) => {
     return res.status(200).json({ message: "Logout successful" });
   });
 });
+//---------------------------------authenticate user------------------------
+const authenticateUser = (req, res, next) => {
+  //if not logged in
+  if (!req.session.userId) {
+    return res.status(401).json({ message: "You must be logged in to view this page." });
+  }
+  next();
+};
+
 //------------------------------------------------------------------------------
-//----------------------- Fetch data from API and insert into the database -----------------------
-/*
-app.get("/fetch-data-from-api", async (req, res) => {
+//-----------------------bathrooms--------------
+//get all of our databases bathrooms
+app.get("/bathrooms", async (req, res) => {
   try {
-    // Replace 'API_ENDPOINT' with the actual API URL you want to fetch data from
-    const apiEndpoint = 'API_ENDPOINT';
-
-    // Fetch data from the API
-    const response = await fetch(apiEndpoint);
-    const data = await response.json();
+    const allbathrooms = await Bathroom.findAll();
 
 
-    console.log(data);
-    res.status(200).json({ message: "Data fetched from API and inserted into the database successfully" });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: "An error occurred while fetching data from the API" });
+    res.status(200).json(allbathrooms);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send({ message: err.message });
   }
 });
-*/
-//-----------------------------------------------------------------------------------------
+//--------------------------------------------------------------
+//------------------------------get a specific bathrroom by Id-------------------
+app.get("/bathrooms/:bathroomId", async (req, res) => {
+
+  const bathroomId = parseInt(req.params.bathroomId, 10);
+  
+  console.log(bathroomId);
+
+  try {
+    const bathroom = await Bathroom.findOne({ where: { id: bathroomId } });
+
+    if (bathroom) {
+      res.status(200).json(bathroom);
+    } else {
+      res.status(404).send({ message: "bathroom not found" });
+    }
+  } catch (err) {
+    console.error(err);
+    res.status(500).send({ message: err.message });
+  }
+});
+
+  //create a bathroom --- based on user Id ------------------------
+  app.post("/bathrooms", authenticateUser, async (req, res) => {
+ try{
+        const userId = req.session.userId;
+
+        const newbathroom = await Bathroom.create({
+        sourceid: req.body.sourceid,
+        UserId: req.session.userId, // Set the UserId to the logged-in user's ID
+        address: req.body.address,
+        lat: req.body.lat,
+        lng: req.body.lng,
+        name: req.body.name,
+        rating: req.body.rating,
+        content: req.body.content,
+        photo: req.body.photo,
+        wheelchair: req.body.wheelchair,
+        unisex: req.body.unisex,
+        emergencyCord: req.body.emergencyCord,
+        emergencyButton: req.body.emergencyButton,
+        petFriendly: req.body.petFriendly,
+        requiresKey: req.body.requiresKey,
+        handDryer: req.body.handDryer,
+        feminineProducts: req.body.feminineProducts,
+        toiletCovers: req.body.toiletCovers,
+        bidet: req.body.bidet,
+        singleStall: req.body.singleStall,
+        multipleStall: req.body.multipleStall,
+        changingTable: req.body.changingTable,
+        trashCan: req.body.trashCan,
+        goodFlooring: req.body.goodFlooring,
+        airFreshener: req.body.airFreshener,
+        automatic: req.body.automatic,
+        coatHook: req.body.coatHook,
+        brailleSign: req.body.brailleSign,
+        hotWater: req.body.hotWater,
+        firstAid: req.body.firstAid,
+        sharpsDisposal: req.body.sharpsDisposal,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      });
+  
+
+
+    //  res.status(201).json({newbathroom, userId});
+      res.status(201).json(newbathroom);
+      console.log("User ID:", userId);
+    }
+    catch(err){
+      console.error(err);
+      res.status(500).send({message: err.message});
+    }
+  });
+  //--------------------------------------------------------------------------
+  app.delete("/bathrooms/:bathroomId", authenticateUser, async (req, res) => {
+    const bathroomId = parseInt(req.params.bathroomId, 10);
+
+    try {
+      const record = await Bathroom.findOne({ where: { id: bathroomId } });
+      if (record && record.UserId !== parseInt(req.session.userId, 10)) {
+        console.log("UserID:" , record);
+        console.log("UserID:" , req.session.userId);
+        return res
+          .status(403)
+          .json({ message: "You are not authorized to delete this bathroom" });
+      }
+      const deleteOp = await Bathroom.destroy({ where: { id: bathroomId } });
+      if (deleteOp > 0) {
+        res.status(200).send({ message: "Bathroom deleted successfully" });
+      } else {
+        res.status(404).send({ message: "Bathroom not found" });
+      }
+    } catch (err) {
+      console.error(err);
+      res.status(500).send({ message: err.message });
+    }
+  });
+  
+
+
+///-------------------------------REVIEWS------------------------------------------
+//get all reviews for a single bathroom 
+// bathrooms/bathroomId/reviews
+app.get("/bathrooms/:bathroomId/reviews", async (req, res) => {
+
+  const bathroomId = parseInt(req.params.bathroomId, 10)
+  console.log(bathroomId);
+
+  try {
+
+  //testing  
+  // const allReviews = await Review.findAll();
+  // res.status(200).json(allReviews);
+
+  const bathroomReviews = await Review.findAll({where: {BathroomId : bathroomId}});
+  res.status(200).json(bathroomReviews);
+
+  } catch (err) {
+    console.error(err);
+    res.status(500).send({ message: err.message });
+  }
+});
+
+//creating review for specific bathroom
+app.post("/bathrooms/:bathroomId/reviews",  authenticateUser, async (req, res) => {
+ 
+  const bathroomId = parseInt(req.params.bathroomId, 10);
+  const userId = req.session.userId; // Get the user ID from the session
+  try {
+    const review = await Review.create({
+      content: req.body.content,
+      photo: req.body.photo,
+      wheelchair: req.body.wheelchair,
+      unisex: req.body.unisex,
+      emergencyCord: req.body.emergencyCord,
+      emergencyButton: req.body.emergencyButton,
+      petFriendly: req.body.petFriendly,
+      requiresKey: req.body.requiresKey,
+      handDryer: req.body.handDryer,
+      feminineProducts: req.body.feminineProducts,
+      toiletCovers: req.body.toiletCovers,
+      bidet: req.body.bidet,
+      singleStall: req.body.singleStall,
+      multipleStall: req.body.multipleStall,
+      changingTable: req.body.changingTable,
+      trashCan: req.body.trashCan,
+      goodFlooring: req.body.goodFlooring,
+      airFreshener: req.body.airFreshener,
+      automatic: req.body.automatic,
+      coatHook: req.body.coatHook,
+      brailleSign: req.body.brailleSign,
+      hotWater: req.body.hotWater,
+      firstAid: req.body.firstAid,
+      sharpsDisposal: req.body.sharpsDisposal,
+      BathroomId: bathroomId,
+      UserId: userId, // Set the UserId to the logged-in user's ID
+      createdAt: new Date(),
+      updatedAt: new Date()
+    });
+
+    res.status(201).json(review);
+  } catch (error) {
+    console.error("Error creating review:", error);
+    res.status(500).json({ message: "An error occurred while creating the review" });
+  }
+});
+
+//get all reviews from a user
+app.get("/:userId/reviews", async (req, res) => {
+
+  const userId = parseInt(req.params.userId, 10)
+  console.log(userId);
+
+  try {
+
+  //testing  
+  // const allReviews = await Review.findAll();
+  // res.status(200).json(allReviews);
+
+  const userReviews = await Review.findAll({where: {UserId : userId}});
+  res.status(200).json(userReviews);
+
+  } catch (err) {
+    console.error(err);
+    res.status(500).send({ message: err.message });
+  }
+});
+//delete a review if the user was the one who creared it
+app.delete("/bathrooms/:bathroomId/:reviewsId", authenticateUser, async (req, res) => {
+  const reviewId = parseInt(req.params.reviewsId, 10);
+
+  try {
+    const record = await Review.findOne({ where: { id: reviewId } });
+    if (record && record.UserId !== parseInt(req.session.userId, 10)) {
+      return res
+        .status(403)
+        .json({ message: "You are not authorized to perform that action." });
+    }
+
+    const deleteOp = await Review.destroy({ where: { id: reviewId } });
+
+    if (deleteOp > 0) {
+      res.status(200).send({ message: "review deleted successfully" });
+    } else {
+      res.status(404).send({ message: "review not found" });
+    }
+  } catch (err) {
+    if (err.name === "SequelizeValidationError") {
+      return res.status(422).json({ errors: err.errors.map((e) => e.message) });
+    }
+    console.error(err);
+    res.status(500).send({ message: err.message });
+  }
+});
+
 
 app.listen(port, () => {
   console.log(`Server is running at http://localhost:${port}`);
 });
+

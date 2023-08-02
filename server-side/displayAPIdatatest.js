@@ -50,8 +50,13 @@ async function fetchData() {
   try {
     const response = await axios.request(options);
     const latLngData = response.data.map(item => ({
+      id: item.id,
       lat: item.latitude,
-      lng: item.longitude
+      lng: item.longitude,
+      name : item.name,
+      changintable : item.changing_table,
+      unisex: item.unisex
+      
     }));
     const jsonData = JSON.stringify(latLngData, null, 2);
 
