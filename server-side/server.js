@@ -503,11 +503,13 @@ app.delete("/bathrooms/:bathroomId/:reviewsId", authenticateUser, async (req, re
     console.error(err);
   }
 });
+
 // -- cronjob scheduling --
-cron.schedule('0 0 * * 1', () => {
+cron.schedule('0 0 6 * *', () => {
   console.log('running a task every minute');
   getAllBathrooms();
 });
+
 app.listen(port, () => {
   console.log(`Server is running at http://localhost:${port}`);
 });

@@ -1,4 +1,4 @@
-import NavBar from "./NavBar";
+import NavBar from "./BathroomList";
 
 export default function About(){
     return(
