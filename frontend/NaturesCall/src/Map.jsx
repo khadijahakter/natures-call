@@ -1,6 +1,6 @@
 import React  from "react";
 
-import { useState } from "react";
+import { useState,useEffect } from "react";
 
 import { GoogleMap, useJsApiLoader,Marker } from "@react-google-maps/api";
 const containerStyle = {
@@ -8,6 +8,30 @@ const containerStyle = {
   // height:'1600px'
   width: '100%',
   height: '100vh'
+};
+
+
+export async function  action(){
+try {
+  // Make the POST request to the backend using fetch
+  const response = await fetch('http://localhost:4000/nearby', {
+    // http://localhost:4000/{$lat}}
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(data),
+  });
+
+  // Parse the response as JSON
+  const responseData = await response.json();
+
+  // Do something with the response (if needed)
+  console.log("The coordinates were sent: ",responseData);
+} catch (error) {
+  // Handle errors (if any)
+  console.error('Error sending coordinates:', error);
+}
 };
 
 
@@ -20,6 +44,11 @@ export default function Map() {
   const [lat, setLat]=useState(null);
   const [long, setLong]=useState(null);
   const [address, setAddress]=useState('');
+
+ 
+
+
+
   
 // map is already set
 // 2. grab geocode value and pass this value into the chatgpt onGeocode() function
@@ -59,12 +88,23 @@ export default function Map() {
           // Log the latitude and longitude to the console
         setLat(location.lat())
         setLong(location.lng())
+        
         } else {
           console.error("Geocode was not successful for the following reason:", status);
         }
       });
     }
   };
+  const data={
+    lat,
+    long,
+  }
+  useEffect(() => {
+    // Call the action function when the component mounts
+    action();
+    console.log("lat: ",data.lat)
+    console.log("long: ",data.long)
+  }, [lat, long]); 
   return isLoaded ? (
     <>
     {/* <NavBar/> */}
@@ -89,6 +129,7 @@ export default function Map() {
             value={address}
             onChange={(e) => setAddress(e.target.value)}
             placeholder="Enter address"
+            className="text-black"
           />
           <button onClick={onGeocode}>Geocode Address</button>
         </div>
