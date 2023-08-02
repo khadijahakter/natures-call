@@ -6,8 +6,8 @@ import { Outlet } from "react-router-dom";
 
 
 
-
-function NavBar() {
+//change name to bathroom list
+function Home() {
    
   const [displayBathrooms,setDisplayBathrooms]=useState([]);
   useEffect(()=>{
@@ -19,10 +19,7 @@ function NavBar() {
     const displayBathrooms =await response.json();
     setDisplayBathrooms(displayBathrooms);
      
-     
-    
-    
-    return displayBathrooms;
+    return {displayBathrooms};
     
     }
     
@@ -34,31 +31,20 @@ function NavBar() {
   return (
     <>
     
-    <div className=" text-lg flex space-x-5 content-center bg-cyan-900">
-        {/* /style={({ isActive }) => ({ color: "red" })} */}
-        
-    <NavLink  className=" p-10 outline-black text-black" to={`/`}>Natures Call</NavLink>
-    <NavLink className=" p-10 outline-black text-black" to={`/about`}>About</NavLink>
-    <NavLink className="bg-cyan-900 text-black" to={`/signup`} >Login/Signup</NavLink>
+    <ul className='ml-10'>
 
-  
-
-  
-</div>
-<ul className='ml-10'>
         {displayBathrooms.map(bathroom => (
-          <li >
-          
-            <h3 >{bathroom.name}</h3>
-        
-            
+
+        <li >
+            <h3 >{bathroom.name}</h3>            
             <p><strong>rating: </strong>{bathroom.rating}</p>
             <p><strong>Address: </strong> {bathroom.address}</p>
-            
-            </li>
+        </li>
         
         ))}
+        
     </ul>
+
    <Outlet/> 
 
     </>
@@ -66,5 +52,5 @@ function NavBar() {
   
 }
 
-export default NavBar;
+export default Home;
 
