@@ -385,12 +385,12 @@ app.get("/bathrooms/:bathroomId/reviews", async (req, res) => {
 
 // Assuming you have Sequelize imported and the Bathroom model defined
 
-const { Op, literal } = require("sequelize");
+const { Op, literal } = require("sequelize");//op contains operators for queries, literal inserts raw sql into sequelize
 
 app.post("/nearby", async (req, res) => {
   const userLat = parseFloat(req.body.lat);
   const userLong = parseFloat(req.body.long);
-  const maxDistance = 500;
+  const maxDistance = 5;// this is kilometers
 
   try {
     const userBathrooms = await Bathroom.findAll({
