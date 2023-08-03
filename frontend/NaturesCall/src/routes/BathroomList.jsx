@@ -28,6 +28,7 @@ export default function BathroomList() {
     });
     const displayBathrooms = await response.json();
     setDisplayBathrooms(displayBathrooms);
+    console.log("display br: ",displayBathrooms)
     
     return displayBathrooms;
   }
@@ -58,6 +59,15 @@ export default function BathroomList() {
                 <strong className="font-medium">Address: </strong>
                 {bathroom.address}
               </p>
+              <p className="text-sm text-gray-600">
+                <strong className="font-medium">Latitude: </strong>
+                {bathroom.lat}
+              </p>
+              <p className="text-sm text-gray-600">
+                <strong className="font-medium">Longitude: </strong>
+                {bathroom.lng}
+              </p>
+              
             </li>
             </Link>
           ))}
@@ -66,7 +76,7 @@ export default function BathroomList() {
 
             
       <div className="w-1/2">
-        <div className="border p-4"><Map lat={lat} long={long} setLat={setLat} setLong={setLong}/></div>
+        <div className="border p-4"><Map displayBathrooms={displayBathrooms} lat={lat} long={long} setLat={setLat} setLong={setLong}/></div>
       </div>
 
     </div>
