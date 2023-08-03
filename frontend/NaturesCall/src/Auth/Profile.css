@@ -13,6 +13,9 @@
 .bathroom-header{
     font-size:2rem;
 }
+.review-header{
+  font-size: 2rem;
+}
 
 .bathrooms-container {
     width: 50%;
@@ -21,8 +24,20 @@
     left: 25%;
     transform: translateX(-50%);
   }
+
+  .reviews-container{
+    width: 50%;
+    position: absolute;
+    top: 150px; /* Adjust the top positioning as needed */
+    left: 75%;
+    transform: translateX(-50%);
+  }
   
   .bathroom-item {
     /* Add any styles for individual bathroom items here */
     margin-bottom: 20px; /* Optional: Add some space between each bathroom item */
+  }
+
+  .review-item{
+    margin-bottom:20px;
   }
