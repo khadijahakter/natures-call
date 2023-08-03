@@ -14,7 +14,7 @@ const cron = require('node-cron');
 
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: "http://localhost:5174",
     allowedHeaders: ["Content-Type", "Authorization"],
     methods: ["GET", "POST", "PATCH", "DELETE"],
   })
@@ -267,7 +267,7 @@ app.get("/bathrooms/:bathroomId", async (req, res) => {
 
 
 
-app.get("/bathrooms/user/:userId", authenticateUser, async (req, res) => {
+app.get("/bathrooms/user/:userId",/* authenticateUser,*/ async (req, res) => {
   const userId = parseInt(req.params.userId, 10);
 
   try {

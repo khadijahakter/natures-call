@@ -18,6 +18,7 @@ import Signup, { action as signupAction } from './Auth/Signup.jsx'
 import Login, { action as loginAction } from './Auth/Login.jsx'
 import Profile, {loader as UserBathroomLoader} from './Auth/Profile.jsx'
 
+import BathroomPage, {loader as bathroomLoader} from './BathroomPage.jsx';
 
 
 
@@ -54,9 +55,13 @@ const router = createBrowserRouter([
         path:"/about",
         element:<About/>
       },
-
       {
-          path:"/profile",
+        path:"/bathrooms/:id",
+        element:<BathroomPage/>,
+        loader: bathroomLoader
+      },
+      {
+          path:"/profile/:id",
           element:<Profile/>,
           loader: UserBathroomLoader
       },
