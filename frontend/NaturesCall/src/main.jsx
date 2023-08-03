@@ -6,7 +6,7 @@ import {
   Route,
   createRoutesFromElements
 } from "react-router-dom";
-import Map from './Map.jsx'
+import Map, {action as mapAction} from './Map.jsx'
 import './index.css'
 import Navbar from './NavBar.jsx';
 import BathroomList from './routes/BathroomList.jsx';
@@ -18,7 +18,7 @@ import Login, { action as loginAction } from './Auth/Login.jsx'
 import BathroomPage, {loader as bathroomLoader} from './BathroomPage.jsx';
 import AddReviewForm from './AddReviewForm.jsx';
 
-
+console.log(mapAction)
 
 
 const router = createBrowserRouter([
@@ -34,7 +34,8 @@ const router = createBrowserRouter([
         children : [
           {
             path : "",
-            element : <Map/>
+            element : <Map/>,
+            action: mapAction,
           }
         ]
       },

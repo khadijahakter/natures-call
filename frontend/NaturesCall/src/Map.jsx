@@ -1,6 +1,6 @@
 import React  from "react";
 
-import { useState } from "react";
+import { useState,useEffect } from "react";
 
 import { GoogleMap, useJsApiLoader,Marker } from "@react-google-maps/api";
 const containerStyle = {
@@ -11,12 +11,44 @@ const containerStyle = {
 };
 
 
+export async function  action(){
+try {
+  // Make the POST request to the backend using fetch
+  const response = await fetch('http://localhost:4000/nearby', {
+    // http://localhost:4000/{$lat}}
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(data),
+  });
+
+  // Parse the response as JSON
+  const responseData = await response.json();
+
+  // Do something with the response (if needed)
+  console.log("The coordinates were sent: ",responseData);
+} catch (error) {
+  // Handle errors (if any)
+  console.error('Error sending coordinates:', error);
+}
+};
+
+
 const center = {
   lat: 40.7128,
   lng: -74.0060
 };
 export default function Map() {
   const [geocoder, setGeocoder] = useState(null);
+  const [lat, setLat]=useState(null);
+  const [long, setLong]=useState(null);
+  const [address, setAddress]=useState('');
+
+ 
+
+
+
   
 // map is already set
 // 2. grab geocode value and pass this value into the chatgpt onGeocode() function
@@ -43,7 +75,7 @@ export default function Map() {
   }, [])
 
   const onGeocode = () => {
-    const address = '33 beard street'; // Replace with the address you want to geocode
+    //const address = '33 beard street'; // Replace with the address you want to geocode
     if (geocoder) {
       geocoder.geocode({ address: address }, (results, status) => {
         if (status === window.google.maps.GeocoderStatus.OK && results[0]) {
@@ -54,14 +86,25 @@ export default function Map() {
             map: map,
           });
           // Log the latitude and longitude to the console
-        console.log('Latitude:', location.lat());
-        console.log('Longitude:', location.lng());
+        setLat(location.lat())
+        setLong(location.lng())
+        
         } else {
           console.error("Geocode was not successful for the following reason:", status);
         }
       });
     }
   };
+  const data={
+    lat,
+    long,
+  }
+  useEffect(() => {
+    // Call the action function when the component mounts
+    action();
+    console.log("lat: ",data.lat)
+    console.log("long: ",data.long)
+  }, [lat, long]); 
   return isLoaded ? (
     <>
     {/* <NavBar/> */}
@@ -80,7 +123,19 @@ export default function Map() {
 
         <></>
       </GoogleMap>
-      <button onClick={onGeocode}>Geocode</button>
+      <div>
+          <input
+            type="text"
+            value={address}
+            onChange={(e) => setAddress(e.target.value)}
+            placeholder="Enter address"
+            className="text-black"
+          />
+          <button onClick={onGeocode}>Geocode Address</button>
+        </div>
+      <p>Latitude: {lat}</p>
+        <p>Longitude: {long}</p>
+        <button>Add Book</button>
 
       </div>
       
