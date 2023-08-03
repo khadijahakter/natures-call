@@ -20,13 +20,18 @@ export default function AddReviewForm(){
         <Form method="post" className="p-4 bg-blue-200 text-white">
           <h1 className="text-2xl font-bold text-center mb-4">Create Review</h1>
     
-          <div className="flex flex-col gap-4">
-            <label className="font-bold">Content</label>
-            <textarea
-              name="content"
-              className="border-2 border-blue-500 p-2 rounded"
-            />
-          </div>
+        <fieldset>
+            <legend>Choose your favorite monster</legend>
+
+            <input type="radio" id="kraken" name="monster" value="K" />
+            <label for="kraken">Kraken</label><br />
+
+            <input type="radio" id="sasquatch" name="monster" value="S" />
+            <label for="sasquatch">Sasquatch</label><br />
+
+            <input type="radio" id="mothman" name="monster" value="M" />
+            <label for="mothman">Mothman</label>
+        </fieldset>
     
           <div className="flex flex-col gap-4">
             <label className="font-bold">Photo</label>
