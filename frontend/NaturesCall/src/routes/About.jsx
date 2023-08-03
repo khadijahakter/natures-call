@@ -1,4 +1,3 @@
-import NavBar from "./BathroomList";
 
 export default function About(){
     return(
@@ -14,7 +13,7 @@ export default function About(){
         </div>
         
         <footer>
-        <div className=" bg-slate-200 m-30 rounded-lg ">
+        <div className=" bg-slate-900 m-30 rounded-lg ">
         <h2 className="font-bold indent-3 text-center">Contact Us!</h2>
         <br>
         </br>

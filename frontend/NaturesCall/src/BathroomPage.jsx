@@ -69,12 +69,12 @@ const {Bathroom, Reviews} = useLoaderData();
           <p className="text-lg mb-2">Emergency Cord: {emergencyCord ? "Yes" : "No"}</p>
           {/* Continue displaying other properties similarly */}
           <div className="mt-4">
-            <NavLink
-              to={`/add-review/${sourceid}`}
+            <Link to
+             ={`/bathrooms/id/addReview`}
               className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600"
             >
               Add a Review
-            </NavLink>
+            </Link>
           </div>
     
           {/* Reviews Section */}
