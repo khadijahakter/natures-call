@@ -1,5 +1,5 @@
 import React, { useState,useEffect } from "react";
-import { Link,NavLink, useLoaderData } from "react-router-dom";
+import { Link,NavLink, useLoaderData, useParams } from "react-router-dom";
 
 import { Outlet } from "react-router-dom";
 
@@ -57,6 +57,8 @@ const {Bathroom, Reviews} = useLoaderData();
         firstAid,
         sharpsDisposal,
       } = Bathroom;
+
+      const { id } = useParams();
       return (
         <div className="container mx-auto p-4">
           <h1 className="text-3xl font-bold mb-4">{name}</h1>
@@ -70,7 +72,7 @@ const {Bathroom, Reviews} = useLoaderData();
           {/* Continue displaying other properties similarly */}
           <div className="mt-4">
             <Link to
-             ={`/bathrooms/id/addReview`}
+             ={`/bathrooms/${id}/addReview`}
               className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600"
             >
               Add a Review

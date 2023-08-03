@@ -16,7 +16,7 @@ import Popup from './routes/Popup.jsx'
 import Signup, { action as signupAction } from './Auth/Signup.jsx'
 import Login, { action as loginAction } from './Auth/Login.jsx'
 import BathroomPage, {loader as bathroomLoader} from './BathroomPage.jsx';
-import AddReviewForm from './AddReviewForm.jsx';
+import AddReviewForm, {action as AddReview} from './AddReviewForm.jsx';
 
 console.log(mapAction)
 
@@ -60,7 +60,8 @@ const router = createBrowserRouter([
       },
       {
         path:"/bathrooms/:id/addReview",
-        element:<AddReviewForm/>
+        element:<AddReviewForm/>,
+        action : AddReview
       },
     ],
   },

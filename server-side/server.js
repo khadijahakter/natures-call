@@ -417,10 +417,8 @@ app.post("/nearby", async (req, res) => {
 
 
 
-
-
 //creating review for specific bathroom
-app.post("/bathrooms/:bathroomId/reviews",  authenticateUser, async (req, res) => {
+app.post("/bathrooms/:bathroomId/reviews", async (req, res) => {
  
   const bathroomId = parseInt(req.params.bathroomId, 10);
   const userId = req.session.userId; // Get the user ID from the session
@@ -451,7 +449,8 @@ app.post("/bathrooms/:bathroomId/reviews",  authenticateUser, async (req, res) =
       firstAid: req.body.firstAid,
       sharpsDisposal: req.body.sharpsDisposal,
       BathroomId: bathroomId,
-      UserId: userId, // Set the UserId to the logged-in user's ID
+      // UserId: userId, // Set the UserId to the logged-in user's ID
+      UserId: 1, // Set the UserId to the logged-in user's ID
       createdAt: new Date(),
       updatedAt: new Date()
     });
