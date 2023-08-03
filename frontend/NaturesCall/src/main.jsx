@@ -62,23 +62,6 @@ const router = createBrowserRouter([
 
 ]);
 
-// const router = createBrowserRouter(
-//   createRoutesFromElements(
-//     <>
-     
-//       <Route path="/" element={<NavBar />}>
-       
-//         <Route path="/about" element={<About />} />
-//         <Route path="/" element={<App />} />
-//         <Route path="/login" element={<Login />} action={loginAction} />
-//       <Route path="/signup" element={<Signup />} action={signupAction} />
-
-//       </Route>
-      
-
-//     </>
-//   )
-// )
 
 
 

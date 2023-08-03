@@ -6,11 +6,16 @@ import { Outlet } from "react-router-dom";
 //loader for single bathroom element
 //loader for reviews for a specific bathroom
 export async function loader({params}){
-      console.log({params});
+    console.log({params});
   const response= await fetch(`http://localhost:4000/bathrooms/${params.id}`);
 
-  const Bathroom =await response.json();
-  return {Bathroom};
+  const Bathroom =  await response.json();
+
+  const reviewsResponse= await fetch(`http://localhost:4000/bathrooms/${params.id}/reviews`);
+
+  const Reviews = await reviewsResponse.json();
+
+  return {Bathroom, Reviews};
   
   }
 
@@ -18,7 +23,7 @@ export async function loader({params}){
 
 export default function BathroomPage(){
 
-const {Bathroom} = useLoaderData();
+const {Bathroom, Reviews} = useLoaderData();
 
     const {
         sourceid,
@@ -70,6 +75,10 @@ const {Bathroom} = useLoaderData();
                 </div>
             </div>
             <Outlet />
+
+            {Reviews.map(review => (
+              <h3>{review.content}</h3>
+            ))}
         </>
     );
 
