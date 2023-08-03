@@ -24,7 +24,9 @@
     left: 25%;
     transform: translateX(-50%);
   }
-
+.reviewandbathroomcount{
+  position:absolute;
+}
   .reviews-container{
     width: 50%;
     position: absolute;

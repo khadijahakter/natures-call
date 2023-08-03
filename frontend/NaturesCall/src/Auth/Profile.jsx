@@ -84,6 +84,10 @@ const getBathroomNameById = (BathroomId) => {
     <div>
 
     <h1 className="profile-header">Your Profile</h1>
+    <div className = "reviewandbathroomcount">
+    <p>You posted a total of {userBathrooms.length} bathrooms</p>
+    <p>You posted a total of {reviewsData.length} reviews</p>
+    </div>
    { /*bathrooms*/}
     <div className="bathrooms-container">
        <h2 className = "bathroom-header"> Your Bathrooms </h2>
