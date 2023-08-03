@@ -4,6 +4,7 @@ import { Outlet } from "react-router-dom";
 
 export default function BathroomList() {
   const [displayBathrooms, setDisplayBathrooms] = useState([]);
+  const [selected, setSelected] = useState(null);
   useEffect(() => {
     async function fetchBathrooms() {
       const response = await fetch("http://localhost:4000/bathrooms");
@@ -17,9 +18,11 @@ export default function BathroomList() {
   return (
     <div className="flex">
 
+
       <div className="w-1/2">
         <ul className="ml-10 flex flex-col space-y-4">
           {displayBathrooms.map(bathroom => (
+          <Link to = {`/bathrooms/${bathroom.id}`}>
             <li className="flex flex-col border p-4 rounded-lg">
               <h3 className="text-xl font-bold">{bathroom.name}</h3>
               <p className="text-sm text-blue-600">
@@ -31,6 +34,7 @@ export default function BathroomList() {
                 {bathroom.address}
               </p>
             </li>
+            </Link>
           ))}
         </ul>
       </div>

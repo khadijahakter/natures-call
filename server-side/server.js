@@ -265,6 +265,7 @@ app.get("/bathrooms/:bathroomId", async (req, res) => {
     res.status(500).send({ message: err.message });
   }
 });
+
 //get all bathrooms the user posted based on user Id
 
 
