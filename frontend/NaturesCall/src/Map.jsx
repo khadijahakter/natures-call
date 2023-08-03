@@ -135,6 +135,7 @@ export default function Map() {
         </div>
       <p>Latitude: {lat}</p>
         <p>Longitude: {long}</p>
+        <button>Add Book</button>
 
       </div>
       
