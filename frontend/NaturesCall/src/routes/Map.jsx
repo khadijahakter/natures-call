@@ -11,38 +11,16 @@ const containerStyle = {
 };
 
 
-export async function  action(){
-try {
-  // Make the POST request to the backend using fetch
-  const response = await fetch('http://localhost:4000/nearby', {
-    // http://localhost:4000/{$lat}}
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(data),
-  });
 
-  // Parse the response as JSON
-  const responseData = await response.json();
-
-  // Do something with the response (if needed)
-  console.log("The coordinates were sent: ",responseData);
-} catch (error) {
-  // Handle errors (if any)
-  console.error('Error sending coordinates:', error);
-}
-};
 
 
 const center = {
   lat: 40.7128,
   lng: -74.0060
 };
-export default function Map() {
+export default function Map( {lat,long,setLat,setLong}) {
   const [geocoder, setGeocoder] = useState(null);
-  const [lat, setLat]=useState(null);
-  const [long, setLong]=useState(null);
+
   const [address, setAddress]=useState('');
 
  
@@ -95,16 +73,8 @@ export default function Map() {
       });
     }
   };
-  const data={
-    lat,
-    long,
-  }
-  useEffect(() => {
-    // Call the action function when the component mounts
-    action();
-    console.log("lat: ",data.lat)
-    console.log("long: ",data.long)
-  }, [lat, long]); 
+  
+  
   return isLoaded ? (
     <>
     {/* <NavBar/> */}

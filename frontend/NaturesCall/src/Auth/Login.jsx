@@ -65,9 +65,9 @@ const Login = () => {
       <a className="text-center">forgot password?</a>
       
       <br/>
-      <p className="text-center">------------ or ------------</p>
+      <p className="text-center">------------ Dont have an account ------------</p>
       <br/>
-      <p className="text-center">Sign in with Google</p>
+      <Link className="text-center" to={"/signup"}>Create Account</Link>
     </>
   );
 }
