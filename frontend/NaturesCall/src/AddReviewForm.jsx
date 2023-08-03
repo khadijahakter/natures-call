@@ -1,23 +1,13 @@
 import React from "react";
 import { Form, redirect, Link } from "react-router-dom";
 
-// export async function action({ request, params }) {
-//     const formData = await request.formData();
-
-//     const response = await fetch(`http://localhost:4000/bathrooms/${params.id}/reviews`, {
-//         method: "POST",
-//         headers: {
-//             "Content-Type": "application/json",
-//         },
-//         body: JSON.stringify(formData), // Use the JSON-serializable object
-//     });
-
-// }
 
 // action for add a review 
 export async function action({ request, params }) {
     let formData = await request.formData();
     let bathroomData = Object.fromEntries(formData);
+
+//****************** ADD USER ID FROM SESSION WHEN AUTH CONTEXT WORK */
 
     const response = await fetch(`http://localhost:4000/bathrooms/${params.id}/reviews`, {
         method: "POST",
@@ -55,19 +45,19 @@ export default function AddReviewForm() {
                     <label htmlFor="unisexYes" className="mr-4 dark:text-gray-300">Yes</label>
                     <input type="radio" id="unisexNo" name="unisex" value="0" />
                     <label htmlFor="unisexNo" className="mr-4 dark:text-gray-300">No</label>
-                    <input type="radio" id="unisexUnknown" name="unisex" value="null" defaultChecked />
+                    <input type="radio" id="unisexUnknown" name="unisex" value="3" defaultChecked />
                     <label htmlFor="unisexUnknown" className="dark:text-gray-300">Unknown</label>
                 </div>
             </fieldset>
-{/* 
+
             <fieldset className="mb-8">
                 <legend className="text-lg font-semibold mb-2">Does it have an Emergency Cord?</legend>
                 <div className="flex items-center space-x-4">
-                    <input type="radio" id="emergencyCordYes" name="emergencyCord" value="yes" />
+                    <input type="radio" id="emergencyCordYes" name="emergencyCord" value="1" />
                     <label htmlFor="emergencyCordYes" className="mr-4 dark:text-gray-300">Yes</label>
-                    <input type="radio" id="emergencyCordNo" name="emergencyCord" value="no" />
+                    <input type="radio" id="emergencyCordNo" name="emergencyCord" value="0" />
                     <label htmlFor="emergencyCordNo" className="mr-4 dark:text-gray-300">No</label>
-                    <input type="radio" id="emergencyCordUnknown" name="emergencyCord" value="unknown" defaultChecked />
+                    <input type="radio" id="emergencyCordUnknown" name="emergencyCord" value="3" defaultChecked />
                     <label htmlFor="emergencyCordUnknown" className="dark:text-gray-300">Unknown</label>
                 </div>
             </fieldset>
@@ -75,11 +65,11 @@ export default function AddReviewForm() {
             <fieldset className="mb-8">
                 <legend className="text-lg font-semibold mb-2">Does it have an Emergency Button?</legend>
                 <div className="flex items-center space-x-4">
-                    <input type="radio" id="emergencyButtonYes" name="emergencyButton" value="yes" />
+                    <input type="radio" id="emergencyButtonYes" name="emergencyButton" value="1" />
                     <label htmlFor="emergencyButtonYes" className="mr-4 dark:text-gray-300">Yes</label>
-                    <input type="radio" id="emergencyButtonNo" name="emergencyButton" value="no" />
+                    <input type="radio" id="emergencyButtonNo" name="emergencyButton" value="0" />
                     <label htmlFor="emergencyButtonNo" className="mr-4 dark:text-gray-300">No</label>
-                    <input type="radio" id="emergencyButtonUnknown" name="emergencyButton" value="unknown" defaultChecked />
+                    <input type="radio" id="emergencyButtonUnknown" name="emergencyButton" value="3" defaultChecked />
                     <label htmlFor="emergencyButtonUnknown" className="dark:text-gray-300">Unknown</label>
                 </div>
             </fieldset>
@@ -87,14 +77,14 @@ export default function AddReviewForm() {
             <fieldset className="mb-8">
                 <legend className="text-lg font-semibold mb-2">Is it Pet Friendly?</legend>
                 <div className="flex items-center space-x-4">
-                    <input type="radio" id="petFriendlyYes" name="petFriendly" value="yes" />
+                    <input type="radio" id="petFriendlyYes" name="petFriendly" value="1" />
                     <label htmlFor="petFriendlyYes" className="mr-4 dark:text-gray-300">Yes</label>
-                    <input type="radio" id="petFriendlyNo" name="petFriendly" value="no" />
+                    <input type="radio" id="petFriendlyNo" name="petFriendly" value="0" />
                     <label htmlFor="petFriendlyNo" className="mr-4 dark:text-gray-300">No</label>
-                    <input type="radio" id="petFriendlyUnknown" name="petFriendly" value="unknown" defaultChecked />
+                    <input type="radio" id="petFriendlyUnknown" name="petFriendly" value="3" defaultChecked />
                     <label htmlFor="petFriendlyUnknown" className="dark:text-gray-300">Unknown</label>
                 </div>
-            </fieldset> */}
+            </fieldset>
 
             <button
                 type="submit"
