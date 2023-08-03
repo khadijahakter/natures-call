@@ -40,7 +40,7 @@ export default function Profile() {
   return (
     <div>
       <h1>Your Profile</h1>
-      <h2>User Bathrooms</h2>
+      
 
       {userBathrooms.map((bathroom) => (
         <div key={bathroom.id}>
@@ -51,7 +51,7 @@ export default function Profile() {
           <p>Name: {bathroom.name}</p>
           <p>Rating: {bathroom.rating}</p>
           <p>Content: {bathroom.content}</p>
-          <p>Photo: {bathroom.photo}</p>
+          <img src={bathroom.photo} alt={`Photo of ${bathroom.name}`} />
           {/* Render other bathroom details here */}
           <hr />
         </div>
