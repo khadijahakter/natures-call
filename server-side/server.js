@@ -262,10 +262,8 @@ app.get("/bathrooms/:bathroomId", async (req, res) => {
     res.status(500).send({ message: err.message });
   }
 });
+
 //get all bathrooms the user posted based on user Id
-
-
-
 app.get("/bathrooms/user/:userId", authenticateUser, async (req, res) => {
   const userId = parseInt(req.params.userId, 10);
 
