@@ -3,6 +3,7 @@ import { Link, NavLink, useLoaderData } from "react-router-dom";
 import { Outlet } from "react-router-dom";
 import {useState, useEffect} from "react";
 import axios from "axios";
+import './Profile.css';
 // loader for user bathrooms
 export async function loader({ params }) {
 
@@ -13,7 +14,6 @@ export async function loader({ params }) {
   return {UserBathrooms};
 
 }
-
 
 
 
@@ -38,12 +38,14 @@ export default function Profile() {
   }, []);
 
   return (
-    <div>
-      <h1>Your Profile</h1>
-      
 
+    <div>
+
+    <h1 className="profile-header">Your Profile</h1>
+    <div className="bathrooms-container">
+       <h2 className = "bathroom-header"> Your Bathrooms </h2>
       {userBathrooms.map((bathroom) => (
-        <div key={bathroom.id}>
+        <div key={bathroom.id} className="bathroom-item">
           <p>Source ID: {bathroom.sourceid}</p>
           <p>Address: {bathroom.address}</p>
           <p>Latitude: {bathroom.lat}</p>
@@ -56,6 +58,7 @@ export default function Profile() {
           <hr />
         </div>
       ))}
+    </div>
     </div>
   );
 }
