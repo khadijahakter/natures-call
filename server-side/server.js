@@ -539,6 +539,42 @@ app.delete("/bathrooms/:bathroomId/:reviewsId", authenticateUser, async (req, re
   }
 });
 
+// Edit a bathroom
+app.patch("/bathrooms/:bathroomId", authenticateUser, async (req, res) => {
+  const bathroomId = parseInt(req.params.bathroomId, 10);
+  try {
+    const record = await Bathroom.findOne({ where: { id: bathroomId } });
+    if (!record) {
+      return res.status(404).json({ message: "Bathroom not found" });
+    }
+
+    // Check if the user is authorized to edit the bathroom
+    // if (record.UserId !== parseInt(req.session.userId, 10)) {
+    //   return res
+    //     .status(403)
+    //     .json({ message: "You are not authorized to edit this bathroom." });
+    // }
+
+    const [numberOfAffectedRows, affectedRows] = await Bathroom.update(
+      req.body,
+      { where: { id: bathroomId }, returning: true }
+    );
+
+    if (numberOfAffectedRows > 0) {
+      res.status(200).json(affectedRows[0]);
+    } else {
+      res.status(404).json({ message: "Bathroom not found" });
+    }
+  } catch (err) {
+    if (err.name === "SequelizeValidationError") {
+      return res.status(422).json({ errors: err.errors.map((e) => e.message) });
+    }
+    res.status(500).json({ message: "An error occurred while updating the bathroom" });
+    console.error(err);
+  }
+});
+
+
 // -- cronjob scheduling --
 cron.schedule('0 0 6 * *', () => {
   console.log('running a task every minute');
