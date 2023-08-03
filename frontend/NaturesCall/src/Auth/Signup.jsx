@@ -1,5 +1,5 @@
 import React from "react";
-
+import "./auth.css";
 import { Form, redirect,Link} from "react-router-dom";
 
 export async function action({ request }) {
@@ -76,11 +76,9 @@ const Signup = () => {
       <p className="text-center">------------ or ------------</p>
       <br />
 
-      <p>
-        Already have an account?
-        <Link to={"/login"}>Login</Link>
+      <p>    <Link to={"/login"}  className="text-underline">Already have an account? Login</Link>
       </p>
-      <Link to={"/"}>Back</Link>
+      <Link to={"/"} className="text-underline">Back</Link>
       </>
     
   );

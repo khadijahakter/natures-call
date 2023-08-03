@@ -1,8 +1,10 @@
 import React from "react";
 
 import { Form, redirect,Link } from "react-router-dom";
+import {useContext} from "react";
+import {AuthContext} from "./AuthContext";
 
-
+import "./auth.css";
 
 export async function action({ request }) {
   const formData = await request.formData();
@@ -18,7 +20,7 @@ export async function action({ request }) {
 
   if (!response.ok) {
     // invalid credentials, remain on login page
-    alert("incorrect ")
+    alert("incorrect password/email ")
     return null;
   }
     alert("successfully Logged in");
@@ -26,7 +28,14 @@ export async function action({ request }) {
 }
 
 
-const Login = () => {
+function Login(){
+  const{currentUser} = useContext(AuthContext);
+  if(currentUser){
+    alert("user logged in from Login.jsx");
+    return <Link to = "/" />;
+    
+  }
+  
   return (
     <>
       
@@ -59,15 +68,18 @@ const Login = () => {
 
       
       <br/>
-      <Link to={"/signup"}>Back</Link>
-      <br/>
       
-      <a className="text-center">forgot password?</a>
+      <Link to={"/signup"}  className="text-underline">Dont have an account? Click here to sign up</Link>
       
       <br/>
+      
+      <a className="text-center text-underline">Forgot password?</a>
+     
+      <br/>
+      <Link to={"/"}  className="text-underline">Back</Link>
       <p className="text-center">------------ or ------------</p>
       <br/>
-      <p className="text-center">Sign in with Google</p>
+      <p className="text-center text-underline">Sign in with Google</p>
     </>
   );
 }

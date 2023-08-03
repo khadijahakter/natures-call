@@ -1,5 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
+import AuthProvider from './Auth/AuthContext'
 import {
   createBrowserRouter,
   RouterProvider,
@@ -15,7 +16,7 @@ import About from './routes/About.jsx'
 import Popup from './routes/Popup.jsx'
 import Signup, { action as signupAction } from './Auth/Signup.jsx'
 import Login, { action as loginAction } from './Auth/Login.jsx'
-
+import Profile, {loader as UserBathroomLoader} from './Auth/Profile.jsx'
 
 
 
@@ -39,7 +40,7 @@ const router = createBrowserRouter([
         ]
       },
       {
-        path: "login",
+        path: "/login",
         element: <Login />,
         action: loginAction,
       },
@@ -52,6 +53,12 @@ const router = createBrowserRouter([
       {
         path:"/about",
         element:<About/>
+      },
+
+      {
+          path:"/profile",
+          element:<Profile/>,
+          loader: UserBathroomLoader
       },
 
     ],
@@ -81,9 +88,9 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-
+<AuthProvider>
     <RouterProvider router={router} />
-
+    </AuthProvider>
   </React.StrictMode>,
 )
 

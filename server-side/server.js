@@ -164,7 +164,7 @@ app.get("/", (req, res) => {
           .json({ errors: error.errors.map((e) => e.message) });
       }
       res.status(500).json({
-        message: "Error occurred while creating user",
+        message: "Error occurred while creating user  ",
         error: error,
         
       });
