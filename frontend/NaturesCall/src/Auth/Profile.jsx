@@ -23,9 +23,12 @@ export default function Profile() {
   useEffect(() => {
     async function fetchUserBathrooms() {
       try {
-        const userId = 5; // Replace 5 with the actual user's ID or fetch it from the logged-in user's data
+   
+       const userId = 5; // Replace 5 with the actual user's ID or fetch it from the logged-in user's data
         const response = await axios.get(`http://localhost:4000/bathrooms/user/${userId}`);
         const userBathroomsData = response.data;
+        
+
         setUserBathrooms(userBathroomsData);
       } catch (error) {
         console.error("Error fetching user bathrooms data:", error);

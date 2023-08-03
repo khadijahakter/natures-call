@@ -153,6 +153,7 @@ app.get("/", (req, res) => {
         user: {
           name: user.name,
           email: user.email,
+        //  UserId: req.session.userId,
         },
       });
     } catch (error) {
@@ -194,6 +195,7 @@ app.get("/", (req, res) => {
             user: {
               name: user.name,
               email: user.email,
+              UserId: req.session.userId,
             },
           });
         } else {
