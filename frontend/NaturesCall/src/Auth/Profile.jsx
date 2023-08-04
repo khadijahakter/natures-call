@@ -28,20 +28,22 @@ export async function loader({ params }) {
   const UserId = 5;
 
   try {
-    const [bathroomsResponse, reviewsResponse] = await Promise.all([
+    const [bathroomsResponse, reviewsResponse, profileresponse] = await Promise.all([
       fetch(`http://localhost:4000/bathrooms/user/${UserId}`),
-      fetch(`http://localhost:4000/${UserId}/reviews`)
+      fetch(`http://localhost:4000/${UserId}/reviews`),
+      fetch(`http://localhost:4000/users/${UserId}`)
     ]);
 
     const userBathrooms = await bathroomsResponse.json();
     const reviewsData = await reviewsResponse.json();
-
+    const profileData = await profileresponse.json();
     console.log("User Bathrooms:", userBathrooms);
     console.log("Reviews Data:", reviewsData);
+    console.log("User Profile Data", profileData);
 
     // Do additional processing with the data if needed.
 
-    return { userBathrooms, reviewsData };
+    return { userBathrooms, reviewsData, profileData };
   } catch (error) {
     console.error("Error fetching data:", error);
     throw error;
@@ -55,7 +57,7 @@ export default function Profile() {
 // Use the new loader for bathroom reviews
 
 //destructure bathrooms and reviews
-const {userBathrooms, reviewsData} = userData;
+const {userBathrooms, reviewsData, profileData} = userData;
 const getBathroomNameById = (BathroomId) => {
   const bathroom = userBathrooms.find((bathroom) => bathroom.id === BathroomId);
   return bathroom ? bathroom.name : "Unknown Bathroom";
@@ -87,6 +89,9 @@ const getBathroomNameById = (BathroomId) => {
     <div className = "reviewandbathroomcount">
     <p>You posted a total of {userBathrooms.length} bathrooms</p>
     <p>You posted a total of {reviewsData.length} reviews</p>
+    <p> Username: {profileData.name}</p>
+    <p> Email: {profileData.email} </p>
+    <img src={profileData.photo}  />
     </div>
    { /*bathrooms*/}
     <div className="bathrooms-container">

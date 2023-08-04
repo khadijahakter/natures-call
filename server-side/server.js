@@ -209,6 +209,25 @@ app.get("/", (req, res) => {
         .json({ message: "An error occurred during the login process" });
     }
   });
+//get the user name and email 
+app.get("/users/:userId",  async (req,res) =>{
+  const userId = parseInt(req.params.userId, 10);
+  
+  console.log(userId);
+
+  try {
+    const user = await User.findOne({ where: { id: userId } });
+
+    if (user) {
+      res.status(200).json(user);
+    } else {
+      res.status(404).send({ message: "user not found" });
+    }
+  } catch (err) {
+    console.error(err);
+    res.status(500).send({ message: err.message });
+  }
+});
 //logout (destroy session)
 app.delete("/logout", (req, res) => {
   req.session.destroy((err) => {

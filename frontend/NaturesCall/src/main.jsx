@@ -62,11 +62,11 @@ const router = createBrowserRouter([
       },
       {
           path:"/profile/:id",
-          element:(
-            <ProtectedRoute>
+          element://(
+          //   <ProtectedRoute>
           <Profile/>,
-          </ProtectedRoute>
-          ),
+        //  </ProtectedRoute>
+          //),
           
     
           loader: UserBathroomLoader
