@@ -4,10 +4,12 @@ import { AuthContext } from "./Auth/AuthContext";
 //Navbar is dakota root.jsx
 
 export async function loader({ request }) {
-  const UserId = 5;
+  const UserId = 3;
   const response = await fetch(`http://localhost:4000/users/${UserId}`);
   if (response.ok) {
     const { user } = await response.json();
+    console.log("Response status:", response.status);
+
     console.log("user fetched response:" ,user);
     return { currentUser: user };
   }
