@@ -1,6 +1,8 @@
 import React from "react";
 import "./auth.css";
 import { Form, redirect,Link} from "react-router-dom";
+import {useContext} from "react";
+import {AuthContext} from "./AuthContext";
 
 export async function action({ request }) {
     const formData = await request.formData();
@@ -29,7 +31,10 @@ export async function action({ request }) {
   }
 
 const Signup = () => {
-    
+    const{currentUser} = useContext(AuthContext);
+    if(currentUser){
+      return <Link to ="/" />
+    }
    
   return (
     <>

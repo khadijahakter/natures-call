@@ -19,6 +19,7 @@ import Login, { action as loginAction } from './Auth/Login.jsx'
 import Profile, {loader as UserBathroomLoader} from './Auth/Profile.jsx'
 
 import BathroomPage, {loader as bathroomLoader} from './BathroomPage.jsx';
+import ProtectedRoute from "./Auth/ProtectedRoute";
 
 
 
@@ -61,7 +62,13 @@ const router = createBrowserRouter([
       },
       {
           path:"/profile/:id",
-          element:<Profile/>,
+          element:(
+            <ProtectedRoute>
+          <Profile/>,
+          </ProtectedRoute>
+          ),
+          
+    
           loader: UserBathroomLoader
           
       },

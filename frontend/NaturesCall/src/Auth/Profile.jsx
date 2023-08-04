@@ -91,7 +91,7 @@ const getBathroomNameById = (BathroomId) => {
    { /*bathrooms*/}
     <div className="bathrooms-container">
        <h2 className = "bathroom-header"> Your Bathrooms </h2>
-      {userBathrooms.map((bathroom) => (
+      {userBathrooms.map((bathroom)  => (
         <div key={bathroom.id} className="bathroom-item">
           <p>Name: {bathroom.name}</p>
           <p>Address: {bathroom.address}</p>
