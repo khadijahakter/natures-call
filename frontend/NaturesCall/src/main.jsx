@@ -61,7 +61,7 @@ const router = createBrowserRouter([
         loader: bathroomLoader
       },
       {
-          path:"/profile/:id",
+          path:"/profile",
           element://(
           //   <ProtectedRoute>
           <Profile/>,

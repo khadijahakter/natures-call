@@ -25,8 +25,8 @@ import './Profile.css';
 //   return UserReviews;
 // }
 export async function loader({ params }) {
-  const UserId = 5;
-
+ // const UserId = 5;
+const UserId = 3;
   try {
     const [bathroomsResponse, reviewsResponse, profileresponse] = await Promise.all([
       fetch(`http://localhost:4000/bathrooms/user/${UserId}`),

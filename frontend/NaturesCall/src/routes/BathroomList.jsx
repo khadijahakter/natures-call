@@ -10,6 +10,7 @@ export default function BathroomList() {
       const response = await fetch("http://localhost:4000/bathrooms");
       const displayBathrooms = await response.json();
       setDisplayBathrooms(displayBathrooms);
+      console.log("display bathrooms" , displayBathrooms);
       return displayBathrooms;
     }
     fetchBathrooms();
