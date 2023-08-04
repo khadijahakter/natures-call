@@ -1,6 +1,8 @@
 import React from "react";
-
+import "./auth.css";
 import { Form, redirect,Link} from "react-router-dom";
+import {useContext} from "react";
+import {AuthContext} from "./AuthContext";
 
 export async function action({ request }) {
     const formData = await request.formData();
@@ -29,7 +31,10 @@ export async function action({ request }) {
   }
 
 const Signup = () => {
-    
+    const{currentUser} = useContext(AuthContext);
+    if(currentUser){
+      return <Link to ="/" />
+    }
    
   return (
     <>
@@ -76,11 +81,9 @@ const Signup = () => {
       <p className="text-center">------------ or ------------</p>
       <br />
 
-      <p>
-        Already have an account?
-        <Link to={"/login"}>Login</Link>
+      <p>    <Link to={"/login"}  className="text-underline">Already have an account? Login</Link>
       </p>
-      <Link to={"/"}>Back</Link>
+      <Link to={"/"} className="text-underline">Back</Link>
       </>
     
   );
