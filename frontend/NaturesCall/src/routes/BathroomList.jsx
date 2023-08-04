@@ -68,6 +68,7 @@ export default function BathroomList() {
                 {bathroom.lng}
               </p>
               
+              
             </li>
             </Link>
           ))}
