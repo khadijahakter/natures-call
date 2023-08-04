@@ -78,8 +78,14 @@ export default function Map({ lat, long, setLat, setLong,displayBathrooms }) {
     }
   };
 
-  const customIconUrl = ""; // Replace this with the URL of your custom icon
-
+  // const createCustomMarkerIcon = (color) => {
+  //   return {
+  //     path: google.maps.SymbolPath.CIRCLE,
+  //     fillColor: color, // Change this to the desired color
+  //     fillOpacity: 1.0,
+  //     scale: 1.5, // Adjust the size of the icon as per your requirement
+  //   };
+  // };
 
   return isLoaded ? (
     <>
@@ -111,10 +117,7 @@ export default function Map({ lat, long, setLat, setLong,displayBathrooms }) {
           <Marker
             key={displayBathroom.id}
             position={{ lat: parseFloat(displayBathroom.lat), lng: parseFloat(displayBathroom.lng) }}
-            // icon={{
-            //   url: customIconUrl,
-            //   scaledSize: new window.google.maps.Size(15, 15), // Adjust the size of the icon as per your requirement
-            // }}
+            // icon={createCustomMarkerIcon("#FF0000")} 
           />
         ))}
          
