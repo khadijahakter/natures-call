@@ -1,9 +1,8 @@
 import React from "react";
 
-import { Form, redirect,Link } from "react-router-dom";
-import {useContext} from "react";
-import {AuthContext} from "./AuthContext";
-
+import { Form, redirect,Link, Navigate } from "react-router-dom";
+import { useContext } from "react";
+import { AuthContext } from "./AuthContext";
 import "./auth.css";
 
 export async function action({ request }) {
@@ -32,9 +31,13 @@ function Login(){
   const{currentUser} = useContext(AuthContext);
   if(currentUser){
    // alert("user logged in from Login.jsx");
-    console.log("user logged in from Login.jsx");
-    return <Link to = "/" />;
+    console.log("user logged in from Login.jsx and currentUser exists");
+    return <Navigate to = "/" />;
     
+  }
+  if(!currentUser){
+    console.log("no current User Login.jsx");
+
   }
   
   return (

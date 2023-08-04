@@ -19,6 +19,7 @@ import BathroomPage, {loader as bathroomLoader} from './BathroomPage.jsx';
 import AddReviewForm, {action as AddReview} from './AddReviewForm.jsx';
 import Profile, {loader as UserBathroomLoader} from './Auth/Profile.jsx';
 import {action as logoutAction} from './Auth/Logout.jsx';
+import { AuthContext } from "./Auth/AuthContext";
 
 import ProtectedRoute from "./Auth/ProtectedRoute";
 
@@ -32,6 +33,7 @@ const router = createBrowserRouter([
 
     element: <Navbar />,
     errorElement: <ErrorPage />,
+    // action: logoutAction,
     children: [
       {
         path: "",
@@ -69,16 +71,20 @@ const router = createBrowserRouter([
            <ProtectedRoute>
           <Profile/>,
          </ProtectedRoute>
-),        
-          
-    
-          loader: UserBathroomLoader
-          
+        ),        
+           loader: UserBathroomLoader
       },
       {
+      
+      
         path: "/logout",
-        loader: logoutAction
-      }
+        // element:(
+        // <ProtectedRoute>
+   
+        loader: logoutAction,
+        // </ProtectedRoute>
+        // ),
+      },
 
     ],
   },
