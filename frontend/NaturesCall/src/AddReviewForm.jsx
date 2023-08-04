@@ -16,6 +16,17 @@ export async function action({ request, params }) {
         },
         body: JSON.stringify(bathroomData),
     });
+
+    const updateresponse = await fetch(`http://localhost:4000/bathrooms/${params.id}`, {
+        method: "PATCH",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(bathroomData),
+    });
+
+
+
     return redirect(`/bathrooms/${params.id}`);
 }
 
@@ -26,6 +37,18 @@ export default function AddReviewForm() {
         <Form method="post" className="p-8 bg-blue-200 text-white rounded">
             <h1 className="text-2xl font-bold text-center mb-8">Create Review</h1>
     
+         <fieldset>   
+       <div className="flex flex-col gap-4 mb-4">
+        <textarea
+          id="rating"
+          name="rating"
+          className="border-2 border-blue-500 p-2 rounded"
+          rows="1"
+          placeholder="Enter your rating here"
+        />
+      </div> 
+        </fieldset>
+
      <fieldset>   
        <div className="flex flex-col gap-4 mb-4">
         <textarea

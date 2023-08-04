@@ -540,7 +540,7 @@ app.delete("/bathrooms/:bathroomId/:reviewsId", authenticateUser, async (req, re
 });
 
 // Edit a bathroom
-app.patch("/bathrooms/:bathroomId", authenticateUser, async (req, res) => {
+app.patch("/bathrooms/:bathroomId", async (req, res) => {
   const bathroomId = parseInt(req.params.bathroomId, 10);
   try {
     const record = await Bathroom.findOne({ where: { id: bathroomId } });
@@ -555,8 +555,28 @@ app.patch("/bathrooms/:bathroomId", authenticateUser, async (req, res) => {
     //     .json({ message: "You are not authorized to edit this bathroom." });
     // }
 
+  //NEED A CONDITION FOR NULL 
+
+    //get bathroomid bathrooms current rating:
+    const curBathroom = await Bathroom.findOne({where : {id : bathroomId}});
+    const OldRate = curBathroom.rating;
+
+    const numOfReviews = await Review.count({ where: { BathroomId: bathroomId } });
+    
+
+    // New rating from the request
+    const newRating = req.body.rating;
+    
+    // Moving average calculation
+    const newAvg = OldRate + (newRating - OldRate) / (numOfReviews + 1);
+    
+  //add new average to the request body 
+
+
     const [numberOfAffectedRows, affectedRows] = await Bathroom.update(
-      req.body,
+
+      { rating: newAvg },
+      // req.body,
       { where: { id: bathroomId }, returning: true }
     );
 
