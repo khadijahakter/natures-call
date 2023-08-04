@@ -1,12 +1,12 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
+import AuthProvider from './Auth/AuthContext'
 import {
   createBrowserRouter,
   RouterProvider,
   Route,
   createRoutesFromElements
 } from "react-router-dom";
-import Map, {action as mapAction} from './Map.jsx'
 import './index.css'
 import Navbar from './NavBar.jsx';
 import BathroomList from './routes/BathroomList.jsx';
@@ -17,30 +17,28 @@ import Signup, { action as signupAction } from './Auth/Signup.jsx'
 import Login, { action as loginAction } from './Auth/Login.jsx'
 import BathroomPage, {loader as bathroomLoader} from './BathroomPage.jsx';
 import AddReviewForm, {action as AddReview} from './AddReviewForm.jsx';
+import Profile, {loader as UserBathroomLoader} from './Auth/Profile.jsx'
 
-console.log(mapAction)
+
+import ProtectedRoute from "./Auth/ProtectedRoute";
+
+
 
 
 const router = createBrowserRouter([
   {
     path: "/",
 
-    element: <Navbar/>,
-    errorElement:<ErrorPage/>,
-    children:[
+    element: <Navbar />,
+    errorElement: <ErrorPage />,
+    children: [
       {
-        path : "",
-        element:<BathroomList/>,
-        children : [
-          {
-            path : "",
-            element : <Map/>,
-            action: mapAction,
-          }
-        ]
+        path: "",
+        element: <BathroomList />,
+
       },
       {
-        path: "login",
+        path: "/login",
         element: <Login />,
         action: loginAction,
       },
@@ -50,19 +48,31 @@ const router = createBrowserRouter([
         action: signupAction,
       },
       {
-        path:"/about",
-        element:<About/>
+        path: "/about",
+        element: <About />
       },
       {
-        path:"/bathrooms/:id",
-        element:<BathroomPage/>,
+        path: "/bathrooms/:id",
+        element: <BathroomPage />,
         loader: bathroomLoader
       },
       {
         path:"/bathrooms/:id/addReview",
         element:<AddReviewForm/>,
         action : AddReview
+      },{
+          path:"/profile",
+          element://(
+          //   <ProtectedRoute>
+          <Profile/>,
+        //  </ProtectedRoute>
+          //),
+          
+    
+          loader: UserBathroomLoader
+          
       },
+
     ],
   },
 
@@ -73,9 +83,9 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-
+<AuthProvider>
     <RouterProvider router={router} />
-
+    </AuthProvider>
   </React.StrictMode>,
 )
 

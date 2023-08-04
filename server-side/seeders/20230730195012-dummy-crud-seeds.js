@@ -24,8 +24,11 @@ module.exports = {
       },
       // Add more user entries here if needed
     ]);
-
-    await queryInterface.bulkInsert('bathrooms', [
+    const users = await queryInterface.sequelize.query('select ID from users');
+    const userId = users[0][0].id;
+    //bathrooms
+    await queryInterface.bulkInsert('bathrooms', 
+    [
       {
         sourceid: 'bathroom1',
         address: '123 Main St',
@@ -36,6 +39,7 @@ module.exports = {
         UserId: 1, // Foreign key reference to the user
         createdAt: new Date(),
         updatedAt: new Date(),
+    //    UserId: userId,
       },
       {
         sourceid: 'bathroom2',
@@ -47,10 +51,11 @@ module.exports = {
         UserId: 2, // Foreign key reference to the user
         createdAt: new Date(),
         updatedAt: new Date(),
+  //      UserId: userId,
       },
       // Add more bathroom entries here if needed
     ]);
-
+    
     // Seed data for reviews table
     await queryInterface.bulkInsert('reviews', [
       {

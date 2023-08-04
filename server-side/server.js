@@ -105,6 +105,7 @@ const getAllBathrooms = async () => {
 };
 
 
+
 //-----------------------login auth---------------------------------------------
 
 //prints to the console what request was made and the status returned
@@ -152,6 +153,7 @@ app.get("/", (req, res) => {
         user: {
           name: user.name,
           email: user.email,
+        //  UserId: req.session.userId,
         },
       });
     } catch (error) {
@@ -163,7 +165,7 @@ app.get("/", (req, res) => {
           .json({ errors: error.errors.map((e) => e.message) });
       }
       res.status(500).json({
-        message: "Error occurred while creating user",
+        message: "Error occurred while creating user  ",
         error: error,
         
       });
@@ -193,6 +195,7 @@ app.get("/", (req, res) => {
             user: {
               name: user.name,
               email: user.email,
+              UserId: req.session.userId,
             },
           });
         } else {
@@ -206,6 +209,25 @@ app.get("/", (req, res) => {
         .json({ message: "An error occurred during the login process" });
     }
   });
+//get the user name and email 
+app.get("/users/:userId",  async (req,res) =>{
+  const userId = parseInt(req.params.userId, 10);
+  
+  console.log(userId);
+
+  try {
+    const user = await User.findOne({ where: { id: userId } });
+
+    if (user) {
+      res.status(200).json(user);
+    } else {
+      res.status(404).send({ message: "user not found" });
+    }
+  } catch (err) {
+    console.error(err);
+    res.status(500).send({ message: err.message });
+  }
+});
 //logout (destroy session)
 app.delete("/logout", (req, res) => {
   req.session.destroy((err) => {
@@ -264,7 +286,10 @@ app.get("/bathrooms/:bathroomId", async (req, res) => {
 });
 
 //get all bathrooms the user posted based on user Id
-app.get("/bathrooms/user/:userId", authenticateUser, async (req, res) => {
+
+
+
+app.get("/bathrooms/user/:userId",/* authenticateUser,*/ async (req, res) => {
   const userId = parseInt(req.params.userId, 10);
 
   try {
@@ -614,4 +639,3 @@ cron.schedule('0 0 6 * *', () => {
 app.listen(port, () => {
   console.log(`Server is running at http://localhost:${port}`);
 });
-
