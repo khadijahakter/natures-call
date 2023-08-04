@@ -30,9 +30,7 @@ const router = createBrowserRouter([
   {
     
     path: "/",
-
     element: <Navbar />,
-    
     errorElement: <ErrorPage />,
     loader: NavBarLoader,
     // action: logoutAction,

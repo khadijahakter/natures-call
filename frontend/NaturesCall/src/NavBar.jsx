@@ -11,6 +11,7 @@ export async function loader({ request }) {
     console.log("user fetched response:" ,user);
     return { currentUser: user };
   }
+  console.log("no user fetched");
   return { currentUser: null };
 }
 
