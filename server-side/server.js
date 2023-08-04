@@ -561,10 +561,12 @@ app.patch("/bathrooms/:bathroomId", async (req, res) => {
     const curBathroom = await Bathroom.findOne({where : {id : bathroomId}});
     const OldRate = curBathroom.rating;
 
+
+    var newAvg;
 //NEED A CONDITION FOR NULL 
 if (curBathroom.rating === null)
 {
- const newAvg = req.body.rating
+ newAvg = req.body.rating
 }
 else
 {
@@ -575,13 +577,15 @@ else
     const newRating = req.body.rating;
     
     // Moving average calculation
-    const newAvg = OldRate + (newRating - OldRate) / (numOfReviews + 1);
+     newAvg = OldRate + (newRating - OldRate) / (numOfReviews + 1);
  }  
+
+
 
   //add new average to the request body 
     const [numberOfAffectedRows, affectedRows] = await Bathroom.update(
 
-      { rating: newAvg },
+      { rating: Math.round(newAvg) },
       // req.body,
       { where: { id: bathroomId }, returning: true }
     );
