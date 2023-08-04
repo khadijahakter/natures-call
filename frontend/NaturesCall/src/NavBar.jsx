@@ -1,7 +1,7 @@
 import { NavLink, Outlet, Link } from "react-router-dom";
 import React, { useContext } from "react";
 import { AuthContext } from "./Auth/AuthContext";
-
+//Navbar is dakota root.jsx
 export default function Navbar() {
   const { isLoggedIn } = useContext(AuthContext);
 

@@ -31,7 +31,8 @@ export async function action({ request }) {
 function Login(){
   const{currentUser} = useContext(AuthContext);
   if(currentUser){
-    alert("user logged in from Login.jsx");
+   // alert("user logged in from Login.jsx");
+    console.log("user logged in from Login.jsx");
     return <Link to = "/" />;
     
   }
