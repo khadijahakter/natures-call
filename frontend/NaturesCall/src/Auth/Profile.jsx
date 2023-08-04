@@ -2,7 +2,7 @@ import React from "react";
 import { Link, NavLink, useLoaderData } from "react-router-dom";
 import { Outlet } from "react-router-dom";
 import {useState, useEffect} from "react";
-import axios from "axios";
+// import axios from "axios";
 import './Profile.css';
 // loader for user bathrooms
 // export async function loader({ params }) {
