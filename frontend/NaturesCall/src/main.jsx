@@ -6,7 +6,6 @@ import {
   Route,
   createRoutesFromElements
 } from "react-router-dom";
-import Map, {action as mapAction} from './Map.jsx'
 import './index.css'
 import Navbar from './NavBar.jsx';
 import BathroomList from './routes/BathroomList.jsx';
@@ -18,26 +17,19 @@ import Login, { action as loginAction } from './Auth/Login.jsx'
 import BathroomPage, {loader as bathroomLoader} from './BathroomPage.jsx';
 import AddReviewForm, {action as AddReview} from './AddReviewForm.jsx';
 
-console.log(mapAction)
 
 
 const router = createBrowserRouter([
   {
     path: "/",
 
-    element: <Navbar/>,
-    errorElement:<ErrorPage/>,
-    children:[
+    element: <Navbar />,
+    errorElement: <ErrorPage />,
+    children: [
       {
-        path : "",
-        element:<BathroomList/>,
-        children : [
-          {
-            path : "",
-            element : <Map/>,
-            action: mapAction,
-          }
-        ]
+        path: "",
+        element: <BathroomList />,
+
       },
       {
         path: "login",
@@ -50,12 +42,12 @@ const router = createBrowserRouter([
         action: signupAction,
       },
       {
-        path:"/about",
-        element:<About/>
+        path: "/about",
+        element: <About />
       },
       {
-        path:"/bathrooms/:id",
-        element:<BathroomPage/>,
+        path: "/bathrooms/:id",
+        element: <BathroomPage />,
         loader: bathroomLoader
       },
       {
