@@ -19,11 +19,14 @@ export async function action({ request }) {
 
   if (!response.ok) {
     // invalid credentials, remain on login page
-    alert("incorrect password/email ")
+    alert("incorrect password/email ");
     return null;
   }
+  if(response.ok){
     alert("successfully Logged in");
-  return redirect("/");
+    console.log("logged in success from Login.jsx action");
+    return redirect("/");
+  }
 }
 
 
@@ -36,7 +39,7 @@ function Login(){
     
   }
   if(!currentUser){
-    console.log("no current User Login.jsx");
+    console.log("no currentUser (AuthContext) Login.jsx");
 
   }
   

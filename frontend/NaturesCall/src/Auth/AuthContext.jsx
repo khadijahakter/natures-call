@@ -2,7 +2,8 @@ import {useState, createContext} from "react";
 
 export const AuthContext = createContext();
 
-const AuthProvider = ({children}) =>{
+ const AuthProvider = ({children}) =>{
+    console.log("AuthProvider component initialized from AuthContext.jsx");
     const[currentUser, setCurrentUser] = useState(null);
 
     return(

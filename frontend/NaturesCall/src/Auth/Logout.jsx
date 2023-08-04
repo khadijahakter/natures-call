@@ -8,7 +8,7 @@ export async function action({ request }) {
     method :"DELETE"
   });
   alert(" successfully Logged Out");
-  console.log("logged out");
+  console.log(" successfully logged out");
 // return null;
 return redirect("/");
 }

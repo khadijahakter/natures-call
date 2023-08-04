@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import AuthProvider from './Auth/AuthContext'
+import AuthProvider from './Auth/AuthContext';
 import {
   createBrowserRouter,
   RouterProvider,
@@ -22,7 +22,7 @@ import {action as logoutAction} from './Auth/Logout.jsx';
 import { AuthContext } from "./Auth/AuthContext";
 
 import ProtectedRoute from "./Auth/ProtectedRoute";
-
+import{loader as NavBarLoader} from "./NavBar.jsx";
 
 
 
@@ -32,7 +32,9 @@ const router = createBrowserRouter([
     path: "/",
 
     element: <Navbar />,
+    
     errorElement: <ErrorPage />,
+    loader: NavBarLoader,
     // action: logoutAction,
     children: [
       {
