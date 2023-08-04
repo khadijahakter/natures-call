@@ -1,7 +1,5 @@
 import React from "react";
-
 import { useState, useEffect } from "react";
-
 import { GoogleMap, useJsApiLoader, Marker } from "@react-google-maps/api";
 const containerStyle = {
   // width:'1600px',
@@ -39,6 +37,7 @@ export default function Map({ lat, long, setLat, setLong,displayBathrooms }) {
   const [map, setMap] = React.useState(null)
 
   const onLoad = React.useCallback(function callback(map) {
+
     // This is just an example of getting and using the map instance!!! don't just blindly copy!
     const bounds = new window.google.maps.LatLngBounds(center);
     const geocoder = new window.google.maps.Geocoder();
@@ -57,13 +56,17 @@ export default function Map({ lat, long, setLat, setLong,displayBathrooms }) {
     //const address = '33 beard street'; // Replace with the address you want to geocode
     if (geocoder) {
       geocoder.geocode({ address: address }, (results, status) => {
+
         if (status === window.google.maps.GeocoderStatus.OK && results[0]) {
           const location = results[0].geometry.location;
           map.setCenter(location);
-          new window.google.maps.Marker({
+
+           new window.google.maps.Marker({
             position: location,
             map: map,
+
           });
+
           // Log the latitude and longitude to the console
           setLat(location.lat())
           setLong(location.lng())
@@ -74,6 +77,8 @@ export default function Map({ lat, long, setLat, setLong,displayBathrooms }) {
       });
     }
   };
+
+  const customIconUrl = ""; // Replace this with the URL of your custom icon
 
 
   return isLoaded ? (
@@ -106,6 +111,10 @@ export default function Map({ lat, long, setLat, setLong,displayBathrooms }) {
           <Marker
             key={displayBathroom.id}
             position={{ lat: parseFloat(displayBathroom.lat), lng: parseFloat(displayBathroom.lng) }}
+            // icon={{
+            //   url: customIconUrl,
+            //   scaledSize: new window.google.maps.Size(15, 15), // Adjust the size of the icon as per your requirement
+            // }}
           />
         ))}
          
