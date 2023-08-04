@@ -17,8 +17,8 @@ import Signup, { action as signupAction } from './Auth/Signup.jsx'
 import Login, { action as loginAction } from './Auth/Login.jsx'
 import BathroomPage, {loader as bathroomLoader} from './BathroomPage.jsx';
 import AddReviewForm, {action as AddReview} from './AddReviewForm.jsx';
-import Profile, {loader as UserBathroomLoader} from './Auth/Profile.jsx'
-
+import Profile, {loader as UserBathroomLoader} from './Auth/Profile.jsx';
+import {action as logoutAction} from './Auth/Logout.jsx';
 
 import ProtectedRoute from "./Auth/ProtectedRoute";
 
@@ -27,6 +27,7 @@ import ProtectedRoute from "./Auth/ProtectedRoute";
 
 const router = createBrowserRouter([
   {
+    
     path: "/",
 
     element: <Navbar />,
@@ -60,18 +61,24 @@ const router = createBrowserRouter([
         path:"/bathrooms/:id/addReview",
         element:<AddReviewForm/>,
         action : AddReview
-      },{
+      },
+      {
+        index: true,
           path:"/profile",
-          element://(
-          //   <ProtectedRoute>
+          element:(
+           <ProtectedRoute>
           <Profile/>,
-        //  </ProtectedRoute>
-          //),
+         </ProtectedRoute>
+),        
           
     
           loader: UserBathroomLoader
           
       },
+      {
+        path: "/logout",
+        loader: logoutAction
+      }
 
     ],
   },

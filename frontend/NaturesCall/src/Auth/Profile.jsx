@@ -26,7 +26,7 @@ import './Profile.css';
 // }
 export async function loader({ params }) {
  // const UserId = 5;
-const UserId = 5;
+const UserId = 3;
   try {
     const [bathroomsResponse, reviewsResponse, profileresponse] = await Promise.all([
       fetch(`http://localhost:4000/bathrooms/user/${UserId}`),
@@ -53,6 +53,7 @@ const UserId = 5;
 
 
 export default function Profile() {
+  console.log("Profile Component Loaded In main.jsx");
   const userData = useLoaderData(loader); // Use the existing loader for bathrooms
 // Use the new loader for bathroom reviews
 
