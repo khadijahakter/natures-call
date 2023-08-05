@@ -91,6 +91,7 @@ export default function Map({ lat, long, setLat, setLong,displayBathrooms }) {
       <p>Latitude: {lat}</p>
       <p>Longitude: {long}</p>
       <button><Link to={"/addBathroom"}>Add Bathroom</Link></button>
+      <button><Link to={"/editBathroom"}>Edit Bathroom</Link></button>
 
 
       <div className="ml-80">

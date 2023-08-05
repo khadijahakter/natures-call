@@ -6,7 +6,7 @@ import{useState} from 'react';
 export async function loader({ params }) {
   const bathroomResponse = await fetch(`http://localhost:4000/bathroom/${params.id}`);
   const bathroom = await bathroomResponse.json();
-
+  console.log("Bathroom data:", bathroom);
 
 
   return { bathroom };
@@ -27,7 +27,7 @@ export default function EditBathroom(){
   };
 
 
-  const handleAddBookFormSubmit = async (e) => {
+  const handleAddBrFormSubmit = async (e) => {
     e.preventDefault();
 
     const preparedBathroom = {
@@ -59,7 +59,7 @@ export default function EditBathroom(){
 
   return (
     <>
-    <Form method="post" className="p-8 bg-blue-200 text-black rounded">
+    <Form method="post" className="p-8 bg-blue-200 text-black rounded" onSubmit={handleAddBrFormSubmit}>
             <h1 className="text-2xl font-bold text-center mb-8">Add A Bathroom!</h1>
     
          <fieldset>   
@@ -70,6 +70,7 @@ export default function EditBathroom(){
           className="border-2 border-blue-500 p-2 rounded"
           rows="1"
           placeholder="Enter the address here"
+          onChange={handleInput}
         />
       </div> 
         </fieldset>
@@ -82,6 +83,7 @@ export default function EditBathroom(){
           className="border-2 border-blue-500 p-2 rounded"
           rows="1"
           placeholder="Enter the name here"
+          onChange={handleInput}
         />
       </div> 
         </fieldset>
@@ -98,7 +100,7 @@ export default function EditBathroom(){
                 </div>
             </fieldset>
 
-            <fieldset className="mb-8">
+            <fieldset className="mb-8" onChange={handleInput}>
                 <legend className="text-lg font-semibold mb-2">Does it have an Emergency Cord?</legend>
                 <div className="flex items-center space-x-4">
                     <input type="radio" id="emergencyCordYes" name="emergencyCord" value="1" />
@@ -110,7 +112,7 @@ export default function EditBathroom(){
                 </div>
             </fieldset>
 
-            <fieldset className="mb-8">
+            <fieldset className="mb-8" onChange={handleInput}>
                 <legend className="text-lg font-semibold mb-2">Does it have an Emergency Button?</legend>
                 <div className="flex items-center space-x-4">
                     <input type="radio" id="emergencyButtonYes" name="emergencyButton" value="1" />
@@ -122,7 +124,7 @@ export default function EditBathroom(){
                 </div>
             </fieldset>
 
-            <fieldset className="mb-8">
+            <fieldset className="mb-8" onChange={handleInput}>
                 <legend className="text-lg font-semibold mb-2">Is it Pet Friendly?</legend>
                 <div className="flex items-center space-x-4">
                     <input type="radio" id="petFriendlyYes" name="petFriendly" value="1" />
