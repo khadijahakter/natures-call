@@ -41,10 +41,9 @@ const getAllBathrooms = async () => {
         unisex: 'false'
       },
       headers: {
-      //  'X-RapidAPI-Key': '831c853957mshc77689e0a4a42aap148651jsn97b41cae877a',
-      'X-RapidAPI-Key': '137ac3c14amsh0c46764884bab1ap1cae9ejsn41d15eeab940',
-        'X-RapidAPI-Host': 'public-bathrooms.p.rapidapi.com'
-      }
+          'X-RapidAPI-Key': process.env.API_KEY,
+          'X-RapidAPI-Host': 'public-bathrooms.p.rapidapi.com'
+        }
     };
 
     try {
@@ -599,7 +598,10 @@ app.patch("/bathrooms/:bathroomId", async (req, res) => {
 cron.schedule('0 0 6 * *', () => {
   console.log('running a task every minute');
   getAllBathrooms();
+  
 });
+
+  
 
 app.listen(port, () => {
   console.log(`Server is running at http://localhost:${port}`);

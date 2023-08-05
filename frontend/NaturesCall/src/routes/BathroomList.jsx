@@ -48,7 +48,7 @@ export default function BathroomList() {
       <div className="w-1/2">
         <ul className="ml-10 flex flex-col space-y-4">
           {displayBathrooms.map(bathroom => (
-          <Link to = {`/bathrooms/${bathroom.id}`}>
+          <Link to = {`/bathrooms/${bathroom.id}`} >
             <li className="flex flex-col border p-4 rounded-lg">
               <h3 className="text-xl font-bold">{bathroom.name}</h3>
               <p className="text-sm text-blue-600">
