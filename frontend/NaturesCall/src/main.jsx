@@ -67,11 +67,11 @@ const router = createBrowserRouter([
       {
         index: true,
           path:"/profile",
-          element:(
-           <ProtectedRoute>
-          <Profile/>,
-         </ProtectedRoute>
-        ),        
+      //    element:(
+     //      <ProtectedRoute>
+         element: <Profile/>,
+     //    </ProtectedRoute>
+     //   ),        
            loader: UserBathroomLoader
       },
       {
