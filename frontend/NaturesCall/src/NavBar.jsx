@@ -1,6 +1,6 @@
 import { NavLink, Outlet, Link } from "react-router-dom";
 import React from "react";
-import logo from './images/Natures_Call_Logo.png'; // Adjust the path to the actual location of your logo
+import logo from './images/Natures_Call_Logo.png'; 
 
 export default function Navbar() {
   return (
@@ -8,7 +8,7 @@ export default function Navbar() {
      <nav style={{ backgroundColor: '#33709D' }}>
         <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
           <Link to={"/"} className="flex items-center">
-            <img src={logo} alt="Logo" className="h-10 w-10 mr-2" /> {/* Adjust size as needed */}
+            <img src={logo} alt="Logo" className="h-10 w-10 mr-2" /> 
             <h1 className="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Natures call</h1>
           </Link>
           <button data-collapse-toggle="navbar-default" type="button"

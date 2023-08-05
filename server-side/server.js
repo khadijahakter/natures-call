@@ -4,8 +4,8 @@ const app = express();
 const port = 4000;
 const session = require("express-session");
 const Sequelize = require('sequelize');
-const {User, Bathroom, Review} = require("./models"); // Replace the path with the correct one for your project
-// const {Bathroom, Review, User} = require("./models"); // Replace the path with the correct one for your project
+const {User, Bathroom, Review} = require("./models"); 
+// const {Bathroom, Review, User} = require("./models"); 
 const axios = require("axios");
 require("dotenv").config();
 const cors = require("cors");
@@ -41,8 +41,7 @@ const getAllBathrooms = async () => {
         unisex: 'false'
       },
       headers: {
-      //  'X-RapidAPI-Key': '831c853957mshc77689e0a4a42aap148651jsn97b41cae877a',
-      'X-RapidAPI-Key': '137ac3c14amsh0c46764884bab1ap1cae9ejsn41d15eeab940',
+        'X-RapidAPI-Key': process.env.API_KEY,
         'X-RapidAPI-Host': 'public-bathrooms.p.rapidapi.com'
       }
     };
