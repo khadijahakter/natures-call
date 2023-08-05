@@ -1,0 +1,45 @@
+/* Profile.css */
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+/* Add custom styles for the header */
+.profile-header {
+  font-size: 2rem;
+  position: absolute;
+  top: 50px;
+  left: 0px;
+}
+.bathroom-header{
+    font-size:2rem;
+}
+.review-header{
+  font-size: 2rem;
+}
+
+.bathrooms-container {
+    width: 50%;
+    position: absolute;
+    top: 150px; /* Adjust the top positioning as needed */
+    left: 25%;
+    transform: translateX(-50%);
+  }
+.reviewandbathroomcount{
+  position:absolute;
+}
+  .reviews-container{
+    width: 50%;
+    position: absolute;
+    top: 150px; /* Adjust the top positioning as needed */
+    left: 75%;
+    transform: translateX(-50%);
+  }
+  
+  .bathroom-item {
+    /* Add any styles for individual bathroom items here */
+    margin-bottom: 20px; /* Optional: Add some space between each bathroom item */
+  }
+
+  .review-item{
+    margin-bottom:20px;
+  }

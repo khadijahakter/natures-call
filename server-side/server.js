@@ -41,9 +41,11 @@ const getAllBathrooms = async () => {
         unisex: 'false'
       },
       headers: {
+
           'X-RapidAPI-Key': process.env.API_KEY,
           'X-RapidAPI-Host': 'public-bathrooms.p.rapidapi.com'
         }
+
     };
 
     try {
@@ -104,6 +106,7 @@ const getAllBathrooms = async () => {
 };
 
 
+
 //-----------------------login auth---------------------------------------------
 
 //prints to the console what request was made and the status returned
@@ -151,6 +154,7 @@ app.get("/", (req, res) => {
         user: {
           name: user.name,
           email: user.email,
+        //  UserId: req.session.userId,
         },
       });
     } catch (error) {
@@ -162,7 +166,7 @@ app.get("/", (req, res) => {
           .json({ errors: error.errors.map((e) => e.message) });
       }
       res.status(500).json({
-        message: "Error occurred while creating user",
+        message: "Error occurred while creating user  ",
         error: error,
         
       });
@@ -192,6 +196,7 @@ app.get("/", (req, res) => {
             user: {
               name: user.name,
               email: user.email,
+              UserId: req.session.userId,
             },
           });
         } else {
@@ -205,6 +210,25 @@ app.get("/", (req, res) => {
         .json({ message: "An error occurred during the login process" });
     }
   });
+//get the user name and email 
+app.get("/users/:userId",  async (req,res) =>{
+  const userId = parseInt(req.params.userId, 10);
+  
+  console.log(userId);
+
+  try {
+    const user = await User.findOne({ where: { id: userId } });
+
+    if (user) {
+      res.status(200).json(user);
+    } else {
+      res.status(404).send({ message: "user not found" });
+    }
+  } catch (err) {
+    console.error(err);
+    res.status(500).send({ message: err.message });
+  }
+});
 //logout (destroy session)
 app.delete("/logout", (req, res) => {
   req.session.destroy((err) => {
@@ -263,7 +287,10 @@ app.get("/bathrooms/:bathroomId", async (req, res) => {
 });
 
 //get all bathrooms the user posted based on user Id
-app.get("/bathrooms/user/:userId", authenticateUser, async (req, res) => {
+
+
+
+app.get("/bathrooms/user/:userId",/* authenticateUser,*/ async (req, res) => {
   const userId = parseInt(req.params.userId, 10);
 
   try {
@@ -554,12 +581,21 @@ app.patch("/bathrooms/:bathroomId", async (req, res) => {
     //     .json({ message: "You are not authorized to edit this bathroom." });
     // }
 
-  //NEED A CONDITION FOR NULL 
+  
 
     //get bathroomid bathrooms current rating:
     const curBathroom = await Bathroom.findOne({where : {id : bathroomId}});
     const OldRate = curBathroom.rating;
 
+
+    var newAvg;
+//NEED A CONDITION FOR NULL 
+if (curBathroom.rating === null)
+{
+ newAvg = req.body.rating
+}
+else
+{
     const numOfReviews = await Review.count({ where: { BathroomId: bathroomId } });
     
 
@@ -567,14 +603,15 @@ app.patch("/bathrooms/:bathroomId", async (req, res) => {
     const newRating = req.body.rating;
     
     // Moving average calculation
-    const newAvg = OldRate + (newRating - OldRate) / (numOfReviews + 1);
-    
+     newAvg = OldRate + (newRating - OldRate) / (numOfReviews + 1);
+ }  
+
+
+
   //add new average to the request body 
-
-
     const [numberOfAffectedRows, affectedRows] = await Bathroom.update(
 
-      { rating: newAvg },
+      { rating: Math.round(newAvg) },
       // req.body,
       { where: { id: bathroomId }, returning: true }
     );
@@ -606,4 +643,3 @@ cron.schedule('0 0 6 * *', () => {
 app.listen(port, () => {
   console.log(`Server is running at http://localhost:${port}`);
 });
-

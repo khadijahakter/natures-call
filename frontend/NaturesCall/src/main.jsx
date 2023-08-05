@@ -1,5 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
+import AuthProvider from './Auth/AuthContext'
 import {
   createBrowserRouter,
   RouterProvider,
@@ -16,8 +17,15 @@ import Signup, { action as signupAction } from './Auth/Signup.jsx'
 import Login, { action as loginAction } from './Auth/Login.jsx'
 import BathroomPage, {loader as bathroomLoader} from './BathroomPage.jsx';
 import AddReviewForm, {action as AddReview} from './AddReviewForm.jsx';
+
 import AddBathroom, {action as addBrAction} from './AddBathRoom';
 import EditBathroom,{ loader as loader } from './EditBathroom';
+
+import Profile, {loader as UserBathroomLoader} from './Auth/Profile.jsx'
+
+
+import ProtectedRoute from "./Auth/ProtectedRoute";
+
 
 
 
@@ -34,7 +42,7 @@ const router = createBrowserRouter([
 
       },
       {
-        path: "login",
+        path: "/login",
         element: <Login />,
         action: loginAction,
       },
@@ -67,7 +75,19 @@ const router = createBrowserRouter([
         path:"/bathrooms/:id/addReview",
         element:<AddReviewForm/>,
         action : AddReview
+      },{
+          path:"/profile",
+          element://(
+          //   <ProtectedRoute>
+          <Profile/>,
+        //  </ProtectedRoute>
+          //),
+          
+    
+          loader: UserBathroomLoader
+          
       },
+
     ],
   },
 
@@ -78,9 +98,9 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-
+<AuthProvider>
     <RouterProvider router={router} />
-
+    </AuthProvider>
   </React.StrictMode>,
 )
 
