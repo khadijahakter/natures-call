@@ -1,5 +1,9 @@
 import React from "react";
 import { useState, useEffect } from "react";
+
+import { Link } from "react-router-dom";
+
+
 import { GoogleMap, useJsApiLoader, Marker } from "@react-google-maps/api";
 const containerStyle = {
   // width:'1600px',
@@ -26,8 +30,7 @@ export default function Map({ lat, long, setLat, setLong,displayBathrooms }) {
 
 
 
-  // map is already set
-  // 2. grab geocode value and pass this value into the chatgpt onGeocode() function
+  
 
   const { isLoaded } = useJsApiLoader({
     id: 'google-map-script',
@@ -51,7 +54,7 @@ export default function Map({ lat, long, setLat, setLong,displayBathrooms }) {
     setMap(null);
   }, []);
   
-
+//converts address to coordinates
   const onGeocode = () => {
     //const address = '33 beard street'; // Replace with the address you want to geocode
     if (geocoder) {
@@ -61,11 +64,10 @@ export default function Map({ lat, long, setLat, setLong,displayBathrooms }) {
           const location = results[0].geometry.location;
           map.setCenter(location);
 
-           new window.google.maps.Marker({
-            position: location,
-            map: map,
-
-          });
+          // new window.google.maps.Marker({
+          //   position: location,
+          //   map: map,
+          // });
 
           // Log the latitude and longitude to the console
           setLat(location.lat())
@@ -101,7 +103,8 @@ export default function Map({ lat, long, setLat, setLong,displayBathrooms }) {
       </div>
       <p>Latitude: {lat}</p>
       <p>Longitude: {long}</p>
-      <button>Add Book</button>
+      <button><Link to={"/addBathroom"}>Add Bathroom</Link></button>
+      <button><Link to={"/editBathroom"}>Edit Bathroom</Link></button>
 
 
       <div className="ml-80">
