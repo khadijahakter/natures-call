@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import AuthProvider from './Auth/AuthContext'
+import AuthProvider from './Auth/AuthContext';
 import {
   createBrowserRouter,
   RouterProvider,
@@ -18,23 +18,29 @@ import Login, { action as loginAction } from './Auth/Login.jsx'
 import BathroomPage, {loader as bathroomLoader} from './BathroomPage.jsx';
 import AddReviewForm, {action as AddReview} from './AddReviewForm.jsx';
 
+
 import AddBathroom, {action as addBrAction} from './AddBathRoom';
 import EditBathroom,{ loader as loader } from './EditBathroom';
 
-import Profile, {loader as UserBathroomLoader} from './Auth/Profile.jsx'
+
+import Profile, {loader as UserBathroomLoader} from './Auth/Profile.jsx';
+import {action as logoutAction} from './Auth/Logout.jsx';
+import { AuthContext } from "./Auth/AuthContext";
 
 
 import ProtectedRoute from "./Auth/ProtectedRoute";
-
+import{loader as NavBarLoader} from "./NavBar.jsx";
 
 
 
 const router = createBrowserRouter([
   {
+    
     path: "/",
-
     element: <Navbar />,
     errorElement: <ErrorPage />,
+    loader: NavBarLoader,
+    // action: logoutAction,
     children: [
       {
         path: "",
@@ -75,17 +81,27 @@ const router = createBrowserRouter([
         path:"/bathrooms/:id/addReview",
         element:<AddReviewForm/>,
         action : AddReview
-      },{
+      },
+      {
+        index: true,
           path:"/profile",
-          element://(
-          //   <ProtectedRoute>
-          <Profile/>,
-        //  </ProtectedRoute>
-          //),
-          
-    
-          loader: UserBathroomLoader
-          
+      //    element:(
+     //      <ProtectedRoute>
+         element: <Profile/>,
+     //    </ProtectedRoute>
+     //   ),        
+           loader: UserBathroomLoader
+      },
+      {
+      
+      
+        path: "/logout",
+        // element:(
+        // <ProtectedRoute>
+   
+        loader: logoutAction,
+        // </ProtectedRoute>
+        // ),
       },
 
     ],

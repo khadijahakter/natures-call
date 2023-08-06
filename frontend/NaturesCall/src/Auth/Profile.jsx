@@ -26,24 +26,27 @@ import './Profile.css';
 // }
 export async function loader({ params }) {
  // const UserId = 5;
-const UserId = 5;
+const UserId = 1;
   try {
-    const [bathroomsResponse, reviewsResponse, profileresponse] = await Promise.all([
-      fetch(`http://localhost:4000/bathrooms/user/${UserId}`),
+    const [allBathroomsResponse, bathroomsResponse, reviewsResponse, profileresponse] = await Promise.all([
+      fetch(`http://localhost:4000/bathrooms`),
+      //fetch(`http://localhost:4000/bathrooms/user/${UserId}`),
+      fetch(`http://localhost:4000/jason`),
       fetch(`http://localhost:4000/${UserId}/reviews`),
       fetch(`http://localhost:4000/users/${UserId}`)
     ]);
-
+    const allBathrooms = await allBathroomsResponse.json();
     const userBathrooms = await bathroomsResponse.json();
     const reviewsData = await reviewsResponse.json();
     const profileData = await profileresponse.json();
+    console.log("all bathrooms: ", allBathrooms);
     console.log("User Bathrooms:", userBathrooms);
     console.log("Reviews Data:", reviewsData);
     console.log("User Profile Data", profileData);
 
     // Do additional processing with the data if needed.
 
-    return { userBathrooms, reviewsData, profileData };
+    return { allBathrooms, userBathrooms, reviewsData, profileData };
   } catch (error) {
     console.error("Error fetching data:", error);
     throw error;
@@ -53,17 +56,20 @@ const UserId = 5;
 
 
 export default function Profile() {
+  console.log("Profile Component Loaded In main.jsx");
   const userData = useLoaderData(loader); // Use the existing loader for bathrooms
 // Use the new loader for bathroom reviews
 
 //destructure bathrooms and reviews
-const {userBathrooms, reviewsData, profileData} = userData;
+const {allBathrooms, userBathrooms, reviewsData, profileData} = userData;
 const getBathroomNameById = (BathroomId) => {
-  const bathroom = userBathrooms.find((bathroom) => bathroom.id === BathroomId);
+  console.log('Review BathroomId:', BathroomId, typeof BathroomId);
+  const bathroom = allBathrooms.find((bathroom) => {
+    return Number(bathroom.id) === Number(BathroomId); // Added "return"
+  });
+
   return bathroom ? bathroom.name : "Unknown Bathroom";
 };
-
-
 // const userBathrooms = [
 //   { id: 1, name: "Bathroom A" },
 //   { id: 2, name: "Bathroom B" },
@@ -80,7 +86,7 @@ const getBathroomNameById = (BathroomId) => {
 // console.log(getBathroomNameById(3, userBathrooms)); // Output: "Bathroom C"
 // console.log(getBathroomNameById(5, userBathrooms)); // Output: "Unknown Bathroom"
 
-
+//debugger
   return (
 
     <div>

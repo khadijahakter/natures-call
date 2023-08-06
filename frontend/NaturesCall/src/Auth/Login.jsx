@@ -1,9 +1,8 @@
 import React from "react";
 
-import { Form, redirect,Link } from "react-router-dom";
-import {useContext} from "react";
-import {AuthContext} from "./AuthContext";
-
+import { Form, redirect,Link, Navigate } from "react-router-dom";
+import { useContext } from "react";
+import { AuthContext } from "./AuthContext";
 import "./auth.css";
 
 export async function action({ request }) {
@@ -20,20 +19,28 @@ export async function action({ request }) {
 
   if (!response.ok) {
     // invalid credentials, remain on login page
-    alert("incorrect password/email ")
+    alert("incorrect password/email ");
     return null;
   }
+  if(response.ok){ //it does get the response
     alert("successfully Logged in");
-  return redirect("/");
+    console.log("logged in success from Login.jsx action");
+    return redirect("/");
+  }
 }
 
 
 function Login(){
   const{currentUser} = useContext(AuthContext);
   if(currentUser){
-    alert("user logged in from Login.jsx");
-    return <Link to = "/" />;
+   // alert("user logged in from Login.jsx");
+    console.log("user logged in from Login.jsx and currentUser exists");
+    return <Navigate to = "/" />;
     
+  }
+  if(!currentUser){
+    console.log("no currentUser (AuthContext) Login.jsx");
+
   }
   
   return (

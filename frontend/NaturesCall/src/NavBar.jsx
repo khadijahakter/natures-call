@@ -1,10 +1,38 @@
-import { NavLink, Outlet, Link } from "react-router-dom";
-import React, { useContext } from "react";
+import { NavLink, Outlet, Link, useNavigation, useLoaderData} from "react-router-dom";
+import React, { useEffect, useContext } from "react";
 import { AuthContext } from "./Auth/AuthContext";
+//Navbar is dakota root.jsx
+
+export async function loader({ request }) {
+  const UserId = 3;
+  const response = await fetch(`http://localhost:4000/users/${UserId}`);
+  if (response.ok) {
+    const { user } = await response.json();
+    console.log("Response status:", response.status);
+
+    console.log("user fetched response:" ,user);
+    return { currentUser: user };
+  }
+  console.log("no user fetched");
+  return { currentUser: null };
+}
 
 export default function Navbar() {
-  const { isLoggedIn } = useContext(AuthContext);
+  const { currentUser } = useLoaderData();
+  console.log("current user loader data: ", currentUser )
+  const { setCurrentUser } = useContext(AuthContext);
+  const navigation = useNavigation();
 
+  useEffect(() => {
+    setCurrentUser(currentUser);
+    console.log("currentUser set from NavBar.jsx");
+  }, [currentUser]);
+if(currentUser){
+  console.log("currentUser exists from NavBar.jsx");
+}
+if(!currentUser){
+  console.log("currentUser does not exist from NavBar.jsx");
+}
   return (
     <>
       <nav className="bg-blue-900">
