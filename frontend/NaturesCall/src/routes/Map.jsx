@@ -1,15 +1,6 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { GoogleMap, useJsApiLoader, Marker } from "@react-google-maps/api";
-const containerStyle = {
-  // width:'1600px',
-  // height:'1600px'
-  width: '100%',
-  height: '100vh'
-};
-
-
-
 
 
 const center = {
@@ -87,30 +78,105 @@ export default function Map({ lat, long, setLat, setLong,displayBathrooms }) {
   //   };
   // };
 
-  return isLoaded ? (
-    <>
-      <div>
-        <input
-          type="text"
-          value={address}
-          onChange={(e) => setAddress(e.target.value)}
-          placeholder="Enter address"
-          className="text-black"
-        />
-        <button onClick={onGeocode}>Find Bathrooms</button>
-      </div>
-      <p>Latitude: {lat}</p>
-      <p>Longitude: {long}</p>
-      <button>Add Book</button>
+  
+const containerStyle = {
+  // width:'1600px',
+  // height:'1600px'
+  width: '100%',
+  height: '90vh',
+  backgroundColor : 'blue'
+};
+
+const blueMapStyles = [
+  {
+    "featureType": "water",
+    "elementType": "geometry",
+    "stylers": [
+      { "color": "#64CCC5" }
+    ]
+  },
+  {
+    "featureType": "landscape",
+    "stylers": [
+      { "color": "#F6F4EB" }
+    ]
+  },
+  // {
+  //   "featureType": "road",
+  //   "elementType": "geometry",
+  //   "stylers": [
+  //     { "color": "#91C8E4" }
+  //   ]
+  // },
+  // {
+  //   "featureType": "poi",
+  //   "elementType": "geometry",
+  //   "stylers": [
+  //     { "color": "#176B87" }
+  //   ]
+  // },
+  // {
+  //   "featureType": "transit",
+  //   "stylers": [
+  //     { "color": "#176B87" }
+  //   ]
+  // },
+  // {
+  //   "elementType": "labels.text.stroke",
+  //   "stylers": [
+  //     { "visibility": "on" },
+  //     { "color": "#DAFFFB" }
+  //   ]
+  // },
+  // {
+  //   "elementType": "labels.text",
+  //   "stylers": [
+  //     { "saturation": -1 },
+  //     // { "color": "#DAFFFB" }
+  //   ]
+  // },
+  // {
+  //   "elementType": "labels.icon",
+  //   "stylers": [
+  //     { "visibility": "on" }
+  //   ]
+  // }
+];
 
 
-      <div className="ml-80">
+
+return isLoaded ? (
+  <>
+  
+    <div className= "relative w-full h-screen">
+
+    <div className="absolute top-2 left-1/4 z-10 p-2 rounded w-2/4 bg-cyan-300 bg-opacity-40 overflow-hidden shadow-lg">
+    <div className="flex items-center bg-cyan-700 rounded ">
+      <input
+        type="text"
+        value={address}
+        onChange={(e) => setAddress(e.target.value)}
+        placeholder="Enter address"
+        className="px-4 py-2 flex-grow text-white bg-cyan-900 bg-opacity-90"
+      />
+      <button onClick={onGeocode} className="bg-cyan-700 hover:bg-cyan-500 text-white font-bold  py-2 px-4 rounded-r">
+        Find Bathrooms
+      </button>
+    </div>
+    {/* <p className="text-white">Latitude: {lat}</p>
+    <p className="text-white">Longitude: {long}</p> */}
+  </div>
+
+
+      <div style={{position: 'relative', width: '100%', height: '90vh'}}>
         <GoogleMap
+          // defaultOptions={{ styles: blueMapStyles }}
           mapContainerStyle={containerStyle}
           center={center}
           zoom={8}
           onLoad={onLoad}
           onUnmount={onUnmount}
+          // options={{ styles: blueMapStyles }}
         >
           { /* Child components, such as markers, info windows, etc. */}
           {displayBathrooms.map((displayBathroom) => (
@@ -120,20 +186,22 @@ export default function Map({ lat, long, setLat, setLong,displayBathrooms }) {
             // icon={createCustomMarkerIcon("#FF0000")} 
           />
         ))}
-         
-
-          <></>
+        <></>
         </GoogleMap>
 
-
+        <div className="absolute bottom-7 right-20 z-10">
+          <button className="bg-sky-900 text-white rounded-full p-4 hover:bg-blue-800 focus:outline-none">
+          Add Bathroom</button>
+        </div>
       </div>
 
-
-    </>
-  ) : <>
-
-    <p>Loading...</p>
+    </div>
   </>
+) : <>
+
+  <p>Loading...</p>
+</>
+
 }
 
 
