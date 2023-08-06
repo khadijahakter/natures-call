@@ -8,8 +8,8 @@ const center = {
   lng: -74.0060
 };
 export default function Map({ lat, long, setLat, setLong,displayBathrooms }) {
+  
   const [geocoder, setGeocoder] = useState(null);
-
   const [address, setAddress] = useState('');
 
 
@@ -92,20 +92,20 @@ const blueMapStyles = [
     "featureType": "water",
     "elementType": "geometry",
     "stylers": [
-      { "color": "#64CCC5" }
+      { "color": "#70b0ce" }
     ]
   },
   {
     "featureType": "landscape",
     "stylers": [
-      { "color": "#F6F4EB" }
+      { "color": "##E5ECE4" }
     ]
   },
   // {
   //   "featureType": "road",
   //   "elementType": "geometry",
   //   "stylers": [
-  //     { "color": "#91C8E4" }
+  //     { "color": "#fae37d" }
   //   ]
   // },
   // {
@@ -148,9 +148,9 @@ const blueMapStyles = [
 return isLoaded ? (
   <>
   
-    <div className= "relative w-full h-screen">
+    <div className= "relative w-full ">
 
-    <div className="absolute top-2 left-1/4 z-10 p-2 rounded w-2/4 bg-cyan-300 bg-opacity-40 overflow-hidden shadow-lg">
+    <div className="search absolute top-2 left-1/4 z-10 p-2 rounded w-2/4 bg-cyan-300 bg-opacity-40 overflow-hidden ">
     <div className="flex items-center bg-cyan-700 rounded ">
       <input
         type="text"
@@ -168,15 +168,14 @@ return isLoaded ? (
   </div>
 
 
-      <div style={{position: 'relative', width: '100%', height: '90vh'}}>
+      <div style={{position: 'relative', width: '100%', height: '100%'}}>
         <GoogleMap
-          // defaultOptions={{ styles: blueMapStyles }}
           mapContainerStyle={containerStyle}
           center={center}
           zoom={8}
           onLoad={onLoad}
           onUnmount={onUnmount}
-          // options={{ styles: blueMapStyles }}
+          options={{ styles: blueMapStyles }}
         >
           { /* Child components, such as markers, info windows, etc. */}
           {displayBathrooms.map((displayBathroom) => (

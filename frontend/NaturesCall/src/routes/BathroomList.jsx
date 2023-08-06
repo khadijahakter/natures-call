@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { Outlet } from "react-router-dom";
 import Map from "./Map";
+import RatingDisplay from "../RatingDisplay";
 
 
 
@@ -43,46 +44,54 @@ export default function BathroomList() {
 
   return (
     <>
-      <div className="flex h-screen ">
-        {!displayBathrooms.length ? (
+      <div className="flex h-screen">
+        {/* {!displayBathrooms.length ? (
           <div className="w-full h-full">
               <div> 
               <h2 className="text-center text-2xl font-bold py-5 px-3 bg-cyan-600 text-white rounded-full shadow-lg mx-auto my-5 bg-opacity-50  max-w-md text-gray-100">
-  Search to find a bathroom near you
-</h2>
+                Search to find a bathroom near you
+              </h2>
               </div> 
          <div className="px-6 h-full shadow-xl ">
               <Map displayBathrooms={displayBathrooms} lat={lat} long={long} setLat={setLat} setLong={setLong} />
             </div>
           </div>
-        ) : (
+        ) : ( */}
           <>
-            <div className="w-1/4 h-full bg-cyan-600 bg-opacity-50 p-4 overflow-y-auto">
-              <ul className="flex flex-col space-y-4 text-white">
+            <div className=" overflow-scroll Bathroomlist-bg w-1/4 h-full bg-opacity-50 p-4  overflow-y-auto ">
+              <ul className=" flex flex-col space-y-4 text-white">
                 {displayBathrooms.map(bathroom => (
                   <Link to={`/bathrooms/${bathroom.id}`} key={bathroom.id}>
-                    <li className="flex flex-col border p-4 rounded-lg bg-cyan-300 bg-opacity-50 transform transition duration-200 ease-in-out hover:scale-105">
-                      <h3 className="text-xl font-bold">{bathroom.name}</h3>
-                      <p className="text-sm text-gray-300">
-                        <strong className="font-medium">Rating: </strong>
-                        {bathroom.rating ? bathroom.rating : "Na"}
+                    <li className="Bathroom-card flex flex-col  p-4 rounded-lg bg-opacity-30 transform transition duration-200 ease-in-out hover:scale-105">
+                     
+                      <div>
+                      <h3 className="text-xl font-bold text-sky-900">{bathroom.name}</h3>
+                      <p className="text-sm text-gray-600 py-1 ">
+                              {/* <strong className="font-medium">Rating: </strong>
+                              {bathroom.rating ? bathroom.rating : "Na"} */}
+                              <RatingDisplay rating={bathroom.rating} />
                       </p>
-                      <p className="text-sm text-gray-300">
+                      </div>
+
+                      <p className="text-sm text-gray-600">
                         <strong className="font-medium">Address: </strong>
                         {bathroom.address}
                       </p>
+      
+                     
                     </li>
                   </Link>
                 ))}
               </ul>
             </div>
-            <div className="w-3/4 h-full">
-              <div className="px-2 h-full">
+
+            <div className="w-3/4 h-full ">
+              <div className="">
                 <Map displayBathrooms={displayBathrooms} lat={lat} long={long} setLat={setLat} setLong={setLong} />
               </div>
             </div>
           </>
-        )}
+          {/* )}  */}
       </div>
     </>
   );
