@@ -30,7 +30,8 @@ const UserId = 1;
   try {
     const [allBathroomsResponse, bathroomsResponse, reviewsResponse, profileresponse] = await Promise.all([
       fetch(`http://localhost:4000/bathrooms`),
-      fetch(`http://localhost:4000/bathrooms/user/${UserId}`),
+      //fetch(`http://localhost:4000/bathrooms/user/${UserId}`),
+      fetch(`http://localhost:4000/jason`),
       fetch(`http://localhost:4000/${UserId}/reviews`),
       fetch(`http://localhost:4000/users/${UserId}`)
     ]);
@@ -85,7 +86,7 @@ const getBathroomNameById = (BathroomId) => {
 // console.log(getBathroomNameById(3, userBathrooms)); // Output: "Bathroom C"
 // console.log(getBathroomNameById(5, userBathrooms)); // Output: "Unknown Bathroom"
 
-
+debugger
   return (
 
     <div>

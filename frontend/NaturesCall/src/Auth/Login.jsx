@@ -22,7 +22,7 @@ export async function action({ request }) {
     alert("incorrect password/email ");
     return null;
   }
-  if(response.ok){
+  if(response.ok){ //it does get the response
     alert("successfully Logged in");
     console.log("logged in success from Login.jsx action");
     return redirect("/");

@@ -121,6 +121,7 @@ app.use(express.json());
 app.use(
     session({
       secret: process.env.SESSION_SECRET,
+  // secret: "177dd26d1b12ed2a2c5664fbd9112e262bc18be5cc6d6fbfd28b130b30241ffcc396092c06ad6b05453036a7cc6474e1aaff833a33b86057e8772432054c6cb6",
       resave: false,
       saveUninitialized: false,
       cookie: {
@@ -239,8 +240,10 @@ app.delete("/logout", (req, res) => {
     return res.status(200).json({ message: "Logout successful" });
   });
 });
+
 //---------------------------------authenticate user------------------------
 const authenticateUser = (req, res, next) => {
+  
   //if not logged in
   if (!req.session.userId) {
     return res.status(401).json({ message: "You must be logged in to view this page." });
@@ -264,31 +267,31 @@ app.get("/bathrooms", async (req, res) => {
 });
 //--------------------------------------------------------------
 //------------------------------get a specific bathrroom by Id-------------------
-app.get("/bathrooms/:bathroomId", async (req, res) => {
+// app.get("/bathrooms/:bathroomId", async (req, res) => {
 
-  const bathroomId = parseInt(req.params.bathroomId, 10);
+//   const bathroomId = parseInt(req.params.bathroomId, 10);
   
-  console.log(bathroomId);
+//   console.log(bathroomId);
 
-  try {
-    const bathroom = await Bathroom.findOne({ where: { id: bathroomId } });
+//   try {
+//     const bathroom = await Bathroom.findOne({ where: { id: bathroomId } });
 
-    if (bathroom) {
-      res.status(200).json(bathroom);
-    } else {
-      res.status(404).send({ message: "bathroom not found" });
-    }
-  } catch (err) {
-    console.error(err);
-    res.status(500).send({ message: err.message });
-  }
-});
+//     if (bathroom) {
+//       res.status(200).json(bathroom);
+//     } else {
+//       res.status(404).send({ message: "bathroom not found" });
+//     }
+//   } catch (err) {
+//     console.error(err);
+//     res.status(500).send({ message: err.message });
+//   }
+// });
 
 //get all bathrooms the user posted based on user Id
 
 
 
-app.get("/bathrooms/user/:userId",/* authenticateUser,*/ async (req, res) => {
+app.get("/bathrooms/user/:userId", authenticateUser, async (req, res) => {
   const userId = parseInt(req.params.userId, 10);
 
   try {
@@ -302,6 +305,25 @@ app.get("/bathrooms/user/:userId",/* authenticateUser,*/ async (req, res) => {
     res.status(500).send({ message: err.message });
   }
 });
+//get profile bathrooms based on session UserID
+app.get("/jason",  async (req, res) => {
+
+
+  const userId = parseInt(req.session.userId,10);
+ 
+  console.log("robert", userId);
+  try {
+    const userBathrooms = await Bathroom.findAll({
+      where: { UserId: userId },
+    });
+
+    res.status(200).json(userBathrooms);
+  } catch (err) {
+   // console.error(err);
+    res.status(500).send({ message: err.message });
+  }
+});
+
   //create a bathroom --- based on user Id ------------------------
   app.post("/bathrooms", authenticateUser,  async (req, res) => {
  try{
