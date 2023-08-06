@@ -11,7 +11,6 @@ require("dotenv").config();
 const cors = require("cors");
 const cron = require('node-cron');
 
-
 app.use(
   cors({
     origin: "http://localhost:5173",
@@ -19,8 +18,6 @@ app.use(
     methods: ["GET", "POST", "PATCH", "DELETE"],
   })
 );
-
-
 
 // --- fetching from api ---
 const getAllBathrooms = async () => {
@@ -55,11 +52,11 @@ const getAllBathrooms = async () => {
           var changingTable = +bathroom.changing_table;
           const newbathroom = await Bathroom.create({
             sourceid: bathroom.id,
-            address: bathroom.street + ', ' + bathroom.city + ', ' + bathroom.state, // Assuming these fields exist
+            address: bathroom.street + ', ' + bathroom.city + ', ' + bathroom.state, 
             lat: bathroom.latitude,
             lng: bathroom.longitude,
             name: bathroom.name,
-            rating: null, // Assuming this comes from your request or some other source
+            rating: null, 
             content: null,
             photo: null,
             wheelchair: wheelchair_accessible,
@@ -74,7 +71,7 @@ const getAllBathrooms = async () => {
             bidet: null,
             singleStall: null,
             multipleStall: null,
-            changingTable: changingTable, // Assuming this field exists
+            changingTable: changingTable, 
             trashCan: null,
             goodFlooring: null,
             airFreshener: null,
@@ -96,18 +93,16 @@ const getAllBathrooms = async () => {
       }
     } catch (error) {
       console.error(error);
-      break; // Error occurred, exit the loop
+      break; 
     }
 
     page += 1;
   }
 };
 
+//  -- login authentication --
 
-
-//-----------------------login auth---------------------------------------------
-
-//prints to the console what request was made and the status returned
+// Prints to the console what request was made and the status returned
 app.use((req, res, next) => {
   console.log(`Request: ${req.method} ${req.originalUrl}`);
   res.on("finish", () => {
@@ -474,7 +469,7 @@ app.post("/bathrooms/:bathroomId/reviews", async (req, res) => {
       sharpsDisposal: req.body.sharpsDisposal,
       BathroomId: bathroomId,
       // UserId: userId, // Set the UserId to the logged-in user's ID
-      UserId: 1, // Set the UserId to the logged-in user's ID
+      UserId: 9, // Set the UserId to the logged-in user's ID
       createdAt: new Date(),
       updatedAt: new Date()
     });

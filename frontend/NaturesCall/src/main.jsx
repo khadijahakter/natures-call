@@ -7,7 +7,7 @@ import {
   Route,
   createRoutesFromElements
 } from "react-router-dom";
-import './index.css'
+// import './index.css'
 import Navbar from './NavBar.jsx';
 import BathroomList from './routes/BathroomList.jsx';
 import ErrorPage from './ErrorPage.jsx'
@@ -19,11 +19,7 @@ import BathroomPage, {loader as bathroomLoader} from './BathroomPage.jsx';
 import AddReviewForm, {action as AddReview} from './AddReviewForm.jsx';
 import Profile, {loader as UserBathroomLoader} from './Auth/Profile.jsx'
 
-
 import ProtectedRoute from "./Auth/ProtectedRoute";
-
-
-
 
 const router = createBrowserRouter([
   {
@@ -68,7 +64,6 @@ const router = createBrowserRouter([
         //  </ProtectedRoute>
           //),
           
-    
           loader: UserBathroomLoader
           
       },
@@ -78,9 +73,6 @@ const router = createBrowserRouter([
 
 ]);
 
-
-
-
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
 <AuthProvider>
@@ -88,7 +80,3 @@ ReactDOM.createRoot(document.getElementById('root')).render(
     </AuthProvider>
   </React.StrictMode>,
 )
-
-
-
-

@@ -18,7 +18,7 @@ export async function action({ request }) {
     body: JSON.stringify(Object.fromEntries(formData)),
   });
 
-  if (!response.ok) {
+  if (! response.ok) {
     // invalid credentials, remain on login page
     alert("incorrect password/email ")
     return null;
@@ -26,7 +26,6 @@ export async function action({ request }) {
     alert("successfully Logged in");
   return redirect("/");
 }
-
 
 function Login(){
   const{currentUser} = useContext(AuthContext);
@@ -65,10 +64,7 @@ function Login(){
         type="submit"
       ></input>
     </Form> 
-
-      
       <br/>
-      
       <Link to={"/signup"}  className="text-underline">Dont have an account? Click here to sign up</Link>
       
       <br/>
@@ -87,10 +83,4 @@ function Login(){
   );
 }
 
-
-
-
-
 export default Login;
-
-
