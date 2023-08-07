@@ -19,10 +19,13 @@ export async function loader({ params }) {
       fetch(`api/userProfileData/userData`)
     ]);
     const allBathrooms = await allBathroomsResponse.json();
+
     const userBathrooms = await bathroomsResponse.json();
+    const lol = await bathroomsResponse;
     const reviewsData = await reviewsResponse.json();
     const profileData = await profileresponse.json();
-    console.log("all bathrooms: ", allBathrooms);
+    console.log("LOLOL",lol);
+    console.log("all bathrooms response call: ", allBathrooms);
     console.log("User Bathrooms:", userBathrooms);
     console.log("Reviews Data:", reviewsData);
     console.log("User Profile Data", profileData);
