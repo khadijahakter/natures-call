@@ -7,36 +7,16 @@ import './Profile.css';
 
 import { useContext } from "react";
 import { AuthContext } from "./AuthContext";
-// loader for user bathrooms
-// export async function loader({ params }) {
 
-//   const UserId = 5;
-//   //const response = await fetch(`http://localhost:4000/bathrooms/user/${params.UserId}`);
-//   // const response = await fetch(`http://localhost:4000/bathrooms/user/5`);
-//   // const UserBathrooms =await response.json();
-//   // return UserBathrooms;
-// const thing = await Promise.all(
-//   fetch(`http://localhost:4000/bathrooms/user/5`),
-//   fetch(`http://localhost:4000/5/reviews`)
-// )
-//  console.log(thing.response.json())
-//  return thing
-// }
-// export async function ReviewsLoader({ params }) {
-//   const response = await fetch(`http://localhost:4000/5/reviews`);
-//   const UserReviews = await response.json();
-//   return UserReviews;
-// }
 export async function loader({ params }) {
- // const UserId = 5;
+
 const UserId = 2;
   try {
     const [allBathroomsResponse, bathroomsResponse, reviewsResponse, profileresponse] = await Promise.all([
       fetch(`http://localhost:4000/bathrooms`),
-      //fetch(`http://localhost:4000/bathrooms/user/${UserId}`),
-      fetch(`http://localhost:4000/myBathrooms`),//fetching user bathrooms (uses session id from server.js , using authnetication)
-      fetch(`http://localhost:4000/myReviews`),
-      fetch(`http://localhost:4000/profile/userData`)
+      fetch(`api/userProfileData/myBathrooms`),//fetching user bathrooms (uses session id from server.js , using authnetication)
+      fetch(`api/userProfileData/myReviews`),
+      fetch(`api/userProfileData/userData`)
     ]);
     const allBathrooms = await allBathroomsResponse.json();
     const userBathrooms = await bathroomsResponse.json();

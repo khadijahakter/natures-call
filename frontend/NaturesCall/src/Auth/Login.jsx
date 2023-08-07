@@ -5,51 +5,35 @@ import { useContext } from "react";
 import { AuthContext } from "./AuthContext";
 import "./auth.css";
 
-export async function action({ request }) {
-  const formData = await request.formData();
-
-  console.log(Object.fromEntries(formData));
-  const response = await fetch("http://localhost:4000/login", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(Object.fromEntries(formData)),
-  });
-
-  if (!response.ok) {
-    // invalid credentials, remain on login page
-    alert("incorrect password/email ");
-    return null;
-  }
-  if(response.ok){ //it does get the response
-    alert("successfully Logged in");
-    console.log("logged in success from Login.jsx action");
-    return redirect("/");
-  }
-}
 
 
 function Login(){
-  console.log("AuthContext: ", AuthContext);
-  const{currentUser} = useContext(AuthContext);
-  console.log("current user: (from Login Function): ", {currentUser});
-  if(currentUser){
-   // alert("user logged in from Login.jsx");
-    console.log("user logged in from Login.jsx and currentUser exists");
-    return <Navigate to = "/" />;
-    
-  }
-  if(!currentUser){
-    console.log("no currentUser (AuthContext) Login.jsx");
+  const{currentUser, login, authError} = useContext(AuthContext);
+ // console.log("current user: (from Login Function): ", {currentUser});
+ if (currentUser) {
+  return <Navigate to="/" />;
+}
 
+   const handleSubmit = async (e) => {
+    e.preventDefault();
+    const formData = new FormData(e.target);
+    const credentials = Object.fromEntries(formData);
+    await login(credentials);
   }
-  
+
   return (
     <>
       
-      <Form method="post" className="selection:bg-blue-200 flex flex-col gap-2">
+      <Form 
+      method="post" 
+      className="selection:bg-blue-200 flex flex-col gap-2"
+      onSubmit={handleSubmit}
+      >
+
+
       <h2 className="text-black text-center text-xl">Login</h2>
+
+      {authError && <div className="text-red-300">{authError}</div>}
 
       <fieldset className="flex flex-col">
         <label htmlFor="title">Email</label>
