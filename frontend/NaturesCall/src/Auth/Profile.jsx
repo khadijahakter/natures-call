@@ -10,7 +10,7 @@ import { AuthContext } from "./AuthContext";
 
 export async function loader({ params }) {
 
-const UserId = 2;
+
   try {
     const [allBathroomsResponse, bathroomsResponse, reviewsResponse, profileresponse] = await Promise.all([
       fetch(`http://localhost:4000/bathrooms`),
@@ -53,23 +53,8 @@ const getBathroomNameById = (BathroomId) => {
 
   return bathroom ? bathroom.name : "Unknown Bathroom";
 };
-// const userBathrooms = [
-//   { id: 1, name: "Bathroom A" },
-//   { id: 2, name: "Bathroom B" },
-//   { id: 3, name: "Bathroom C" },
-// ];
 
-// const reviewsDatas = [
-//   { id: 101, BathroomId: 1, content: "Review 1" },
-//   { id: 102, BathroomId: 3, content: "Review 2" },
-//   { id: 103, BathroomId: 2, content: "Review 3" },
-// ];
 
-// console.log(getBathroomNameById(1, userBathrooms)); // Output: "Bathroom A"
-// console.log(getBathroomNameById(3, userBathrooms)); // Output: "Bathroom C"
-// console.log(getBathroomNameById(5, userBathrooms)); // Output: "Unknown Bathroom"
-
-debugger
   return (
 
     <div>
