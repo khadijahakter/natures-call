@@ -474,8 +474,8 @@ app.post("/bathrooms/:bathroomId/reviews", async (req, res) => {
       firstAid: req.body.firstAid,
       sharpsDisposal: req.body.sharpsDisposal,
       BathroomId: bathroomId,
-      // UserId: userId, // Set the UserId to the logged-in user's ID
-      UserId: 1, // Set the UserId to the logged-in user's ID
+       UserId: userId, // Set the UserId to the logged-in user's ID
+     // UserId: 1, // Set the UserId to the logged-in user's ID
       createdAt: new Date(),
       updatedAt: new Date()
     });

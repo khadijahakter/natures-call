@@ -138,7 +138,7 @@ const {Bathroom, Reviews} = useLoaderData();
               <h2 className="text-2xl font-bold mt-8 mb-4 ">Reviews</h2>
       
                 {Reviews.map((review) => (
-                  <div key={review.id} className="bg-gray-900 p-4 mx-2 rounded-lg">
+                  <div key={review.id} className="bg-gray-900 p-4 mx-2 rounded-lg bg-opacity-70">
                    <RatingDisplay
                     rating = {review.rating}/>
                   <h3 className="text-xl font-bold">{review.rating}</h3>
@@ -158,56 +158,40 @@ const {Bathroom, Reviews} = useLoaderData();
 
               </div>
 
-  <div className="flex flex-col mx-2 px-2 py-4 space-x-4 w-1/4 bg-sky-900 items-start rounded-lg">
+  <div className="flex flex-col mx-2 px-4 py-6 space-y-4 w-1/4 bg-sky-900 rounded-lg bg-opacity-70 text-white shadow-lg">
    
-   <p className="text-lg mb-2 px-4">
-     <span className=" rounded-full p-2 inline-flex items-center justify-center">
-         <GrWheelchair size={25} />
-       </span> 
+   <p className="text-lg mb-2 flex items-center space-x-2">
+     <span className="bg-white rounded-full p-2 inline-flex items-center justify-center">
+       <GrWheelchair size={25} className="text-sky-900" />
+     </span> 
      Wheelchair Accessible: 
-     {wheelchair ? 
-      " Yes"
-       : 
-       " No"}
+     <span className="font-semibold">{wheelchair ? "Yes" : "No"}</span>
    </p>
  
- <p className="text-lg mb-2">
-   <span className="
-      rounded-full p-2 inline-flex items-center justify-center">
-       <PiGenderNeuterLight size={25} />
-     </span> 
+ <p className="text-lg mb-2 flex items-center space-x-2">
+   <span className="bg-white rounded-full p-2 inline-flex items-center justify-center">
+     <PiGenderNeuterLight size={25} className="text-sky-900"/>
+   </span> 
    Unisex: 
-   {unisex ? 
-    " Yes"
-     : 
-     "No"}
+   <span className="font-semibold">{unisex ? "Yes" : "No"}</span>
  </p>
  
- <p className="text-lg mb-2">
+ <p className="text-lg mb-2 flex items-center space-x-2">
    Emergency cord: 
-   {emergencyCord ? 
-     <span className="rounded-full p-2 inline-flex items-center justify-center">
-       <GrEmergency size={25} />
-     </span> 
-     : 
-     <span className=" rounded-full p-2 inline-flex items-center justify-center  ">
-     <GrEmergency size={25} />  Na
-   </span> }
+   <span className={emergencyCord ? "bg-white rounded-full p-2 inline-flex items-center justify-center" : "bg-gray-400 rounded-full p-2 inline-flex items-center justify-center"}>
+     <GrEmergency size={25} className={emergencyCord ? "text-sky-900" : "text-white"}/>
+   </span> 
  </p>
 
-<p className="text-lg mb-2">
+<p className="text-lg mb-2 flex items-center space-x-2">
    Changing Table: 
-   {changingTable ? 
-     <span className="bg-sky-700 rounded-full p-2 inline-flex items-center justify-center">
-       <MdBabyChangingStation size={45} />
-     </span> 
-     : 
-     <span className=" rounded-full p-2 inline-flex items-center justify-center">
-     <MdBabyChangingStation size={25} />
-   </span> }
+   <span className={changingTable ? "bg-white rounded-full p-2 inline-flex items-center justify-center" : "bg-gray-400 rounded-full p-2 inline-flex items-center justify-center"}>
+     <MdBabyChangingStation size={changingTable ? 45 : 25} className={changingTable ? "text-sky-900" : "text-white"}/>
+   </span> 
  </p>
 
  </div>
+
  </div>
             </>
           ) : (
