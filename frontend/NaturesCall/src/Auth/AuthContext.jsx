@@ -40,6 +40,7 @@ const AuthProvider = ({ children }) => {
         }, 
         body: JSON.stringify(credentials)
       })
+      console.log("authcontext login response ", response);
 
       if (response.ok) {
         const { user } = await response.json();

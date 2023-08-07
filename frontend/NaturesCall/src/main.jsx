@@ -80,7 +80,11 @@ const router = createBrowserRouter([
       },
       {
         path:"/bathrooms/:id/addReview",
-        element:<AddReviewForm/>,
+        element:(
+        <ProtectedRoute>
+        <AddReviewForm/>
+        </ProtectedRoute>
+        ),
         action : AddReview
       },
       {

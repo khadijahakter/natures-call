@@ -12,19 +12,21 @@ export async function loader({ params }) {
 
 
   try {
-    const [allBathroomsResponse, bathroomsResponse, reviewsResponse, profileresponse] = await Promise.all([
+    const [allBathroomsResponse,profileresponse ,reviewsResponse, bathroomsResponse,] = await Promise.all([
       fetch(`http://localhost:4000/bathrooms`),
-      fetch(`api/userProfileData/myBathrooms`),//fetching user bathrooms (uses session id from server.js , using authnetication)
-      fetch(`api/userProfileData/myReviews`),
-      fetch(`api/userProfileData/userData`)
+      fetch(`/api/userProfileData/userData`),
+      fetch(`/api/userProfileData/myReviews`),
+      fetch(`/api/userProfileData/myBathrooms`),//fetching user bathrooms (uses session id from server.js , using authnetication)
     ]);
-    const allBathrooms = await allBathroomsResponse.json();
 
-    const userBathrooms = await bathroomsResponse.json();
-    const lol = await bathroomsResponse;
-    const reviewsData = await reviewsResponse.json();
+    const allBathrooms = await allBathroomsResponse.json();
     const profileData = await profileresponse.json();
-    console.log("LOLOL",lol);
+    const reviewsData = await reviewsResponse.json();
+    const userBathrooms = await bathroomsResponse.json();
+   
+    
+  
+  
     console.log("all bathrooms response call: ", allBathrooms);
     console.log("User Bathrooms:", userBathrooms);
     console.log("Reviews Data:", reviewsData);
@@ -43,11 +45,11 @@ export async function loader({ params }) {
 
 export default function Profile() {
   console.log("Profile Component Loaded In main.jsx");
-  const userData = useLoaderData(loader); // Use the existing loader for bathrooms
+ // const userData = useLoaderData(loader); // Use the existing loader for bathrooms
 // Use the new loader for bathroom reviews
-
+const  { allBathrooms, userBathrooms, reviewsData, profileData } = useLoaderData();
 //destructure bathrooms and reviews
-const {allBathrooms, userBathrooms, reviewsData, profileData} = userData;
+// const {allBathrooms, userBathrooms, reviewsData, profileData} = userData;
 const getBathroomNameById = (BathroomId) => {
   console.log('Review BathroomId:', BathroomId, typeof BathroomId);
   const bathroom = allBathrooms.find((bathroom) => {
