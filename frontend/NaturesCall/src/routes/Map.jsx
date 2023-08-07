@@ -52,10 +52,10 @@ export default function Map({ lat, long, setLat, setLong,displayBathrooms }) {
           const location = results[0].geometry.location;
           map.setCenter(location);
 
-          new window.google.maps.Marker({
-            position: location,
-            map: map,
-          });
+          // new window.google.maps.Marker({
+          //   position: location,
+          //   map: map,
+          // });
 
           // Log the latitude and longitude to the console
           setLat(location.lat())
