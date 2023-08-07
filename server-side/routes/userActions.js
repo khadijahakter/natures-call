@@ -7,7 +7,7 @@ const { authenticateUser } = require("../middleware/auth");
 
 
 //create a review for a bathroom
-router.post("/:bathroomId",  authenticateUser, async (req, res) => {
+router.post("/:bathroomId/reviews",  authenticateUser, async (req, res) => {
  
     const bathroomId = parseInt(req.params.bathroomId, 10);
   const userId = req.session.userId;

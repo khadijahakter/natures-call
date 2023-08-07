@@ -489,7 +489,7 @@ app.post("/nearby", async (req, res) => {
 
 
 //creating review for specific bathroom
-app.post("/bathrooms/:bathroomId/reviews", async (req, res) => {
+app.post("/bathrooms/:bathroomId/reviews", authenticateUser, async (req, res) => {
  
   const bathroomId = parseInt(req.params.bathroomId, 10);
  const userId = req.session.userId;

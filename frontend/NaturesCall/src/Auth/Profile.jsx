@@ -12,19 +12,24 @@ export async function loader({ params }) {
 
 
   try {
-    const [allBathroomsResponse, bathroomsResponse, reviewsResponse, profileresponse] = await Promise.all([
+    const [allBathroomsResponse,profileresponse ,reviewsResponse, bathroomsResponse,] = await Promise.all([
       fetch(`http://localhost:4000/bathrooms`),
-      fetch(`api/userProfileData/myBathrooms`),//fetching user bathrooms (uses session id from server.js , using authnetication)
+      fetch(`api/userProfileData/userData`),
       fetch(`api/userProfileData/myReviews`),
-      fetch(`api/userProfileData/userData`)
+      fetch(`api/userProfileData/myBathrooms`),//fetching user bathrooms (uses session id from server.js , using authnetication)
     ]);
+    // const allBathroomsResponse = await fetch(`http://localhost:4000/bathrooms`);
+    // const profileresponse = await   fetch(`api/userProfileData/userData`);
+    // const reviewsResponse = await  fetch(`api/userProfileData/myReviews`);
+    // const bathroomsResponse = await fetch(`api/userProfileData/myBathrooms`)
     const allBathrooms = await allBathroomsResponse.json();
-
-    const userBathrooms = await bathroomsResponse.json();
-    const lol = await bathroomsResponse;
-    const reviewsData = await reviewsResponse.json();
     const profileData = await profileresponse.json();
-    console.log("LOLOL",lol);
+    const reviewsData = await reviewsResponse.json();
+    const userBathrooms = await bathroomsResponse.json();
+   
+    
+  
+  
     console.log("all bathrooms response call: ", allBathrooms);
     console.log("User Bathrooms:", userBathrooms);
     console.log("Reviews Data:", reviewsData);

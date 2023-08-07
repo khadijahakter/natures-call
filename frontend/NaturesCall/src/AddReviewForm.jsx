@@ -7,7 +7,8 @@ export async function action({ request, params }) {
 
     // -- ADD USER ID FROM SESSION WHEN AUTH CONTEXT WORK --
 //create review
-    const response = await fetch(`api/userActions/${params.id}`, {
+   const response = await fetch(`/api/userActions/${params.id}/reviews`, {
+   // const response = await fetch(`http://localhost:4000/bathrooms/${params.id}/reviews`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
