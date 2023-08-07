@@ -85,7 +85,7 @@ const {Bathroom, Reviews} = useLoaderData();
               <h2 className="text-2xl font-bold mt-8 mb-4">Reviews</h2>
               <div className="space-y-4">
                 {Reviews.map((review) => (
-                  <div key={review.id} className="bg-gray-900 p-4 rounded-lg">
+                  <div key={review.id} className="bg-gray-200 p-4 rounded-lg">
                     <h3 className="text-xl font-bold">{review.title}</h3>
                     <p>{review.content}</p>
                     {/* You can add more review details here */}
