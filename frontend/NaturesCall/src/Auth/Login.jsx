@@ -31,7 +31,9 @@ export async function action({ request }) {
 
 
 function Login(){
+  console.log("AuthContext: ", AuthContext);
   const{currentUser} = useContext(AuthContext);
+  console.log("current user: (from Login Function): ", {currentUser});
   if(currentUser){
    // alert("user logged in from Login.jsx");
     console.log("user logged in from Login.jsx and currentUser exists");

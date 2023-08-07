@@ -5,15 +5,15 @@ import { AuthContext } from "./Auth/AuthContext";
 
 export async function loader({ request }) {
 
-  const response = await fetch(`http://localhost:4000/userData`);
+  const response = await fetch(`http://localhost:4000/current_user`);
   if (response.ok) {
     const { user } = await response.json();
-    console.log("Response status:", response.status);
+    //console.log("Response status:", response.status);
 
-    console.log("user fetched response:" ,user);
+  //  console.log("user fetched response:" ,user);
     return { currentUser: user };
   }
-  console.log("no user fetched");
+//  console.log("no user fetched");
   return { currentUser: null };
 }
 
@@ -27,12 +27,12 @@ export default function Navbar() {
     setCurrentUser(currentUser);
     console.log("currentUser set from NavBar.jsx");
   }, [currentUser]);
-if(currentUser){
-  console.log("currentUser exists from NavBar.jsx");
-}
-if(!currentUser){
-  console.log("currentUser does not exist from NavBar.jsx");
-}
+// if(currentUser){
+//   console.log("currentUser exists from NavBar.jsx");
+// }
+// if(!currentUser){
+//   console.log("currentUser does not exist from NavBar.jsx");
+// }
   return (
     <>
       <nav className="bg-blue-900">

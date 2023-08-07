@@ -13,6 +13,7 @@ export default function ProtectedRoute({ children }) {
   }
   if(currentUser){
     console.log("current user exists");
+    return <Navigate to="/profile" />;
   }
 
   return children;

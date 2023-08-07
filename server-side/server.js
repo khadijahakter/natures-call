@@ -10,7 +10,7 @@ const axios = require("axios");
 require("dotenv").config();
 const cors = require("cors");
 const cron = require('node-cron');
-
+const router = express.Router();
 
 app.use(
   cors({
@@ -19,7 +19,6 @@ app.use(
     methods: ["GET", "POST", "PATCH", "DELETE"],
   })
 );
-
 
 
 // --- fetching from api ---
@@ -196,6 +195,7 @@ app.get("/", (req, res) => {
               name: user.name,
               email: user.email,
               UserId: req.session.userId,
+              userPhoto: user.photo,
             },
           });
         } else {
@@ -691,3 +691,5 @@ cron.schedule('0 0 6 * *', () => {
 app.listen(port, () => {
   console.log(`Server is running at http://localhost:${port}`);
 });
+
+module.exports = router;
