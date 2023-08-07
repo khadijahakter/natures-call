@@ -84,7 +84,7 @@ const containerStyle = {
   // height:'1600px'
   width: '100%',
   height: '90vh',
-  backgroundColor : 'blue'
+  backgroundColor : 'white'
 };
 
 const blueMapStyles = [

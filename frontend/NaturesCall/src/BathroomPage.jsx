@@ -66,8 +66,8 @@ const {Bathroom, Reviews} = useLoaderData();
       const { id } = useParams();
       return (
 <>
-
-        <div className="container mx-auto p-4">
+<div className=" overflow-scroll overflow-y-auto">
+        <div className="container mx-auto p-4 ">
 
           <div className="flex flex-col items-center ">
         <div className="flex items-center space-x-4 justify-center "> {/* flex makes it inline, items-center vertically aligns the items, space-x-4 adds horizontal spacing */}
@@ -81,56 +81,54 @@ const {Bathroom, Reviews} = useLoaderData();
        
      <div className="flex flex-row items-center px-2 py-4 space-x-4">
    
-    <p className="text-lg mb-2">
-      Wheelchair Accessible: 
+    <p className="text-lg mb-2"> 
       {wheelchair ? 
         <span className="bg-sky-900 rounded-full p-2 inline-flex items-center justify-center">
           <GrWheelchair size={45} />
         </span> 
-        : 
-        "No"}
+        :
+         //not there
+        <span className="bg-sky-800 rounded-full p-2 inline-flex items-center justify-center opacity-20 ">
+        <GrWheelchair size={45} />
+      </span> }
     </p>
   
   <p className="text-lg mb-2">
-    Unisex: 
     {unisex ? 
       <span className="bg-sky-700 rounded-full p-2 inline-flex items-center justify-center">
         <PiGenderNeuterLight size={45} />
       </span> 
       : 
-      "No"}
+      //not there 
+      <span className="bg-sky-700 rounded-full p-2 inline-flex items-center justify-center opacity-20">
+        <PiGenderNeuterLight size={45} />
+      </span> }
   </p>
   
   <p className="text-lg mb-2">
-    Emergency cord: 
     {emergencyCord ? 
       <span className="bg-sky-700 rounded-full p-2 inline-flex items-center justify-center">
         <GrEmergency size={45} />
       </span> 
       : 
-      <span className="bg-sky-800 rounded-full p-2 inline-flex items-center justify-center opacity-40 ">
+      <span className="bg-sky-800 rounded-full p-2 inline-flex items-center justify-center opacity-20 ">
       <GrEmergency size={45} />
     </span> }
   </p>
 
  <p className="text-lg mb-2">
-    Changing Table: 
     {changingTable ? 
       <span className="bg-sky-700 rounded-full p-2 inline-flex items-center justify-center">
         <MdBabyChangingStation size={45} />
       </span> 
-      : 
-      "No"}
+      : // not there
+      <span className="bg-sky-700 rounded-full p-2 inline-flex items-center justify-center opacity-20">
+      <MdBabyChangingStation size={45} />
+    </span> }
   </p>
-
   </div>
-
 </div>  
 
-         
-          
-          
-    
           {/* Reviews Section */}
           {Reviews.length > 0 ? (
             <>
@@ -163,22 +161,24 @@ const {Bathroom, Reviews} = useLoaderData();
   <div className="flex flex-col mx-2 px-2 py-4 space-x-4 w-1/4 bg-sky-900 items-start rounded-lg">
    
    <p className="text-lg mb-2 px-4">
+     <span className=" rounded-full p-2 inline-flex items-center justify-center">
+         <GrWheelchair size={25} />
+       </span> 
      Wheelchair Accessible: 
      {wheelchair ? 
-       <span className="bg-sky-900 rounded-full p-2 inline-flex items-center justify-center">
-         <GrWheelchair size={15} />
-       </span> 
+      " Yes"
        : 
-       "No"}
+       " No"}
    </p>
  
  <p className="text-lg mb-2">
-   Unisex: 
-   {unisex ? 
-     <span className="
+   <span className="
       rounded-full p-2 inline-flex items-center justify-center">
        <PiGenderNeuterLight size={25} />
      </span> 
+   Unisex: 
+   {unisex ? 
+    " Yes"
      : 
      "No"}
  </p>
@@ -215,7 +215,7 @@ const {Bathroom, Reviews} = useLoaderData();
           )}
         </div>
 
-        
+        </div>
         </>
       );
 

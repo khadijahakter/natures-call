@@ -11,7 +11,7 @@
 
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
-  background-color: #0c2e32;
+  background-color: #74a8ae;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -39,6 +39,12 @@ background-color: #c1c7cdf8;
 
 }
 
+.addBinput{
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+
+}
+
+
 /* width */
 ::-webkit-scrollbar {
   width: 10px;
@@ -62,13 +68,14 @@ background-color: #c1c7cdf8;
 }
 
 .overflow-scroll::-webkit-scrollbar {
-  display: none;
+  display:contents;
 }
 
 body {
   height: 100vh;
   margin: 0;
-  overflow: hidden;  /* This can prevent any unwanted scrolling. */
+  /* This can prevent any unwanted scrolling.  */
+  /* overflow: hidden;   */
 }
 
 /* 

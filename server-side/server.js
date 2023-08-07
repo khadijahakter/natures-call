@@ -604,8 +604,6 @@ else
      newAvg = OldRate + (newRating - OldRate) / (numOfReviews + 1);
  }  
 
-
-
   //add new average to the request body 
     const [numberOfAffectedRows, affectedRows] = await Bathroom.update(
 

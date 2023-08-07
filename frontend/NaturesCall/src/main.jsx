@@ -18,7 +18,7 @@ import Login, { action as loginAction } from './Auth/Login.jsx'
 import BathroomPage, {loader as bathroomLoader} from './BathroomPage.jsx';
 import AddReviewForm, {action as AddReview} from './AddReviewForm.jsx';
 import Profile, {loader as UserBathroomLoader} from './Auth/Profile.jsx'
-
+import AddBathroom from './AddBathroom';
 
 import ProtectedRoute from "./Auth/ProtectedRoute";
 
@@ -34,8 +34,8 @@ const router = createBrowserRouter([
     children: [
       {
         path: "",
-        element: <BathroomList />,
-
+         element: <BathroomList />,
+      
       },
       {
         path: "/login",
@@ -49,7 +49,8 @@ const router = createBrowserRouter([
       },
       {
         path: "/about",
-        element: <About />
+        //element: <About /> 
+         element: <AddBathroom/>
       },
       {
         path: "/bathrooms/:id",

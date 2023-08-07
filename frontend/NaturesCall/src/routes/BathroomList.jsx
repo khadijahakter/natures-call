@@ -3,6 +3,7 @@ import { Link, NavLink } from "react-router-dom";
 import { Outlet } from "react-router-dom";
 import Map from "./Map";
 import RatingDisplay from "../RatingDisplay";
+import './BathroomListStyles.css' ;
 
 
 
@@ -45,10 +46,10 @@ export default function BathroomList() {
   return (
     <>
       <div className="flex h-screen">
-        {/* {!displayBathrooms.length ? (
+        {!displayBathrooms.length ? (
           <div className="w-full h-full">
               <div> 
-              <h2 className="text-center text-2xl font-bold py-5 px-3 bg-cyan-600 text-white rounded-full shadow-lg mx-auto my-5 bg-opacity-50  max-w-md text-gray-100">
+              <h2 className=" bg-cyan-300 text-center text-xl font-bold text-sky-100 rounded-full shadow-lg mx-auto my-2 bg-opacity-50  max-w-lg text-gray-100 tracking-widest">
                 Search to find a bathroom near you
               </h2>
               </div> 
@@ -56,7 +57,7 @@ export default function BathroomList() {
               <Map displayBathrooms={displayBathrooms} lat={lat} long={long} setLat={setLat} setLong={setLong} />
             </div>
           </div>
-        ) : ( */}
+        ) : (
           <>
             <div className=" overflow-scroll Bathroomlist-bg w-1/4 h-full bg-opacity-50 p-4  overflow-y-auto ">
               <ul className=" flex flex-col space-y-4 text-white">
@@ -91,7 +92,7 @@ export default function BathroomList() {
               </div>
             </div>
           </>
-          {/* )}  */}
+           )}  
       </div>
     </>
   );
