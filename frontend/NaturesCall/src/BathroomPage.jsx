@@ -124,75 +124,23 @@ const {Bathroom, Reviews} = useLoaderData();
   </p>
 
   </div>
-  <div className="flex flex-col items-center px-2 py-4 space-x-4">
-   
-    <p className="text-lg mb-2">
-      Wheelchair Accessible: 
-      {wheelchair ? 
-        <span className="bg-sky-900 rounded-full p-2 inline-flex items-center justify-center">
-          <GrWheelchair size={15} />
-        </span> 
-        : 
-        "No"}
-    </p>
-  
-  <p className="text-lg mb-2">
-    Unisex: 
-    {unisex ? 
-      <span className="
-       rounded-full p-2 inline-flex items-center justify-center">
-        <PiGenderNeuterLight size={25} />
-      </span> 
-      : 
-      "No"}
-  </p>
-  
-  <p className="text-lg mb-2">
-    Emergency cord: 
-    {emergencyCord ? 
-      <span className="rounded-full p-2 inline-flex items-center justify-center">
-        <GrEmergency size={25} />
-      </span> 
-      : 
-      <span className=" rounded-full p-2 inline-flex items-center justify-center  ">
-      <GrEmergency size={25} />  No current votes
-    </span> }
-  </p>
 
- <p className="text-lg mb-2">
-    Changing Table: 
-    {changingTable ? 
-      <span className="bg-sky-700 rounded-full p-2 inline-flex items-center justify-center">
-        <MdBabyChangingStation size={45} />
-      </span> 
-      : 
-      <span className=" rounded-full p-2 inline-flex items-center justify-center">
-      <MdBabyChangingStation size={25} />
-    </span> }
-  </p>
-
-  </div>
 </div>  
 
          
           
-          <div className="mt-4">
-            <Link to
-             ={`/bathrooms/${id}/addReview`}
-              className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600"
-            >
-              Add a Review
-            </Link>
-          </div>
+          
     
           {/* Reviews Section */}
           {Reviews.length > 0 ? (
             <>
-              <h2 className="text-2xl font-bold mt-8 mb-4">Reviews</h2>
-              <div className="space-y-4">
+            <div className="flex -row">
 
+                <div className="space-y-4 w-3/4">
+              <h2 className="text-2xl font-bold mt-8 mb-4 ">Reviews</h2>
+      
                 {Reviews.map((review) => (
-                  <div key={review.id} className="bg-gray-900 p-4 rounded-lg">
+                  <div key={review.id} className="bg-gray-900 p-4 mx-2 rounded-lg">
                    <RatingDisplay
                     rating = {review.rating}/>
                   <h3 className="text-xl font-bold">{review.rating}</h3>
@@ -200,7 +148,67 @@ const {Bathroom, Reviews} = useLoaderData();
                     <p>{review.content}</p>
                   </div>
                 ))}
+
+          <div className= "py-5 ">
+            <Link to
+             ={`/bathrooms/${id}/addReview`}
+              className="bg-sky-900 text-white px-4 py-2 rounded-md hover:bg-teal-600 "
+            >
+              Add a Review
+            </Link>
+          </div>
+
               </div>
+
+  <div className="flex flex-col mx-2 px-2 py-4 space-x-4 w-1/4 bg-sky-900 items-start rounded-lg">
+   
+   <p className="text-lg mb-2 px-4">
+     Wheelchair Accessible: 
+     {wheelchair ? 
+       <span className="bg-sky-900 rounded-full p-2 inline-flex items-center justify-center">
+         <GrWheelchair size={15} />
+       </span> 
+       : 
+       "No"}
+   </p>
+ 
+ <p className="text-lg mb-2">
+   Unisex: 
+   {unisex ? 
+     <span className="
+      rounded-full p-2 inline-flex items-center justify-center">
+       <PiGenderNeuterLight size={25} />
+     </span> 
+     : 
+     "No"}
+ </p>
+ 
+ <p className="text-lg mb-2">
+   Emergency cord: 
+   {emergencyCord ? 
+     <span className="rounded-full p-2 inline-flex items-center justify-center">
+       <GrEmergency size={25} />
+     </span> 
+     : 
+     <span className=" rounded-full p-2 inline-flex items-center justify-center  ">
+     <GrEmergency size={25} />  Na
+   </span> }
+ </p>
+
+<p className="text-lg mb-2">
+   Changing Table: 
+   {changingTable ? 
+     <span className="bg-sky-700 rounded-full p-2 inline-flex items-center justify-center">
+       <MdBabyChangingStation size={45} />
+     </span> 
+     : 
+     <span className=" rounded-full p-2 inline-flex items-center justify-center">
+     <MdBabyChangingStation size={25} />
+   </span> }
+ </p>
+
+ </div>
+ </div>
             </>
           ) : (
             <p>No reviews available.</p>

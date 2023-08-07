@@ -581,7 +581,6 @@ app.patch("/bathrooms/:bathroomId", async (req, res) => {
     // }
 
   
-
     //get bathroomid bathrooms current rating:
     const curBathroom = await Bathroom.findOne({where : {id : bathroomId}});
     const OldRate = curBathroom.rating;
