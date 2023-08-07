@@ -19,10 +19,6 @@ export default function Map({ lat, long, setLat, setLong,displayBathrooms }) {
 
   
 
-
-
-  
-
   const { isLoaded } = useJsApiLoader({
     id: 'google-map-script',
     googleMapsApiKey: import.meta.env.VITE_GOOGLE_MAPS_API_KEY
@@ -45,6 +41,7 @@ export default function Map({ lat, long, setLat, setLong,displayBathrooms }) {
     setMap(null);
   }, []);
   
+
 //converts address to coordinates
   const onGeocode = () => {
     //const address = '33 beard street'; // Replace with the address you want to geocode
@@ -55,10 +52,10 @@ export default function Map({ lat, long, setLat, setLong,displayBathrooms }) {
           const location = results[0].geometry.location;
           map.setCenter(location);
 
-          // new window.google.maps.Marker({
-          //   position: location,
-          //   map: map,
-          // });
+          new window.google.maps.Marker({
+            position: location,
+            map: map,
+          });
 
           // Log the latitude and longitude to the console
           setLat(location.lat())
