@@ -42,9 +42,13 @@ const getAllBathrooms = async () => {
         unisex: 'false'
       },
       headers: {
-        'X-RapidAPI-Key': process.env.API_KEY,
-        'X-RapidAPI-Host': 'public-bathrooms.p.rapidapi.com'
-      }
+
+
+          'X-RapidAPI-Key': process.env.API_KEY,
+          'X-RapidAPI-Host': 'public-bathrooms.p.rapidapi.com'
+        }
+
+
     };
 
     try {
@@ -644,12 +648,21 @@ app.patch("/bathrooms/:bathroomId", async (req, res) => {
     //     .json({ message: "You are not authorized to edit this bathroom." });
     // }
 
-  //NEED A CONDITION FOR NULL 
+  
 
     //get bathroomid bathrooms current rating:
     const curBathroom = await Bathroom.findOne({where : {id : bathroomId}});
     const OldRate = curBathroom.rating;
 
+
+    var newAvg;
+//NEED A CONDITION FOR NULL 
+if (curBathroom.rating === null)
+{
+ newAvg = req.body.rating
+}
+else
+{
     const numOfReviews = await Review.count({ where: { BathroomId: bathroomId } });
     
 
@@ -657,14 +670,15 @@ app.patch("/bathrooms/:bathroomId", async (req, res) => {
     const newRating = req.body.rating;
     
     // Moving average calculation
-    const newAvg = OldRate + (newRating - OldRate) / (numOfReviews + 1);
-    
+     newAvg = OldRate + (newRating - OldRate) / (numOfReviews + 1);
+ }  
+
+
+
   //add new average to the request body 
-
-
     const [numberOfAffectedRows, affectedRows] = await Bathroom.update(
 
-      { rating: newAvg },
+      { rating: Math.round(newAvg) },
       // req.body,
       { where: { id: bathroomId }, returning: true }
     );
@@ -691,7 +705,10 @@ app.use("/api/userActions", UserActionRouter);
 cron.schedule('0 0 6 * *', () => {
   console.log('running a task every minute');
   getAllBathrooms();
+  
 });
+
+  
 
 app.listen(port, () => {
   console.log(`Server is running at http://localhost:${port}`);

@@ -2,7 +2,7 @@ import React from "react";
 import { Link, NavLink, useLoaderData } from "react-router-dom";
 import { Outlet } from "react-router-dom";
 import {useState, useEffect} from "react";
-import axios from "axios";
+// import axios from "axios";
 import './Profile.css';
 
 import { useContext } from "react";
@@ -56,6 +56,7 @@ const getBathroomNameById = (BathroomId) => {
 
   return bathroom ? bathroom.name : "Unknown Bathroom";
 };
+
 
 
   return (
