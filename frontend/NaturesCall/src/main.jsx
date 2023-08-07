@@ -17,9 +17,7 @@ import Signup from './Auth/Signup.jsx'
 import Login from './Auth/Login.jsx'
 import BathroomPage, {loader as bathroomLoader} from './BathroomPage.jsx';
 import AddReviewForm, {action as AddReview} from './AddReviewForm.jsx';
-
-
-import AddBathroom, {action as addBrAction} from './AddBathRoom';
+import AddBathroom, {action as addBrAction} from './AddBathroom';
 import EditBathroom,{ loader as loader } from './EditBathroom';
 
 
