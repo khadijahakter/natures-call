@@ -1,17 +1,16 @@
 import React from 'react';
 import './About.css';
-import navMap from '../images/navMap.jpg';  // one directory up to src and then into images
+import navMap from '../images/NasaMap.avif';  
 export default function About(){
     return(
         <>
 <div 
                 className="hero bg-center bg-no-repeat"
                 style={{
-                    backgroundImage: `url(${navMap})`,
-                    backgroundSize: "cover"
+                    backgroundSize: "cover",
                 }}
 >
-    <div className="text-center text-white font-inter text-5xl font-extrabold">About Us</div>
+    <div className="text-center text-black font-inter text-5xl font-extrabold">About Us</div>
 </div>
 
             <div className="section bg-blue-gradient text-white max-w-full h-screen flex flex-col justify-center items-center ">
