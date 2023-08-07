@@ -14,14 +14,11 @@ export async function loader({ params }) {
   try {
     const [allBathroomsResponse,profileresponse ,reviewsResponse, bathroomsResponse,] = await Promise.all([
       fetch(`http://localhost:4000/bathrooms`),
-      fetch(`api/userProfileData/userData`),
-      fetch(`api/userProfileData/myReviews`),
-      fetch(`api/userProfileData/myBathrooms`),//fetching user bathrooms (uses session id from server.js , using authnetication)
+      fetch(`/api/userProfileData/userData`),
+      fetch(`/api/userProfileData/myReviews`),
+      fetch(`/api/userProfileData/myBathrooms`),//fetching user bathrooms (uses session id from server.js , using authnetication)
     ]);
-    // const allBathroomsResponse = await fetch(`http://localhost:4000/bathrooms`);
-    // const profileresponse = await   fetch(`api/userProfileData/userData`);
-    // const reviewsResponse = await  fetch(`api/userProfileData/myReviews`);
-    // const bathroomsResponse = await fetch(`api/userProfileData/myBathrooms`)
+
     const allBathrooms = await allBathroomsResponse.json();
     const profileData = await profileresponse.json();
     const reviewsData = await reviewsResponse.json();
@@ -48,11 +45,11 @@ export async function loader({ params }) {
 
 export default function Profile() {
   console.log("Profile Component Loaded In main.jsx");
-  const userData = useLoaderData(loader); // Use the existing loader for bathrooms
+ // const userData = useLoaderData(loader); // Use the existing loader for bathrooms
 // Use the new loader for bathroom reviews
-
+const  { allBathrooms, userBathrooms, reviewsData, profileData } = useLoaderData();
 //destructure bathrooms and reviews
-const {allBathrooms, userBathrooms, reviewsData, profileData} = userData;
+// const {allBathrooms, userBathrooms, reviewsData, profileData} = userData;
 const getBathroomNameById = (BathroomId) => {
   console.log('Review BathroomId:', BathroomId, typeof BathroomId);
   const bathroom = allBathrooms.find((bathroom) => {
