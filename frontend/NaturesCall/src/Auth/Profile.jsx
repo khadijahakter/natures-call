@@ -26,14 +26,14 @@ import './Profile.css';
 // }
 export async function loader({ params }) {
  // const UserId = 5;
-const UserId = 1;
+const UserId = 2;
   try {
     const [allBathroomsResponse, bathroomsResponse, reviewsResponse, profileresponse] = await Promise.all([
       fetch(`http://localhost:4000/bathrooms`),
       //fetch(`http://localhost:4000/bathrooms/user/${UserId}`),
-      fetch(`http://localhost:4000/jason`),
-      fetch(`http://localhost:4000/${UserId}/reviews`),
-      fetch(`http://localhost:4000/users/${UserId}`)
+      fetch(`http://localhost:4000/myBathrooms`),//fetching user bathrooms (uses session id from server.js , using authnetication)
+      fetch(`http://localhost:4000/myReviews`),
+      fetch(`http://localhost:4000/profile/userData`)
     ]);
     const allBathrooms = await allBathroomsResponse.json();
     const userBathrooms = await bathroomsResponse.json();

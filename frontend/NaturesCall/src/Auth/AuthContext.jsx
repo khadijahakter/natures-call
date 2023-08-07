@@ -10,6 +10,7 @@ export const AuthContext = createContext();
             <AuthContext.Provider value = {{currentUser, setCurrentUser}}>
             {children}
             </AuthContext.Provider>
+          //      <h1> {currentUser}</h1>
     );
 };
     

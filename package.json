@@ -2,6 +2,7 @@
   "dependencies": {
     "@react-google-maps/api": "^2.19.2",
     "pg-hstore": "^2.3.4",
+    "react-icons": "^4.10.1",
     "sequelize": "^6.32.1",
     "sequelize-cli": "^6.6.1"
   }

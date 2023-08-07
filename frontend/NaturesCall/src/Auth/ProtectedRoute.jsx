@@ -7,7 +7,7 @@ export default function ProtectedRoute({ children }) {
   const { currentUser } = useContext(AuthContext);
 
   if (!currentUser) {
-    console.log("current user does not exists");
+    console.log("current user does not exists (from ProtectedRoute.jsx)");
     return <Navigate to="/login" />;
    
   }

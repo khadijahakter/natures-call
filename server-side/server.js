@@ -228,6 +228,26 @@ app.get("/users/:userId",  async (req,res) =>{
     res.status(500).send({ message: err.message });
   }
 });
+
+app.get("/profile/userData", async (req,res) =>{
+  const userId = parseInt(req.session.userId, 10);
+  
+  console.log(userId);
+
+  try {
+    const user = await User.findOne({ where: { id: userId } });
+
+    if (user) {
+      res.status(200).json(user);
+    } else {
+      res.status(404).send({ message: "user not found" });
+    }
+  } catch (err) {
+    console.error(err);
+    res.status(500).send({ message: err.message });
+  }
+});
+
 //logout (destroy session)
 app.delete("/logout", (req, res) => {
   req.session.destroy((err) => {
@@ -265,27 +285,27 @@ app.get("/bathrooms", async (req, res) => {
     res.status(500).send({ message: err.message });
   }
 });
-//--------------------------------------------------------------
-//------------------------------get a specific bathrroom by Id-------------------
-// app.get("/bathrooms/:bathroomId", async (req, res) => {
+// --------------------------------------------------------------
+// ------------------------------get a specific bathrroom by Id-------------------
+app.get("/bathrooms/:bathroomId", async (req, res) => {
 
-//   const bathroomId = parseInt(req.params.bathroomId, 10);
+  const bathroomId = parseInt(req.params.bathroomId, 10);
   
-//   console.log(bathroomId);
+  console.log(bathroomId);
 
-//   try {
-//     const bathroom = await Bathroom.findOne({ where: { id: bathroomId } });
+  try {
+    const bathroom = await Bathroom.findOne({ where: { id: bathroomId } });
 
-//     if (bathroom) {
-//       res.status(200).json(bathroom);
-//     } else {
-//       res.status(404).send({ message: "bathroom not found" });
-//     }
-//   } catch (err) {
-//     console.error(err);
-//     res.status(500).send({ message: err.message });
-//   }
-// });
+    if (bathroom) {
+      res.status(200).json(bathroom);
+    } else {
+      res.status(404).send({ message: "bathroom not found" });
+    }
+  } catch (err) {
+    console.error(err);
+    res.status(500).send({ message: err.message });
+  }
+});
 
 //get all bathrooms the user posted based on user Id
 
@@ -306,7 +326,7 @@ app.get("/bathrooms/user/:userId", authenticateUser, async (req, res) => {
   }
 });
 //get profile bathrooms based on session UserID
-app.get("/jason",  async (req, res) => {
+app.get("/myBathrooms", authenticateUser, async (req, res) => {
 
 
   const userId = parseInt(req.session.userId,10);
@@ -505,6 +525,27 @@ app.post("/bathrooms/:bathroomId/reviews", async (req, res) => {
   } catch (error) {
     console.error("Error creating review:", error);
     res.status(500).json({ message: "An error occurred while creating the review" });
+  }
+});
+
+//get all reviews from a user (Jean method from robert)
+app.get("/myReviews", authenticateUser, async (req, res) => {
+
+  const userId = parseInt(req.session.userId, 10)
+  console.log(userId);
+
+  try {
+
+  //testing  
+  // const allReviews = await Review.findAll();
+  // res.status(200).json(allReviews);
+
+  const userReviews = await Review.findAll({where: {UserId : userId}});
+  res.status(200).json(userReviews);
+
+  } catch (err) {
+    console.error(err);
+    res.status(500).send({ message: err.message });
   }
 });
 

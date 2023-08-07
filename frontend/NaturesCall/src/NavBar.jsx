@@ -4,8 +4,8 @@ import { AuthContext } from "./Auth/AuthContext";
 //Navbar is dakota root.jsx
 
 export async function loader({ request }) {
-  const UserId = 3;
-  const response = await fetch(`http://localhost:4000/users/${UserId}`);
+
+  const response = await fetch(`http://localhost:4000/userData`);
   if (response.ok) {
     const { user } = await response.json();
     console.log("Response status:", response.status);
@@ -19,7 +19,7 @@ export async function loader({ request }) {
 
 export default function Navbar() {
   const { currentUser } = useLoaderData();
-  console.log("current user loader data: ", currentUser )
+  console.log("current user loader data: ", currentUser );
   const { setCurrentUser } = useContext(AuthContext);
   const navigation = useNavigation();
 
