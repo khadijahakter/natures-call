@@ -1,10 +1,20 @@
-import { NavLink, Outlet, Link } from "react-router-dom";
-import React, { useContext } from "react";
+import { NavLink, Outlet, Link, useNavigation, useNavigate, useLoaderData, Form} from "react-router-dom";
+import React, { useEffect, useContext } from "react";
 import { AuthContext } from "./Auth/AuthContext";
+//Navbar is dakota root.jsx
+
+
 
 export default function Navbar() {
-  const { isLoggedIn } = useContext(AuthContext);
+  const { currentUser, logout } = useContext(AuthContext);
+  const navigation = useNavigation();
+  const navigate = useNavigate();
 
+  const handleLogout = (e) => {
+    e.preventDefault();
+    logout();
+    navigate("/login");
+  }
   return (
     <>
       <nav className="bg-blue-900">
@@ -66,12 +76,19 @@ export default function Navbar() {
                     </Link>
                   </li>
                   <li>
-                    <Link
+                    {/* <Link
                       to="/logout"
                       className="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
                     >
                       Logout
-                    </Link>
+                    </Link> */}
+                     {currentUser && (
+            <Form method="post" onSubmit={handleLogout}>
+              <button type="submit" className="">
+                Logout
+              </button>
+            </Form>
+          )}
                   </li>
                 </>
               
@@ -93,3 +110,4 @@ export default function Navbar() {
     </>
   );
 }
+

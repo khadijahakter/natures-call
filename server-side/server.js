@@ -10,8 +10,10 @@ const axios = require("axios");
 require("dotenv").config();
 const cors = require("cors");
 const cron = require('node-cron');
-
-
+const router = express.Router();
+const authRouter = require("./routes/auth");
+const ProfileRouter = require("./routes/userProfileData");
+const UserActionRouter = require("./routes/userActions");
 app.use(
   cors({
     origin: "http://localhost:5173",
@@ -19,7 +21,6 @@ app.use(
     methods: ["GET", "POST", "PATCH", "DELETE"],
   })
 );
-
 
 
 // --- fetching from api ---
@@ -106,7 +107,8 @@ const getAllBathrooms = async () => {
 
 
 
-//-----------------------login auth---------------------------------------------
+
+
 
 //prints to the console what request was made and the status returned
 app.use((req, res, next) => {
@@ -122,6 +124,7 @@ app.use(express.json());
 app.use(
     session({
       secret: process.env.SESSION_SECRET,
+  
       resave: false,
       saveUninitialized: false,
       cookie: {
@@ -130,86 +133,86 @@ app.use(
     })
   );
 //--------------------------------------welcome-------------------------------
+//-----------------------login auth---------------------------------------------
+app.post("/logins", async (req, res) => {
+  try {
+    // find user by email
+    const user = await User.findOne({ where: { email: req.body.email } });
+
+    if (user === null) {
+      // user not found
+      return res.status(401).json({
+        message: "unknown credentials",
+      });
+    }
+
+    // if user found, use bcrypt to check if password matches hashed password
+    bcrypt.compare(req.body.password, user.password, (error, result) => {
+      if (result) {
+        // Passwords match, create session
+        req.session.userId = user.id;
+        res.status(200).json({
+          message: "Logged in successfully",
+          user: {
+            name: user.name,
+            email: user.email,
+            UserId: req.session.userId,
+          },
+        });
+      } else {
+        // Passwords don't match
+        res.status(401).json({ message: "Incorrect password" });
+      }
+    });
+  } catch (error) {
+    res
+      .status(500)
+      .json({ message: "An error occurred during the login process" });
+  }
+});
+ //signUp
+ app.post("/signups", async (req, res) => {
+  const hashedPass = await bcrypt.hash(req.body.password, 10);
+  
+  try {
+    const user = await User.create({ 
+      name: req.body.name,
+      email: req.body.email,
+      password: hashedPass,
+      photo:req.body.photo
+
+    });
+    req.session.userId = user.id;
+    // Send a response to the client informing them that the user was successfully created
+    res.status(201).json({
+      message: "User created",
+      user: {
+        name: user.name,
+        email: user.email,
+       UserId: req.session.userId,
+      },
+    });
+  } catch (error) {
+
+    console.error(error);
+    if (error.name === "SequelizeValidationError") {
+      return res
+        .status(422)
+        .json({ errors: error.errors.map((e) => e.message) });
+    }
+    res.status(500).json({
+      message: "Error occurred while creating user  ",
+      error: error,
+      
+    });
+  }
+
+});
 app.get("/", (req, res) => {
   res.send("Welcome to Nature's Call!");
 });
-//-----------------------login, sign up, and logout -----------------
-  //signUp
-  app.post("/signup", async (req, res) => {
-    const hashedPass = await bcrypt.hash(req.body.password, 10);
-  
-    try {
-      const user = await User.create({ 
-        name: req.body.name,
-        email: req.body.email,
-        password: hashedPass,
-        photo:req.body.photo
 
-      });
-      req.session.userId = user.id;
-      // Send a response to the client informing them that the user was successfully created
-      res.status(201).json({
-        message: "User created",
-        user: {
-          name: user.name,
-          email: user.email,
-        //  UserId: req.session.userId,
-        },
-      });
-    } catch (error) {
-
-      console.error(error);
-      if (error.name === "SequelizeValidationError") {
-        return res
-          .status(422)
-          .json({ errors: error.errors.map((e) => e.message) });
-      }
-      res.status(500).json({
-        message: "Error occurred while creating user  ",
-        error: error,
-        
-      });
-    }
-
-  });
-  //login using credentials--------------------------------------------- (name email and pass)
-  app.post("/login", async (req, res) => {
-    try {
-      // find user by email
-      const user = await User.findOne({ where: { email: req.body.email } });
-  
-      if (user === null) {
-        // user not found
-        return res.status(401).json({
-          message: "unknown credentials",
-        });
-      }
-  
-      // if user found, use bcrypt to check if password matches hashed password
-      bcrypt.compare(req.body.password, user.password, (error, result) => {
-        if (result) {
-          // Passwords match, create session
-          req.session.userId = user.id;
-          res.status(200).json({
-            message: "Logged in successfully",
-            user: {
-              name: user.name,
-              email: user.email,
-              UserId: req.session.userId,
-            },
-          });
-        } else {
-          // Passwords don't match
-          res.status(401).json({ message: "Incorrect password" });
-        }
-      });
-    } catch (error) {
-      res
-        .status(500)
-        .json({ message: "An error occurred during the login process" });
-    }
-  });
-//get the user name and email 
+//get the user name and email by userID
 app.get("/users/:userId",  async (req,res) =>{
   const userId = parseInt(req.params.userId, 10);
   
@@ -228,26 +231,47 @@ app.get("/users/:userId",  async (req,res) =>{
     res.status(500).send({ message: err.message });
   }
 });
-//logout (destroy session)
-app.delete("/logout", (req, res) => {
-  req.session.destroy((err) => {
-    if (err) {
-      return res.status(500).json({ message: "Logout failed" });
-    }
 
-    res.clearCookie("connect.sid");
-    
-    return res.status(200).json({ message: "Logout successful" });
-  });
-});
-//---------------------------------authenticate user------------------------
-const authenticateUser = (req, res, next) => {
-  //if not logged in
-  if (!req.session.userId) {
-    return res.status(401).json({ message: "You must be logged in to view this page." });
+app.get("/profile/userData", async (req,res) =>{
+
+  if (req.session.userId) {
+    const user = await User.findByPk(req.session.userId);
+    return res.status(200).json({
+      user: {
+        id: user.id,
+        email: user.email,
+        name: user.name
+      }
+    });
+  } else {
+    return res.status(401).json({user: null})
   }
+});
+
+// //logout (destroy session)
+// app.delete("/logout", (req, res) => {
+//   req.session.destroy((err) => {
+//     if (err) {
+//       return res.status(500).json({ message: "Logout failed" });
+//     }
+
+//     res.clearCookie("connect.sid");
+    
+//     return res.status(200).json({ message: "Logout successful" });
+//   });
+// });
+
+//---------------------------------authenticate user------------------------
+const authenticateUser = async (req, res, next) => {
+  if (!req.session.userId) {
+    return res
+      .status(401)
+      .json({ message: "You must be logged in to view this page." });
+  }
+  req.user = await User.findByPk(req.session.userId);
   next();
 };
+
 
 //------------------------------------------------------------------------------
 //-----------------------bathrooms--------------
@@ -263,8 +287,8 @@ app.get("/bathrooms", async (req, res) => {
     res.status(500).send({ message: err.message });
   }
 });
-//--------------------------------------------------------------
-//------------------------------get a specific bathrroom by Id-------------------
+// --------------------------------------------------------------
+// ------------------------------get a specific bathrroom by Id-------------------
 app.get("/bathrooms/:bathroomId", async (req, res) => {
 
   const bathroomId = parseInt(req.params.bathroomId, 10);
@@ -289,7 +313,7 @@ app.get("/bathrooms/:bathroomId", async (req, res) => {
 
 
 
-app.get("/bathrooms/user/:userId",/* authenticateUser,*/ async (req, res) => {
+app.get("/bathrooms/user/:userId", authenticateUser, async (req, res) => {
   const userId = parseInt(req.params.userId, 10);
 
   try {
@@ -303,6 +327,25 @@ app.get("/bathrooms/user/:userId",/* authenticateUser,*/ async (req, res) => {
     res.status(500).send({ message: err.message });
   }
 });
+//get profile bathrooms based on session UserID
+app.get("/myBathrooms", authenticateUser, async (req, res) => {
+
+
+  const userId = parseInt(req.session.userId,10);
+ 
+  console.log("robert", userId);
+  try {
+    const userBathrooms = await Bathroom.findAll({
+      where: { UserId: userId },
+    });
+
+    res.status(200).json(userBathrooms);
+  } catch (err) {
+   // console.error(err);
+    res.status(500).send({ message: err.message });
+  }
+});
+
   //create a bathroom --- based on user Id ------------------------
   app.post("/bathrooms", authenticateUser,  async (req, res) => {
  try{
@@ -446,7 +489,8 @@ app.post("/nearby", async (req, res) => {
 app.post("/bathrooms/:bathroomId/reviews", async (req, res) => {
  
   const bathroomId = parseInt(req.params.bathroomId, 10);
-  const userId = req.session.userId; // Get the user ID from the session
+ const userId = req.session.userId;
+ console.log("userId", userId); // Get the user ID from the session
   try {
     const review = await Review.create({
       content: req.body.content,
@@ -484,6 +528,27 @@ app.post("/bathrooms/:bathroomId/reviews", async (req, res) => {
   } catch (error) {
     console.error("Error creating review:", error);
     res.status(500).json({ message: "An error occurred while creating the review" });
+  }
+});
+
+//get all reviews from a user (Jean method from robert)
+app.get("/myReviews", authenticateUser, async (req, res) => {
+
+  const userId = parseInt(req.session.userId, 10)
+  console.log(userId);
+
+  try {
+
+  //testing  
+  // const allReviews = await Review.findAll();
+  // res.status(200).json(allReviews);
+
+  const userReviews = await Review.findAll({where: {UserId : userId}});
+  res.status(200).json(userReviews);
+
+  } catch (err) {
+    console.error(err);
+    res.status(500).send({ message: err.message });
   }
 });
 
@@ -627,12 +692,19 @@ else
 });
 
 
+app.use("/api/auth", authRouter );
+app.use("/api/userProfileData", ProfileRouter);
+app.use("/api/userActions", UserActionRouter);
 // -- cronjob scheduling --
 cron.schedule('0 0 6 * *', () => {
   console.log('running a task every minute');
   getAllBathrooms();
+  
 });
+
+  
 
 app.listen(port, () => {
   console.log(`Server is running at http://localhost:${port}`);
 });
+

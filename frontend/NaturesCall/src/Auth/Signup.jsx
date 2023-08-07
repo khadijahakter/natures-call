@@ -1,46 +1,35 @@
 import React from "react";
 import "./auth.css";
-import { Form, redirect,Link} from "react-router-dom";
+import { Form, redirect,Link, Navigate} from "react-router-dom";
 import {useContext} from "react";
 import {AuthContext} from "./AuthContext";
 
-export async function action({ request }) {
-    const formData = await request.formData();
-  
-    // Convert formData to a JSON-serializable object
-    const formDataObj = {};
-    for (const [name, value] of formData.entries()) {
-      formDataObj[name] = value;
-    }
-  
-    const response = await fetch("http://localhost:4000/signup", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(formDataObj), // Use the JSON-serializable object
-    });
-  
-    if (!response.ok) {
-      // Invalid submission, remain on the signup page
-      alert("something went wrong");
-      return null;
-    }
-    alert("successfully Signed up");
-    return redirect("/");
-  }
 
 const Signup = () => {
-    const{currentUser} = useContext(AuthContext);
+  const { currentUser, signup, authError } = useContext(AuthContext);
     if(currentUser){
-      return <Link to ="/" />
+      return <Navigate to ="/" />
     }
-   
+    const handleSubmit = async (event) => {
+      event.preventDefault();
+      const formData = new FormData(event.target);
+      const credentials = Object.fromEntries(formData);
+      await signup(credentials);
+    };
+  
   return (
     <>
       
-      <Form method="post" className="selection:bg-blue-200 flex flex-col gap-2">
+      <Form 
+        onSubmit={handleSubmit}
+      // method="post" 
+      
+      
+      className="selection:bg-blue-200 flex flex-col gap-2">
+
       <h1 className="text-black text-center text-xl">Create Account</h1>
+
+      {authError && <div className="text-red-500">{authError}</div>}
 
       <fieldset className="flex flex-col">
         <label htmlFor="title">Name</label>
