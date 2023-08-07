@@ -1,17 +1,16 @@
 import React from 'react';
 import './About.css';
-import navMap from '../images/NasaMap.avif';  
-export default function About(){
-    return(
+export default function About() {
+    return (
         <>
-<div 
+            <div
                 className="hero bg-center bg-no-repeat"
                 style={{
                     backgroundSize: "cover",
                 }}
->
-    <div className="text-center text-black font-inter text-5xl font-extrabold">About Us</div>
-</div>
+            >
+                <div className="text-center text-black font-inter text-5xl font-extrabold">About Us</div>
+            </div>
 
             <div className="section bg-blue-gradient text-white max-w-full h-screen flex flex-col justify-center items-center ">
                 <h2 className="font-inter text-3xl font-extrabold tracking-tight mb-4">Our Story</h2>
@@ -24,7 +23,7 @@ export default function About(){
                 <h2 className="font-inter text-3xl font-extrabold tracking-tight mb-4">How It Works</h2>
                 <h3 className="mt-1 text-lg font-medium mb-4 italic-text">Location, Locate, Review - Your Pathway to a Pleasant Pause</h3>
                 <p className="leading-7 mb-4">
-                Our user-friendly web application is designed with real-life travel scenarios in mind. Simply enter your location, and our intelligent system will identify and display nearby restrooms in a matter of seconds. But we didn't stop there - we also incorporated a review feature that allows users to rate their experiences and share them with our community, ensuring everyone benefits from genuine, firsthand information.
+                    Our user-friendly web application is designed with real-life travel scenarios in mind. Simply enter your location, and our intelligent system will identify and display nearby restrooms in a matter of seconds. But we didn't stop there - we also incorporated a review feature that allows users to rate their experiences and share them with our community, ensuring everyone benefits from genuine, firsthand information.
                 </p>
             </div>
             <div className="section bg-blue-gradient text-white max-w-full h-screen flex flex-col justify-center items-center ">
@@ -38,7 +37,7 @@ export default function About(){
                 <h2 className="font-inter text-3xl font-extrabold tracking-tight mb-4">Our Commitment</h2>
                 <h3 className="mt-1 text-lg font-medium mb-4 italic-text">Committed to Your Comfort, Dedicated to Your Journey</h3>
                 <p className="leading-7 mb-4">
-                At Nature's Call, we are committed to making your everyday journeys comfortable and hassle-free. We believe that everyone deserves easy access to clean, safe, and well-maintained restrooms. By constantly refining our database and enhancing our interface, we are working tirelessly to provide the best service possible.
+                    At Nature's Call, we are committed to making your everyday journeys comfortable and hassle-free. We believe that everyone deserves easy access to clean, safe, and well-maintained restrooms. By constantly refining our database and enhancing our interface, we are working tirelessly to provide the best service possible.
                 </p>
             </div>
         </>
