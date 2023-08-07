@@ -32,6 +32,7 @@ export default function BathroomList() {
     
     return displayBathrooms;
   }
+  //if lat and long not null run fetchedbr which fetches from backend
   useEffect(() => {
     if(lat&&long){
       fetchBathrooms();

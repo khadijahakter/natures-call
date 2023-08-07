@@ -8,23 +8,25 @@ import {
   createRoutesFromElements
 } from "react-router-dom";
 import './index.css'
-import Navbar from './NavBar.jsx';
+import Navbar,{
+  loader as NavbarLoader,
+  action as logoutAction,
+} from './NavBar.jsx';
 import BathroomList from './routes/BathroomList.jsx';
 import ErrorPage from './ErrorPage.jsx'
 import About from './routes/About.jsx'
-import Popup from './routes/Popup.jsx'
 import Signup, { action as signupAction } from './Auth/Signup.jsx'
 import Login, { action as loginAction } from './Auth/Login.jsx'
 import BathroomPage, {loader as bathroomLoader} from './BathroomPage.jsx';
 import AddReviewForm, {action as AddReview} from './AddReviewForm.jsx';
 
 
-import AddBathroom, {action as addBrAction} from './AddBathRoom';
+import AddBathroom,{action as addBrAction} from './AddBathroom';
 import EditBathroom,{ loader as loader } from './EditBathroom';
 
 
 import Profile, {loader as UserBathroomLoader} from './Auth/Profile.jsx';
-import {action as logoutAction} from './Auth/Logout.jsx';
+
 import { AuthContext } from "./Auth/AuthContext";
 
 
@@ -39,8 +41,8 @@ const router = createBrowserRouter([
     path: "/",
     element: <Navbar />,
     errorElement: <ErrorPage />,
-    loader: NavBarLoader,
-    // action: logoutAction,
+    loader: NavbarLoader,
+    action: logoutAction,
     children: [
       {
         path: "",
@@ -59,17 +61,26 @@ const router = createBrowserRouter([
       },
       {
         path: "/about",
-        element: <About />
+         element: 
+         
+            <About />
+          
+       
       },
       {
-        path: "/editBathroom",
+        path: "/editBathroom/:editId",
         element: <EditBathroom />,
         loader: loader,
         
       },
       {
         path: "/addBathroom",
-        element: <AddBathroom />,
+        element: (
+          
+          <AddBathroom />
+       
+
+        ),
         action: addBrAction,
       },
       {
@@ -85,24 +96,13 @@ const router = createBrowserRouter([
       {
         index: true,
           path:"/profile",
-      //    element:(
-     //      <ProtectedRoute>
+     
          element: <Profile/>,
-     //    </ProtectedRoute>
-     //   ),        
+    
+           
            loader: UserBathroomLoader
       },
-      {
       
-      
-        path: "/logout",
-        // element:(
-        // <ProtectedRoute>
-   
-        loader: logoutAction,
-        // </ProtectedRoute>
-        // ),
-      },
 
     ],
   },

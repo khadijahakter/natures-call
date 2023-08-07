@@ -271,25 +271,25 @@ app.get("/bathrooms", async (req, res) => {
 });
 //--------------------------------------------------------------
 //------------------------------get a specific bathrroom by Id-------------------
-// app.get("/bathrooms/:bathroomId", async (req, res) => {
+app.get("/bathrooms/:bathroomId", async (req, res) => {
 
-//   const bathroomId = parseInt(req.params.bathroomId, 10);
+  const bathroomId = parseInt(req.params.bathroomId, 10);
   
-//   console.log(bathroomId);
+  
 
-//   try {
-//     const bathroom = await Bathroom.findOne({ where: { id: bathroomId } });
+  try {
+    const bathroom = await Bathroom.findOne({ where: { id: bathroomId } });
 
-//     if (bathroom) {
-//       res.status(200).json(bathroom);
-//     } else {
-//       res.status(404).send({ message: "bathroom not found" });
-//     }
-//   } catch (err) {
-//     console.error(err);
-//     res.status(500).send({ message: err.message });
-//   }
-// });
+    if (bathroom) {
+      res.status(200).json(bathroom);
+    } else {
+      res.status(404).send({ message: "bathroom not found" });
+    }
+  } catch (err) {
+    console.error(err);
+    res.status(500).send({ message: err.message });
+  }
+});
 
 //get all bathrooms the user posted based on user Id
 
@@ -591,7 +591,15 @@ app.delete("/bathrooms/:bathroomId/:reviewsId", authenticateUser, async (req, re
   }
 });
 
-// Edit a bathroom
+
+
+
+
+
+
+
+//Edit Rating
+
 app.patch("/bathrooms/:bathroomId", async (req, res) => {
   const bathroomId = parseInt(req.params.bathroomId, 10);
   try {
@@ -637,7 +645,16 @@ else
   //add new average to the request body 
     const [numberOfAffectedRows, affectedRows] = await Bathroom.update(
 
-      { rating: Math.round(newAvg) },
+      // { 
+      //   rating: Math.round(newAvg) ,
+      //   address: req.body.address,
+      //   name: req.body.name,
+      //   unisex: req.body.unisex,
+      //   petFriendly:req.body.petFriendly,
+      //   emergencyButton:req.body.emergencyButton,
+      //   emergencyCord:req.body.emergencyCord
+      // },
+      {rating: Math.round(newAvg) },
       // req.body,
       { where: { id: bathroomId }, returning: true }
     );

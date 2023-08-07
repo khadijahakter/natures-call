@@ -24,7 +24,7 @@ export async function action({ request }) {
   }
   if(response.ok){ //it does get the response
     alert("successfully Logged in");
-    console.log("logged in success from Login.jsx action");
+   
     return redirect("/");
   }
 }
