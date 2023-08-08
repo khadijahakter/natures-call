@@ -10,6 +10,7 @@ export default function ProtectedRoute({ children }) {
   }
 
   if (!currentUser) {
+    alert("you need a user to perform this action!");
     return <Navigate to="/login" />;
   }
 

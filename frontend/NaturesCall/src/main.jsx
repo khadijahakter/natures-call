@@ -22,7 +22,9 @@ import EditBathroom,{ loader as loader } from './EditBathroom';
 
 
 import Profile, {loader as UserBathroomLoader} from './Auth/Profile.jsx';
+
 import {action as logoutAction} from './Auth/Logout.jsx';
+
 
 
 
@@ -37,7 +39,9 @@ const router = createBrowserRouter([
     path: "/",
     element: <Navbar />,
     errorElement: <ErrorPage />,
+
  
+
     children: [
       {
         path: "",
@@ -56,21 +60,26 @@ const router = createBrowserRouter([
       },
       {
         path: "/about",
-        element:( 
-          <ProtectedRoute>
-        <About />
-        </ProtectedRoute>
-        ),
+
+         element: 
+         
+            <About />
+          
+       
+
       },
       {
-        path: "/editBathroom",
+        path: "/editBathroom/:editId",
         element: <EditBathroom />,
         loader: loader,
         
       },
       {
         path: "/addBathroom",
-        element: <AddBathroom />,
+        element: (<ProtectedRoute>
+          <AddBathroom />
+           </ProtectedRoute>
+        ),
         action: addBrAction,
       },
       {
@@ -90,24 +99,16 @@ const router = createBrowserRouter([
       {
         index: true,
           path:"/profile",
+
          element:(
           <ProtectedRoute>
           <Profile/>,
         </ProtectedRoute>
        ),        
+
            loader: UserBathroomLoader
       },
-      {
       
-      
-        path: "/logout",
-        // element:(
-        // <ProtectedRoute>
-   
-        loader: logoutAction,
-        // </ProtectedRoute>
-        // ),
-      },
 
     ],
   },
@@ -119,10 +120,11 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   
+  
 <AuthProvider>
     <RouterProvider router={router} />
     </AuthProvider>
-  
+
 )
 
 
