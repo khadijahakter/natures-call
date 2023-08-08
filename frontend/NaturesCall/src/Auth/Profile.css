@@ -39,6 +39,8 @@
   display: flex;
   justify-content: space-between;
   margin-top:40px;
+  opacity: 0; /* Start with opacity set to 0 */
+  animation: fade-in 1s ease-in-out forwards; /* Apply the fade-in animation */
 }
 
 /* Bathrooms Container */
@@ -106,5 +108,15 @@
   .bathrooms-container,
   .reviews-container {
     width: 100%;
+  }
+}
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+    transform: translateY(20px); /* Slide up slightly */
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
