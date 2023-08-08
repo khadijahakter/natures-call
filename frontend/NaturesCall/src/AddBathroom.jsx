@@ -146,7 +146,7 @@ export default function AddBathroom() {
                         type="submit"
                         className="bg-sky-500 hover:bg-sky-600 text-white p-2 px-4 rounded mb-6 w-full"
                     >
-                        Submit Review
+                        Submit Bathroom
                     </button>
                 </Form>
           
