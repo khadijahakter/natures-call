@@ -32,7 +32,7 @@ const getAllBathrooms = async () => {
   while (true) {
     const options = {
       method: 'GET',
-      url: 'https://public-bathrooms.p.rapidapi.com/all',
+      url: 'https://public-bathrooms.p.rapidapi.com/location',
       params: {
         lat: '40.730610',
         lng: '-73.935242',
@@ -43,8 +43,7 @@ const getAllBathrooms = async () => {
         unisex: 'false'
       },
       headers: {
-      //  'X-RapidAPI-Key': '831c853957mshc77689e0a4a42aap148651jsn97b41cae877a',
-      'X-RapidAPI-Key': process.env.API_KEY,
+        'X-RapidAPI-Key': process.env.API_KEY,
         'X-RapidAPI-Host': 'public-bathrooms.p.rapidapi.com'
       }
     };
