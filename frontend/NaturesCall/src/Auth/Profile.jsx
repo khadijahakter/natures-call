@@ -63,7 +63,7 @@ const getBathroomNameById = (BathroomId) => {
 
     <div>
 
-    <h1 className="profile-header">Your Profile</h1>
+    <h1 className="profile-header">Welcome Back, {profileData.user.name}</h1>
     
     <div className = "reviewandbathroomcount">
     <p >Username: {profileData.user.name}</p>
@@ -83,7 +83,7 @@ const getBathroomNameById = (BathroomId) => {
           <p>Name: {bathroom.name}</p>
           <p>Address: {bathroom.address}</p>
           <p>Bathroom Id: {bathroom.id}</p>
-          <p>Rating: {bathroom.rating}</p>
+          <p>Rating: {bathroom.rating} </p>
           <p>Content: {bathroom.content}</p>
           <img src={bathroom.photo} alt={`Photo of ${bathroom.name}`} />
           {/* Render other bathroom details here */}
@@ -98,7 +98,7 @@ const getBathroomNameById = (BathroomId) => {
         <div key={review.id} className="review-item">
           <p>Bathroom Name: {getBathroomNameById(review.BathroomId)}</p>
           <p>Review Content: {review.content}</p>
-          <p>Review wheelchair: {review.wheelchair}</p>
+          {/* <p>Review wheelchair: {review.wheelchair}</p> */}
           <p>Bathroom Id: {review.BathroomId}</p>
           {/* Render other review details here */}
           <hr />
