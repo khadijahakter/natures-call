@@ -195,10 +195,18 @@ const {Bathroom, Reviews} = useLoaderData();
  </div>
             </>
           ) : (
-            <p>No reviews available.</p>
+            <>
+            <p className="p-2 my-4">No reviews available.</p>
+            <Link to
+            ={`/bathrooms/${id}/addReview`}
+             className="bg-sky-900 text-white px-4 py-2 rounded-md hover:bg-teal-600 m-4"
+           >
+             Add a Review
+           </Link>
+           </>
           )}
         </div>
-
+   
         </div>
         </>
       );
