@@ -3,9 +3,9 @@ import { Form, redirect, Link } from "react-router-dom";
 export async function action({ request, params }) {
     let formData = await request.formData();
     let bathroomData = Object.fromEntries(formData);
-   // const response = await fetch("http://localhost:4000/bathrooms", {
-        const response = await fetch("/api/bathroomActions/createBathroom", {
-        
+    // const response = await fetch("http://localhost:4000/bathrooms", {
+    const response = await fetch("/api/bathroomActions/createBathroom", {
+
         method: "POST",
         headers: {
             "Content-Type": "application/json"
@@ -15,15 +15,14 @@ export async function action({ request, params }) {
     console.log("bathroomData: ", bathroomData);
     console.log("add bathroom response: ", response);
     return redirect('/');
-  }
+}
 
 
-export default function AddBathroom(){
-  return (
-    <>
+export default function AddBathroom() {
+    return (
+        <>
 
-       
-            <Form method="post" className="w-3/4 m-5 flex-col p-8 bg-gray-300 text-black rounded overflow-y-auto max-h-screen pb-20 mb-20">
+            <Form method="post" className=" ml-20 justify-center w-3/4 m-5 flex-col p-8 bg-gray-300 text-black rounded overflow-y-auto max-h-screen pb-20 mb-20">
                 <h1 className="text-2xl font-bold text-center mb-8 text-sky-950 tracking-wide">Add A Bathroom!</h1>
                 <fieldset>
                     <div className="flex flex-col gap-4 mb-4">
@@ -47,32 +46,6 @@ export default function AddBathroom(){
                         />
                     </div>
                 </fieldset>
-           <div className="flex">
-
-                <Form method="post" className=" ml-20 justify-center w-3/4 m-5 flex-col p-8 bg-gray-300 text-black rounded overflow-y-auto max-h-screen pb-20 mb-20">
-                    <h1 className="text-2xl font-bold text-center mb-8 text-sky-950 tracking-wide">Add A Bathroom!</h1>
-                    <fieldset>
-                        <div className="flex flex-col gap-4 mb-4">
-                            <textarea
-                                id="address"
-                                name="address"
-                                className=" addBinput p-2 rounded bg-opacity-40 bg-sky-900 placeholder-gray-600"
-                                rows="1"
-                                placeholder="Enter the address here"
-                            />
-                        </div>
-                    </fieldset>
-                    <fieldset>
-                        <div className="flex flex-col gap-4 mb-4">
-                            <textarea
-                                id="name"
-                                name="name"
-                                className="addBinput p-2 rounded bg-opacity-40 bg-sky-900 placeholder-gray-600"
-                                rows="1"
-                                placeholder="Enter the name here"
-                            />
-                        </div>
-                    </fieldset>
 
                 <fieldset className="mb-8">
                     <h4 className="mb-1 font-semibold text-gray-900 dark:text-sky-950 tracking-widest">Is it Unisex?</h4>
@@ -104,7 +77,7 @@ export default function AddBathroom(){
 
 
 
-<fieldset className="mb-8">
+                <fieldset className="mb-8">
                     <h4 className="mb-1 font-semibold text-gray-900 dark:text-sky-950 tracking-widest">Does it have an Emergency Cord?</h4>
                     <ul className="items-center w-full text-sm font-medium text-sky-900 bg-white border border-gray-200 rounded-lg sm:flex dark:bg-sky-950 dark:border-sky-600 dark:text-sky-100">
                         <li className="w-full border-b border-gray-200 sm:border-b-0 sm:border-r dark:border-gray-600">
@@ -178,13 +151,13 @@ export default function AddBathroom(){
                 <button
                     type="submit"
                     className="bg-sky-500 hover:bg-sky-600 text-white p-2 px-4 rounded mb-6 w-full"
-                    
+
                 >
-                    Submit Review
+                    Submit Bathroom
                 </button>
             </Form>
-      
-    </>
-);
+
+        </>
+    );
 
 }
