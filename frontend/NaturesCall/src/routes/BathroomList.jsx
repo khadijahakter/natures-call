@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { Outlet } from "react-router-dom";
 import Map from "./Map";
+import RatingDisplay from "../RatingDisplay";
+import './BathroomListStyles.css' ;
 
 
 
@@ -26,61 +28,75 @@ export default function BathroomList() {
       },
       body: JSON.stringify(data),
     });
+
     const displayBathrooms = await response.json();
     setDisplayBathrooms(displayBathrooms);
     console.log("display br: ",displayBathrooms)
     
     return displayBathrooms;
   }
-  //if lat and long not null run fetchedbr which fetches from backend
+
+
+  //ckecks if lat and long were set, if they were fetches the list of bathrooms
+
   useEffect(() => {
     if(lat&&long){
       fetchBathrooms();
-
     }
-    
-    
   }, [lat,long]);
 
   return (
-    <div className="flex">
+    <>
+      <div className="flex h-screen">
+        {!displayBathrooms.length ? (
+          <div className="w-full h-full">
+              <div> 
+              <h2 className=" bg-cyan-300 text-center text-xl font-bold text-sky-100 rounded-full shadow-lg mx-auto my-2 bg-opacity-50  max-w-lg text-gray-100 tracking-widest">
+                Search to find a bathroom near you
+              </h2>
+              </div> 
+         <div className="px-6 h-full shadow-xl ">
+              <Map displayBathrooms={displayBathrooms} lat={lat} long={long} setLat={setLat} setLong={setLong} />
+            </div>
+          </div>
+        ) : (
+          <>
+            <div className=" overflow-scroll Bathroomlist-bg w-1/4 h-full bg-opacity-50 p-4  overflow-y-auto ">
+              <ul className=" flex flex-col space-y-4 text-white">
+                {displayBathrooms.map(bathroom => (
+                  <Link to={`/bathrooms/${bathroom.id}`} key={bathroom.id}>
+                    <li className="Bathroom-card flex flex-col  p-4 rounded-lg bg-opacity-30 transform transition duration-200 ease-in-out hover:scale-105">
+                     
+                      <div>
+                      <h3 className="text-xl font-bold text-sky-900">{bathroom.name}</h3>
+                      <p className="text-sm text-gray-600 py-1 ">
+                              {/* <strong className="font-medium">Rating: </strong>
+                              {bathroom.rating ? bathroom.rating : "Na"} */}
+                              <RatingDisplay rating={bathroom.rating} />
+                      </p>
+                      </div>
 
+                      <p className="text-sm text-gray-600">
+                        <strong className="font-medium">Address: </strong>
+                        {bathroom.address}
+                      </p>
+      
+                     
+                    </li>
+                  </Link>
+                ))}
+              </ul>
+            </div>
 
-      <div className="w-1/2">
-        <ul className="ml-10 flex flex-col space-y-4">
-          {displayBathrooms.map(bathroom => (
-          <Link to = {`/bathrooms/${bathroom.id}`} >
-            <li className="flex flex-col border p-4 rounded-lg">
-              <h3 className="text-xl font-bold">{bathroom.name}</h3>
-              <p className="text-sm text-blue-600">
-                <strong className="font-medium">Rating: </strong>
-                {bathroom.rating}
-              </p>
-              <p className="text-sm text-gray-600">
-                <strong className="font-medium">Address: </strong>
-                {bathroom.address}
-              </p>
-              <p className="text-sm text-gray-600">
-                <strong className="font-medium">Latitude: </strong>
-                {bathroom.lat}
-              </p>
-              <p className="text-sm text-gray-600">
-                <strong className="font-medium">Longitude: </strong>
-                {bathroom.lng}
-              </p>
-              
-              
-            </li>
-            </Link>
-          ))}
-        </ul>
+            <div className="w-3/4 h-full ">
+              <div className="">
+                <Map displayBathrooms={displayBathrooms} lat={lat} long={long} setLat={setLat} setLong={setLong} />
+              </div>
+            </div>
+          </>
+           )}  
       </div>
-
-            
-      <div className="w-1/2">
-        <div className="border p-4"><Map displayBathrooms={displayBathrooms} lat={lat} long={long} setLat={setLat} setLong={setLong}/></div>
-      </div>
-
-    </div>
+    </>
   );
+  
 }

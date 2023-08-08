@@ -1,45 +1,19 @@
-import { NavLink, Outlet, Link, useNavigation, useLoaderData,Form } from "react-router-dom";
+import { NavLink, Outlet, Link, useNavigation, useNavigate, useLoaderData, Form} from "react-router-dom";
 import React, { useEffect, useContext } from "react";
 import { AuthContext } from "./Auth/AuthContext";
 //Navbar is dakota root.jsx
 
-export async function loader({ request }) {
-  const UserId = 3;
-  const response = await fetch(`http://localhost:4000/users/${UserId}`);
-  if (response.ok) {
-    const { user } = await response.json();
-    console.log("Response status:", response.status);
 
-    console.log("user fetched response:", user);
-    return { currentUser: user };
-  }
-  console.log("no user fetched");
-  return { currentUser: null };
-}
-export async function action({ request }) {
-  const response = await fetch("http://localhost:4000/logout", {
-    method: "DELETE"
-  });
-  console.log("logout activated")
-  alert("logged out")
-  return null;
-}
 
 export default function Navbar() {
-  const { currentUser } = useLoaderData();
-  console.log("current user loader data: ", currentUser)
-  const { setCurrentUser } = useContext(AuthContext);
+  const { currentUser, logout } = useContext(AuthContext);
   const navigation = useNavigation();
+  const navigate = useNavigate();
 
-  useEffect(() => {
-    setCurrentUser(currentUser);
-    console.log("currentUser set from NavBar.jsx");
-  }, [currentUser]);
-  if (currentUser) {
-    console.log("currentUser exists from NavBar.jsx");
-  }
-  if (!currentUser) {
-    console.log("currentUser does not exist from NavBar.jsx");
+  const handleLogout = (e) => {
+    e.preventDefault();
+    logout();
+    navigate("/login");
   }
   return (
     <>
@@ -91,39 +65,42 @@ export default function Navbar() {
                   About
                 </Link>
               </li>
-
-              <>
+           
+                <>
+                  <li>
+                    <Link
+                      to="/profile"
+                      className="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
+                    >
+                      Profile
+                    </Link>
+                  </li>
+                  <li>
+                    {/* <Link
+                      to="/logout"
+                      className="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
+                    >
+                      Logout
+                    </Link> */}
+                     {currentUser && (
+            <Form method="post" onSubmit={handleLogout}>
+              <button type="submit" className="">
+                Logout
+              </button>
+            </Form>
+          )}
+                  </li>
+                </>
+              
                 <li>
                   <Link
-                    to="/profile"
+                    to="/login"
                     className="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
                   >
-                    Profile
+                    Login/Signup
                   </Link>
                 </li>
-                <li>
-                  <Form 
-                  method="post"
-                    className="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
-                    >
-                    <button type="submit" className="">
-                      Logout
-                    </button>
-                  </Form>
-
-
-                </li>
-              </>
-
-              <li>
-                <Link
-                  to="/login"
-                  className="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
-                >
-                  Login/Signup
-                </Link>
-              </li>
-
+              
             </ul>
           </div>
         </div>

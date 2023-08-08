@@ -4,42 +4,30 @@ import { Outlet } from "react-router-dom";
 import {useState, useEffect} from "react";
 // import axios from "axios";
 import './Profile.css';
-// loader for user bathrooms
-// export async function loader({ params }) {
 
-//   const UserId = 5;
-//   //const response = await fetch(`http://localhost:4000/bathrooms/user/${params.UserId}`);
-//   // const response = await fetch(`http://localhost:4000/bathrooms/user/5`);
-//   // const UserBathrooms =await response.json();
-//   // return UserBathrooms;
-// const thing = await Promise.all(
-//   fetch(`http://localhost:4000/bathrooms/user/5`),
-//   fetch(`http://localhost:4000/5/reviews`)
-// )
-//  console.log(thing.response.json())
-//  return thing
-// }
-// export async function ReviewsLoader({ params }) {
-//   const response = await fetch(`http://localhost:4000/5/reviews`);
-//   const UserReviews = await response.json();
-//   return UserReviews;
-// }
+import { useContext } from "react";
+import { AuthContext } from "./AuthContext";
+
 export async function loader({ params }) {
- // const UserId = 5;
-const UserId = 1;
+
+
   try {
-    const [allBathroomsResponse, bathroomsResponse, reviewsResponse, profileresponse] = await Promise.all([
+    const [allBathroomsResponse,profileresponse ,reviewsResponse, bathroomsResponse,] = await Promise.all([
       fetch(`http://localhost:4000/bathrooms`),
-      //fetch(`http://localhost:4000/bathrooms/user/${UserId}`),
-      fetch(`http://localhost:4000/jason`),
-      fetch(`http://localhost:4000/${UserId}/reviews`),
-      fetch(`http://localhost:4000/users/${UserId}`)
+      fetch(`/api/userProfileData/userData`),
+      fetch(`/api/userProfileData/myReviews`),
+      fetch(`/api/userProfileData/myBathrooms`),//fetching user bathrooms (uses session id from server.js , using authnetication)
     ]);
+
     const allBathrooms = await allBathroomsResponse.json();
-    const userBathrooms = await bathroomsResponse.json();
-    const reviewsData = await reviewsResponse.json();
     const profileData = await profileresponse.json();
-    console.log("all bathrooms: ", allBathrooms);
+    const reviewsData = await reviewsResponse.json();
+    const userBathrooms = await bathroomsResponse.json();
+   
+    
+  
+  
+    console.log("all bathrooms response call: ", allBathrooms);
     console.log("User Bathrooms:", userBathrooms);
     console.log("Reviews Data:", reviewsData);
     console.log("User Profile Data", profileData);
@@ -57,11 +45,11 @@ const UserId = 1;
 
 export default function Profile() {
   console.log("Profile Component Loaded In main.jsx");
-  const userData = useLoaderData(loader); // Use the existing loader for bathrooms
+ // const userData = useLoaderData(loader); // Use the existing loader for bathrooms
 // Use the new loader for bathroom reviews
-
+const  { allBathrooms, userBathrooms, reviewsData, profileData } = useLoaderData();
 //destructure bathrooms and reviews
-const {allBathrooms, userBathrooms, reviewsData, profileData} = userData;
+// const {allBathrooms, userBathrooms, reviewsData, profileData} = userData;
 const getBathroomNameById = (BathroomId) => {
   console.log('Review BathroomId:', BathroomId, typeof BathroomId);
   const bathroom = allBathrooms.find((bathroom) => {
@@ -70,23 +58,9 @@ const getBathroomNameById = (BathroomId) => {
 
   return bathroom ? bathroom.name : "Unknown Bathroom";
 };
-// const userBathrooms = [
-//   { id: 1, name: "Bathroom A" },
-//   { id: 2, name: "Bathroom B" },
-//   { id: 3, name: "Bathroom C" },
-// ];
 
-// const reviewsDatas = [
-//   { id: 101, BathroomId: 1, content: "Review 1" },
-//   { id: 102, BathroomId: 3, content: "Review 2" },
-//   { id: 103, BathroomId: 2, content: "Review 3" },
-// ];
 
-// console.log(getBathroomNameById(1, userBathrooms)); // Output: "Bathroom A"
-// console.log(getBathroomNameById(3, userBathrooms)); // Output: "Bathroom C"
-// console.log(getBathroomNameById(5, userBathrooms)); // Output: "Unknown Bathroom"
 
-//debugger
   return (
 
     <div>

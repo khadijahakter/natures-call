@@ -19,19 +19,19 @@ export default function About(){
         </br>
         <ul className="indent-5">
             
-        <li> <lable>Your Email Address:</lable>
+        <li> <label>Your Email Address:</label>
          <input className=" m-auto block rounded-lg w-96 " placeholder=""></input>
          </li>
          <br></br>
-        <li> <lable>Your Name:</lable>
+        <li> <label>Your Name:</label>
           <input className=" m-auto block rounded-lg w-96" placeholder=""></input>
           </li>
          <br></br>
-        <li>  <lable>Subject:</lable>
+        <li>  <label>Subject:</label>
           <input className=" m-auto block rounded-lg w-96" placeholder=""></input>
           </li>
          <br></br>
-        <li> <lable>Message:</lable>
+        <li> <label>Message:</label>
          <input className="rounded-lg w-96 h-40 m-auto block mg-px" placeholder="enter here"></input>
          </li>
         </ul>

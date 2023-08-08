@@ -5,7 +5,7 @@ const {
 module.exports = (sequelize, DataTypes) => {
   class Bathroom extends Model {
     static associate(models) {
-      this.belongsTo(models.User);
+     this.belongsTo(models.User);
       this.hasMany(models.Review);
       
     }
