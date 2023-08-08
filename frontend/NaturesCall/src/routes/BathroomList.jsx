@@ -36,7 +36,9 @@ export default function BathroomList() {
     return displayBathrooms;
   }
 
+
   //ckecks if lat and long were set, if they were fetches the list of bathrooms
+
   useEffect(() => {
     if(lat&&long){
       fetchBathrooms();

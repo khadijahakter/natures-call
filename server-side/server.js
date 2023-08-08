@@ -287,6 +287,7 @@ app.get("/bathrooms", async (req, res) => {
     res.status(500).send({ message: err.message });
   }
 });
+
 // --------------------------------------------------------------
 // ------------------------------get a specific bathrroom by Id-------------------
 app.get("/bathrooms/:bathroomId", async (req, res) => {
@@ -294,6 +295,7 @@ app.get("/bathrooms/:bathroomId", async (req, res) => {
   const bathroomId = parseInt(req.params.bathroomId, 10);
   
   console.log(bathroomId);
+
 
   try {
     const bathroom = await Bathroom.findOne({ where: { id: bathroomId } });
@@ -347,9 +349,9 @@ app.get("/myBathrooms", authenticateUser, async (req, res) => {
 });
 
   //create a bathroom --- based on user Id ------------------------
-  app.post("/bathrooms", authenticateUser,  async (req, res) => {
+  app.post("/bathrooms",   async (req, res) => {
  try{
-        const userId = req.session.userId;
+        //const userId = req.session.userId;
 
         const newbathroom = await Bathroom.create({
         sourceid: req.body.sourceid,
@@ -384,14 +386,16 @@ app.get("/myBathrooms", authenticateUser, async (req, res) => {
         sharpsDisposal: req.body.sharpsDisposal,
         createdAt: new Date(),
         updatedAt: new Date(),
-        UserId: req.session.userId, // Set the UserId to the logged-in user's ID
+        //UserId: req.session.userId, // Set the UserId to the logged-in user's ID
+        UserId:2,
+        sourceid:"user1"
       });
   
 
 
     //  res.status(201).json({newbathroom, userId});
       res.status(201).json(newbathroom);
-      console.log("User ID:", userId);
+      
     }
     catch(err){
       console.error(err);
@@ -629,7 +633,15 @@ app.delete("/bathrooms/:bathroomId/:reviewsId", authenticateUser, async (req, re
   }
 });
 
-// Edit a bathroom
+
+
+
+
+
+
+
+//Edit Rating
+
 app.patch("/bathrooms/:bathroomId", async (req, res) => {
   const bathroomId = parseInt(req.params.bathroomId, 10);
   try {
@@ -672,7 +684,16 @@ else
   //add new average to the request body 
     const [numberOfAffectedRows, affectedRows] = await Bathroom.update(
 
-      { rating: Math.round(newAvg) },
+      // { 
+      //   rating: Math.round(newAvg) ,
+      //   address: req.body.address,
+      //   name: req.body.name,
+      //   unisex: req.body.unisex,
+      //   petFriendly:req.body.petFriendly,
+      //   emergencyButton:req.body.emergencyButton,
+      //   emergencyCord:req.body.emergencyCord
+      // },
+      {rating: Math.round(newAvg) },
       // req.body,
       { where: { id: bathroomId }, returning: true }
     );

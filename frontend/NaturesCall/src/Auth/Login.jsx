@@ -7,6 +7,7 @@ import "./auth.css";
 
 
 
+
 function Login(){
   const{currentUser, login, authError} = useContext(AuthContext);
  // console.log("current user: (from Login Function): ", {currentUser});
