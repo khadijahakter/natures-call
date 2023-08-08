@@ -27,7 +27,7 @@ const getAllBathrooms = async () => {
   while (true) {
     const options = {
       method: 'GET',
-      url: 'https://public-bathrooms.p.rapidapi.com/all',
+      url: 'https://public-bathrooms.p.rapidapi.com/location',
       params: {
         lat: '40.730610',
         lng: '-73.935242',
@@ -38,7 +38,7 @@ const getAllBathrooms = async () => {
         unisex: 'false'
       },
       headers: {
-        'X-RapidAPI-Key': process.env.API_KEY,
+        'X-RapidAPI-Key': 'c6fa6122e7msh8b447e67fa17369p1a0f40jsn1aeb5a0a610a',
         'X-RapidAPI-Host': 'public-bathrooms.p.rapidapi.com'
       }
     };
@@ -625,10 +625,11 @@ else
 
 
 // -- cronjob scheduling --
-cron.schedule('0 0 6 * *', () => {
-  console.log('running a task every minute');
-  getAllBathrooms();
-});
+// cron.schedule('0 0 6 * *', () => {
+//   console.log('running a task every minute');
+//   getAllBathrooms();
+// });
+// getAllBathrooms();
 
 app.listen(port, () => {
   console.log(`Server is running at http://localhost:${port}`);
