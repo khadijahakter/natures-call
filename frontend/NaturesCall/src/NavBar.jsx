@@ -68,6 +68,7 @@ export default function Navbar() {
               </li>
            
                 <>
+                {currentUser && (
                   <li>
                     <Link
                       to="/profile"
@@ -76,6 +77,7 @@ export default function Navbar() {
                       Profile
                     </Link>
                   </li>
+                   )}
                   <li>
                     {/* <Link
                       to="/logout"
