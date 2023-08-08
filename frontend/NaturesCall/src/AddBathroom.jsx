@@ -12,6 +12,7 @@ export async function action({ request, params }) {
     })
     console.log("bathroomData: ", bathroomData);
     return redirect('/');
+  }
 
 
 export default function AddBathroom(){

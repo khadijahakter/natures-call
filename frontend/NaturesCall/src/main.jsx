@@ -8,21 +8,16 @@ import {
   createRoutesFromElements
 } from "react-router-dom";
 import './index.css'
-import Navbar,{
-  loader as NavbarLoader,
-  action as logoutAction,
-} from './NavBar.jsx';
+import Navbar from './NavBar.jsx';
 import BathroomList from './routes/BathroomList.jsx';
 import ErrorPage from './ErrorPage.jsx'
 import About from './routes/About.jsx'
-
 import Popup from './routes/Popup.jsx'
 import Signup from './Auth/Signup.jsx'
 import Login from './Auth/Login.jsx'
 import BathroomPage, {loader as bathroomLoader} from './BathroomPage.jsx';
 import AddReviewForm, {action as AddReview} from './AddReviewForm.jsx';
 import AddBathroom, {action as addBrAction} from './AddBathroom';
-
 import EditBathroom,{ loader as loader } from './EditBathroom';
 
 
