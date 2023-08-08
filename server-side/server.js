@@ -14,6 +14,7 @@ const router = express.Router();
 const authRouter = require("./routes/auth");
 const ProfileRouter = require("./routes/userProfileData");
 const UserActionRouter = require("./routes/userActions");
+const BathroomActionRouter = require("./routes/bathroomActions");
 app.use(
   cors({
     origin: "http://localhost:5173",
@@ -695,6 +696,7 @@ else
 app.use("/api/auth", authRouter );
 app.use("/api/userProfileData", ProfileRouter);
 app.use("/api/userActions", UserActionRouter);
+app.use("/api/bathroomActions", BathroomActionRouter);
 // -- cronjob scheduling --
 cron.schedule('0 0 6 * *', () => {
   console.log('running a task every minute');

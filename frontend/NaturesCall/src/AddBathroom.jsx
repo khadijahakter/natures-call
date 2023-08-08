@@ -3,7 +3,9 @@ import { Form, redirect, Link } from "react-router-dom";
 export async function action({ request, params }) {
     let formData = await request.formData();
     let bathroomData = Object.fromEntries(formData);
-    const response = await fetch("http://localhost:4000/bathrooms", {
+   // const response = await fetch("http://localhost:4000/bathrooms", {
+        const response = await fetch("/api/bathroomActions/createBathroom", {
+        
         method: "POST",
         headers: {
             "Content-Type": "application/json"
@@ -11,6 +13,7 @@ export async function action({ request, params }) {
         body: JSON.stringify(bathroomData)
     })
     console.log("bathroomData: ", bathroomData);
+    console.log("add bathroom response: ", response);
     return redirect('/');
 }
 export default function AddBathroom() {
