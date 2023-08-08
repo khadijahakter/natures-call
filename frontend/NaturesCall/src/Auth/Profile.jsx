@@ -34,7 +34,7 @@ export async function loader({ params }) {
 
     // Do additional processing with the data if needed.
 
-    return { allBathrooms, userBathrooms, reviewsData, profileData };
+    return { allBathrooms,  profileData, reviewsData, userBathrooms };
   } catch (error) {
     console.error("Error fetching data:", error);
     throw error;
@@ -45,11 +45,9 @@ export async function loader({ params }) {
 
 export default function Profile() {
   console.log("Profile Component Loaded In main.jsx");
- // const userData = useLoaderData(loader); // Use the existing loader for bathrooms
-// Use the new loader for bathroom reviews
-const  { allBathrooms, userBathrooms, reviewsData, profileData } = useLoaderData();
-//destructure bathrooms and reviews
-// const {allBathrooms, userBathrooms, reviewsData, profileData} = userData;
+
+const { allBathrooms,  profileData, reviewsData, userBathrooms } = useLoaderData();
+
 const getBathroomNameById = (BathroomId) => {
   console.log('Review BathroomId:', BathroomId, typeof BathroomId);
   const bathroom = allBathrooms.find((bathroom) => {
@@ -66,13 +64,17 @@ const getBathroomNameById = (BathroomId) => {
     <div>
 
     <h1 className="profile-header">Your Profile</h1>
+    
     <div className = "reviewandbathroomcount">
+    <p >Username: {profileData.user.name}</p>
+  <p >Email: {profileData.user.email}</p>
     <p>You posted a total of {userBathrooms.length} bathrooms</p>
     <p>You posted a total of {reviewsData.length} reviews</p>
-    <p> Username: {profileData.name}</p>
-    <p> Email: {profileData.email} </p>
+   
+
     <img src={profileData.photo}  />
     </div>
+    <div className="bathrooms-reviews-container">
    { /*bathrooms*/}
     <div className="bathrooms-container">
        <h2 className = "bathroom-header"> Your Bathrooms </h2>
@@ -102,6 +104,7 @@ const getBathroomNameById = (BathroomId) => {
           <hr />
         </div>
       ))}
+    </div>
     </div>
     </div>
   );
