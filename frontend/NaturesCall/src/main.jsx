@@ -56,11 +56,11 @@ const router = createBrowserRouter([
       },
       {
         path: "/about",
-        element:( 
-          <ProtectedRoute>
-        <About />
-        </ProtectedRoute>
-        ),
+        element:
+          
+        <About />,
+       
+       
       },
       {
         path: "/editBathroom",

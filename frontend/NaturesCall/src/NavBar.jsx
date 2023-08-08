@@ -2,7 +2,7 @@ import { NavLink, Outlet, Link, useNavigation, useNavigate, useLoaderData, Form}
 import React, { useEffect, useContext } from "react";
 import { AuthContext } from "./Auth/AuthContext";
 //Navbar is dakota root.jsx
-
+import logo from './images/Natures_Call_Logo.png';
 
 
 export default function Navbar() {
@@ -17,9 +17,10 @@ export default function Navbar() {
   }
   return (
     <>
-      <nav className="bg-blue-900">
+        <nav style={{ backgroundColor: '#33709D' }}>
         <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
           <Link to={"/"} className="flex items-center">
+          <img src={logo} alt="Logo" className="h-10 w-10 mr-2" />
             <h1 className="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">
               Nature's Call
             </h1>
@@ -91,7 +92,7 @@ export default function Navbar() {
           )}
                   </li>
                 </>
-              
+                {!currentUser && (
                 <li>
                   <Link
                     to="/login"
@@ -100,7 +101,7 @@ export default function Navbar() {
                     Login/Signup
                   </Link>
                 </li>
-              
+                )}
             </ul>
           </div>
         </div>
@@ -110,4 +111,3 @@ export default function Navbar() {
     </>
   );
 }
-
