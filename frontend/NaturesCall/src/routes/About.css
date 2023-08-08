@@ -1,0 +1,40 @@
+.parallax {
+    /* The image used */
+    background-image: url('https://images.unsplash.com/photo-1604357209793-fca5dca89f97?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8bWFwfGVufDB8fDB8fHww&auto=format&fit=crop&w=600&q=60');
+
+    /* Full height */
+    height: 100%; 
+
+    /* Create the parallax scrolling effect */
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.content {
+    /* Add some padding to allow scrolling */
+    padding: 40px;
+}
+
+.bg-blue-gradient {
+    background: linear-gradient(115deg, #103783, #07c8f9);
+    color: #fff;
+    padding: 20px;
+}
+
+.hero {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.section {
+    padding: 2rem;
+    box-sizing: border-box;
+}
+
+.italic-text {
+    font-style: italic;
+}
