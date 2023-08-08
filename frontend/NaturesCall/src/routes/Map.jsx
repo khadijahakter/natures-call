@@ -1,9 +1,6 @@
 import React from "react";
 import { useState, useEffect } from "react";
-
 import { Link } from "react-router-dom";
-
-
 import { GoogleMap, useJsApiLoader, Marker } from "@react-google-maps/api";
 
 
@@ -143,6 +140,7 @@ const blueMapStyles = [
 ];
 
 
+console.log("hannah", displayBathrooms);
 
 return isLoaded ? (
   <>
@@ -176,8 +174,11 @@ return isLoaded ? (
           onUnmount={onUnmount}
           options={{ styles: blueMapStyles }}
         >
+
           { /* Child components, such as markers, info windows, etc. */}
           {displayBathrooms.map((displayBathroom) => (
+
+
           <Marker
             key={displayBathroom.id}
             position={{ lat: parseFloat(displayBathroom.lat), lng: parseFloat(displayBathroom.lng) }}
