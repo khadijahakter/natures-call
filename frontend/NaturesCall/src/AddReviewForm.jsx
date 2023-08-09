@@ -8,7 +8,7 @@ export async function action({ request, params }) {
     // -- ADD USER ID FROM SESSION WHEN AUTH CONTEXT WORK --
 //create review
    const response = await fetch(`/api/userActions/${params.id}/reviews`, {
-   // const response = await fetch(`http://localhost:4000/bathrooms/${params.id}/reviews`, {
+  
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -35,9 +35,21 @@ export async function action({ request, params }) {
 
 export default function AddReviewForm() {
     const { id } = useParams();
+    
+    const handleSubmit = (event) => {
+        const rating = event.target.rating.value;
+
+        if (!rating) {
+            alert("Please provide a rating before submitting.");
+            event.preventDefault(); // Prevent form submission
+        } else if (rating < 0 || rating > 5) {
+            alert("Rating should be between 0 and 5.");
+            event.preventDefault(); // Prevent form submission
+        }
+    };
     return (
         
-        <Form method="post" className="p-8 bg-blue-300 text-black rounded">
+        <Form method="post" className="p-8 bg-blue-300 text-black rounded"onSubmit={handleSubmit}>
             <Link to={`/bathrooms/${id}`}  className="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">
         Back To Bathroom Page
       </Link>
@@ -51,6 +63,9 @@ export default function AddReviewForm() {
                         className="border-2 border-blue-500 p-2 rounded"
                         rows="1"
                         placeholder="Enter your rating here"
+                        required
+                        min="1"
+                        max="5"
                     />
                 </div>
             </fieldset>
