@@ -127,5 +127,32 @@ const AuthProvider = ({ children }) => {
     </AuthContext.Provider>
   );
 };
+const updateProfilePhoto = async (newProfilePhoto) => {
+  setIsAuthChecked(false);
+
+  try {
+    const response = await fetch("/api/userProfileData/user/profilepic", {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ newProfilePhoto }),
+    });
+
+    if (response.ok) {
+      const { updatedUser } = await response.json();
+      setCurrentUser(updatedUser);
+      setAuthError(null);
+    } else {
+      const errorData = await response.json();
+      setAuthError(errorData.message);
+    }
+  } catch (error) {
+    console.error(error);
+    setAuthError(error.message);
+  }
+
+  setIsAuthChecked(true);
+};
 
 export default AuthProvider

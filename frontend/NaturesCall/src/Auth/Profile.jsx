@@ -58,39 +58,7 @@ const getBathroomNameById = (BathroomId) => {
 };
 
 
-const [newProfilePhoto, setNewProfilePhoto] = useState(""); // State to manage new profile photo URL
 
-const handleProfilePhotoUpdate = async () => {
-  try {
-    // Send the updated profile photo URL to your backend API for user data update
-    const response = await fetch(`api/userProfileData/user/profilepic`, {
-      method: "PATCH", // Use the appropriate HTTP method
-      headers: {
-        "Content-Type": "application/json",
-        // Add any necessary headers, like authorization token
-      },
-      body: JSON.stringify({
-        userId: profileData.user.id, // Replace with actual user ID
-        newProfilePhoto: newProfilePhoto,
-      }),
-    });
-
-    if (response.ok) {
-      // Assuming the backend returns updated user data
-      const updatedProfileData = await response.json();
-
-      // Update the profileData state with the updated user data
-      // This will cause a re-render and display the new photo
-      // You might need to modify the actual structure of the profileData object
-      // based on the response structure from your API
-      // For example: setProfileData(updatedProfileData);
-    } else {
-      console.error("Failed to update profile photo");
-    }
-  } catch (error) {
-    console.error("Error updating profile photo:", error);
-  }
-};
   return (
 
     <div>
@@ -113,10 +81,9 @@ const handleProfilePhotoUpdate = async () => {
         <input
           type="text"
           placeholder="Enter Image URL"
-          value={newProfilePhoto}
-          onChange={(e) => setNewProfilePhoto(e.target.value)}
+        
         />
-        <button onClick={handleProfilePhotoUpdate}>Update Photo</button>
+        <button >Update Photo</button>
       </div>
       </div>
 
