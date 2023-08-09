@@ -19,16 +19,21 @@ export async function loader({params}){
   const reviewsResponse= await fetch(`http://localhost:4000/bathrooms/${params.id}/reviews`);
 
   const Reviews = await reviewsResponse.json();
-
-  return {Bathroom, Reviews};
+  const UserResponse = await fetch(`/api/userProfileData/userData`);
+  const userData = await UserResponse.json();
+  return {Bathroom, Reviews, userData};
   
   }
 
 //action for add a review 
 
 export default function BathroomPage(){
+  const {Bathroom, Reviews, userData} = useLoaderData();
+  
 
-const {Bathroom, Reviews} = useLoaderData();
+
+
+
 
     const {
         sourceid,
@@ -146,6 +151,7 @@ const {Bathroom, Reviews} = useLoaderData();
                     rating = {review.rating}/>
                   <h3 className="text-xl font-bold">{review.rating}</h3>
                     <h3 className="text-xl font-bold">{review.title}</h3>
+                    {/* <p>Posted by: {review.userName}</p> */}
                     <p>{review.content}</p>
                   </div>
                 ))}
