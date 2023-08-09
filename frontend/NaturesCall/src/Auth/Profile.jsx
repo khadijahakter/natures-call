@@ -99,10 +99,13 @@ const handleProfilePhotoUpdate = async () => {
       </Link>
     <h1 className="profile-header">Welcome Back, {profileData.user.name}</h1>
     {/* show profile photo */}
-    <div className="profile-photo">
-        <img src={profileData.photo} alt="Profile" />
-      </div>
-      
+   
+      {/* show profile photo if it's not null */}
+      {profileData.photo && (
+        <div className="profile-photo">
+          <img src={profileData.photo} alt="Profile Pic" />
+        </div>
+      )}
       <div className="profile-container">
       {/* Profile Photo Section */}
       <div className="profile-photo-section">
