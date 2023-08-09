@@ -1,6 +1,6 @@
 import React from "react";
 import { Link, NavLink, useLoaderData, } from "react-router-dom";
-import { Outlet } from "react-router-dom";
+import { Outlet, redirect  } from "react-router-dom";
 import {useState, useEffect} from "react";
 // import axios from "axios";
 import './Profile.css';
@@ -76,6 +76,7 @@ const handleProfilePhotoUpdate = async () => {
         userId: profileData.user.id, // Replace with actual user ID
         newProfilePhoto: newProfilePhoto,
       }),
+
     });
 
     if (response.ok) {
@@ -83,17 +84,15 @@ const handleProfilePhotoUpdate = async () => {
       const updatedData = await response.json();
       setUpdatedProfileData(updatedData);
       setProfilePhotoKey(prevKey => prevKey + 1); // Update the key
-      // Update the profileData state with the updated user data
-      // This will cause a re-render and display the new photo
-      // You might need to modify the actual structure of the profileData object
-      // based on the response structure from your API
-      // For example: setProfileData(updatedProfileData);
+ 
+  
     } else {
       console.error("Failed to update profile photo");
     }
   } catch (error) {
     console.error("Error updating profile photo:", error);
   }
+  return redirect("/");
 };
 
 
