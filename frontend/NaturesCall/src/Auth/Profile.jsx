@@ -58,7 +58,39 @@ const getBathroomNameById = (BathroomId) => {
 };
 
 
+const [newProfilePhoto, setNewProfilePhoto] = useState(""); // State to manage new profile photo URL
 
+const handleProfilePhotoUpdate = async () => {
+  try {
+    // Send the updated profile photo URL to your backend API for user data update
+    const response = await fetch(`/api/updateProfilePhoto`, {
+      method: "POST", // Use the appropriate HTTP method
+      headers: {
+        "Content-Type": "application/json",
+        // Add any necessary headers, like authorization token
+      },
+      body: JSON.stringify({
+        userId: profileData.user.id, // Replace with actual user ID
+        newProfilePhoto: newProfilePhoto,
+      }),
+    });
+
+    if (response.ok) {
+      // Assuming the backend returns updated user data
+      const updatedProfileData = await response.json();
+
+      // Update the profileData state with the updated user data
+      // This will cause a re-render and display the new photo
+      // You might need to modify the actual structure of the profileData object
+      // based on the response structure from your API
+      // For example: setProfileData(updatedProfileData);
+    } else {
+      console.error("Failed to update profile photo");
+    }
+  } catch (error) {
+    console.error("Error updating profile photo:", error);
+  }
+};
   return (
 
     <div>
@@ -66,15 +98,29 @@ const getBathroomNameById = (BathroomId) => {
         Back To Home
       </Link>
     <h1 className="profile-header">Welcome Back, {profileData.user.name}</h1>
-    
+    {/* show profile photo */}
+    <div className="profile-photo">
+        <img src={profileData.photo} alt="Profile" />
+      </div>
+      {/* Profile Photo Section */}
+      <div className="profile-photo-section">
+        <h2>Update Profile Photo</h2>
+        <input
+          type="text"
+          placeholder="Enter Image URL"
+          value={newProfilePhoto}
+          onChange={(e) => setNewProfilePhoto(e.target.value)}
+        />
+        <button onClick={handleProfilePhotoUpdate}>Update Photo</button>
+      </div>
     <div className = "reviewandbathroomcount">
     <p >Username: {profileData.user.name}</p>
   <p >Email: {profileData.user.email}</p>
-    <p>You posted a total of {userBathrooms.length} bathrooms</p>
-    <p>You posted a total of {reviewsData.length} reviews</p>
+    <p>You posted a total of {userBathrooms.length} bathroom(s)</p>
+    <p>You posted a total of {reviewsData.length} review(s)</p>
    
 
-    <img src={profileData.photo}  />
+    {/* <img src={profileData.photo}  /> */}
     </div>
     <div className="bathrooms-reviews-container">
    { /*bathrooms*/}
@@ -84,11 +130,11 @@ const getBathroomNameById = (BathroomId) => {
         <div key={bathroom.id} className="bathroom-item">
           <p>Name: {bathroom.name}</p>
           <p>Address: {bathroom.address}</p>
-          <p>Bathroom Id: {bathroom.id}</p>
+          <p>Bathroom ID: {bathroom.id}</p>
           <p>Rating: {bathroom.rating} </p>
           <p>Content: {bathroom.content}</p>
-          <p>lat: {bathroom.lat}</p>
-          <p>lng: {bathroom.lng}</p>
+          {/* <p>lat: {bathroom.lat}</p>
+          <p>lng: {bathroom.lng}</p> */}
           <img src={bathroom.photo} alt={`Photo of ${bathroom.name}`} />
           {/* Render other bathroom details here */}
           <hr />
@@ -103,7 +149,8 @@ const getBathroomNameById = (BathroomId) => {
           <p>Bathroom Name: {getBathroomNameById(review.BathroomId)}</p>
           <p>Review Content: {review.content}</p>
           {/* <p>Review wheelchair: {review.wheelchair}</p> */}
-          <p>Bathroom Id: {review.BathroomId}</p>
+          <p>Bathroom ID: {review.BathroomId}</p>
+          <p>Time Created: {review.createdAt}</p>
           {/* Render other review details here */}
           <hr />
         </div>

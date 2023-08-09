@@ -49,7 +49,7 @@ router.get("/current_user", async (req, res) => {
         .json({ errors: error.errors.map((e) => e.message) });
     }
     res.status(500).json({
-      message: "Error occurred while creating user. This email may already be taken!  ",
+      message: "Error occurred while creating user. ",
       error: error,
       
     });
