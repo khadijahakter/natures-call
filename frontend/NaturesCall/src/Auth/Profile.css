@@ -139,3 +139,17 @@
     transform: translateY(0);
   }
 }
+
+.profile-photo-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.profile-photo-image {
+  width: 100px; /* Adjust the size as needed */
+  height: 100px; /* Adjust the size as needed */
+  border-radius: 50%; /* Create a circular border */
+  border: 3px solid #fff; /* Add a white border around the circle */
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.3); /* Add a shadow for depth */
+}

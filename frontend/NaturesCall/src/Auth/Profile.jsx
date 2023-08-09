@@ -60,7 +60,7 @@ const getBathroomNameById = (BathroomId) => {
 
 const [newProfilePhoto, setNewProfilePhoto] = useState(""); // State to manage new profile photo URL
 const [updatedProfileData, setUpdatedProfileData] = useState(profileData);
-
+const [profilePhotoKey, setProfilePhotoKey] = useState(0);
 const handleProfilePhotoUpdate = async () => {
   try {
     // Send the updated profile photo URL to your backend API for user data update
@@ -82,6 +82,7 @@ const handleProfilePhotoUpdate = async () => {
       // Assuming the backend returns updated user data
       const updatedData = await response.json();
       setUpdatedProfileData(updatedData);
+      setProfilePhotoKey(prevKey => prevKey + 1); // Update the key
       // Update the profileData state with the updated user data
       // This will cause a re-render and display the new photo
       // You might need to modify the actual structure of the profileData object
@@ -106,11 +107,11 @@ const handleProfilePhotoUpdate = async () => {
     {/* show profile photo */}
    
       {/* show profile photo if it's not null */}
-      {updatedProfileData.photo && (
+      {/* {updatedProfileData.photo && (
   <div className="profile-photo">
     <img src={updatedProfileData.photo} alt="Profile Pic" />
   </div>
-)}
+)} */}
       <div className="profile-container">
       {/* Profile Photo Section */}
       <div className="profile-photo-section">
@@ -124,9 +125,18 @@ const handleProfilePhotoUpdate = async () => {
         <button onClick={handleProfilePhotoUpdate}>Update Photo</button>
       </div>
       </div>
-
+  {/* Style the profile photo */}
+<div className="profile-photo-container">
+<img
+  key={profilePhotoKey} // Use the profilePhotoKey as the key
+  className="profile-photo-image"
+  src={profileData.user.photo}
+  alt="Profile Pic"
+/>
+</div>
 
     <div className = "reviewandbathroomcount">
+
     <p >Username: {profileData.user.name}</p>
   <p >Email: {profileData.user.email}</p>
     <p>You posted a total of {userBathrooms.length} bathroom(s)</p>
