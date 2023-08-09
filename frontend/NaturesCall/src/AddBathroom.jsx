@@ -48,7 +48,9 @@ async function getCoordinatesFromAddress(address) {
 export default function AddBathroom() {
     return (
         <>
-
+<Link to="/" className="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">
+        Back To Home
+      </Link>
            
                 <Form method="post" className="w-3/4 m-5 flex-col p-8 bg-gray-300 text-black rounded overflow-y-auto max-h-screen pb-20 mb-20">
                     <h1 className="text-2xl font-bold text-center mb-8 text-sky-950 tracking-wide">Add A Bathroom!</h1>
