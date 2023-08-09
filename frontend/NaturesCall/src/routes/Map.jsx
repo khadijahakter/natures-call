@@ -162,7 +162,7 @@ return isLoaded ? (
   
     <div className= "relative w-full ">
     <button onClick={getUserLocation} className="bg-cyan-700 hover:bg-cyan-500 text-white font-bold  py-2 px-4 rounded-r">
-        Find Bathrooms
+        Find Nearby Bathrooms
       </button>
 
 
