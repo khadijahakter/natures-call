@@ -63,8 +63,8 @@ const [newProfilePhoto, setNewProfilePhoto] = useState(""); // State to manage n
 const handleProfilePhotoUpdate = async () => {
   try {
     // Send the updated profile photo URL to your backend API for user data update
-    const response = await fetch(`/api/updateProfilePhoto`, {
-      method: "POST", // Use the appropriate HTTP method
+    const response = await fetch(`api/userProfileData/user/profilepic`, {
+      method: "PATCH", // Use the appropriate HTTP method
       headers: {
         "Content-Type": "application/json",
         // Add any necessary headers, like authorization token
@@ -102,9 +102,11 @@ const handleProfilePhotoUpdate = async () => {
     <div className="profile-photo">
         <img src={profileData.photo} alt="Profile" />
       </div>
+      
+      <div className="profile-container">
       {/* Profile Photo Section */}
       <div className="profile-photo-section">
-        <h2>Update Profile Photo</h2>
+        <h2 className = "profile-photo-title">Update Profile Photo</h2>
         <input
           type="text"
           placeholder="Enter Image URL"
@@ -113,6 +115,9 @@ const handleProfilePhotoUpdate = async () => {
         />
         <button onClick={handleProfilePhotoUpdate}>Update Photo</button>
       </div>
+      </div>
+
+
     <div className = "reviewandbathroomcount">
     <p >Username: {profileData.user.name}</p>
   <p >Email: {profileData.user.email}</p>

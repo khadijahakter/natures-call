@@ -81,6 +81,6 @@ router.post("/:bathroomId/reviews",  authenticateUser, async (req, res) => {
       console.error(err);
     }
   });
-//update a profile photo
+
 
   module.exports = router;

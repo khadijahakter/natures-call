@@ -622,7 +622,7 @@ app.delete("/bathrooms/:bathroomId/:reviewsId", authenticateUser, async (req, re
   if (numberOfAffectedRows > 0) {
       res.status(200).json(affectedRows[0]);
     } else {
-      res.status(404).send({ message: "Comment not found" });
+      res.status(404).send({ message: "review not found" });
     }
   } catch (err) {
     if (err.name === "SequelizeValidationError") {

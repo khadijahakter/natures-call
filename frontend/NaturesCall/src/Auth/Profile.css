@@ -96,6 +96,25 @@
   border-radius: 5px;
   margin-top: 15px;
 }
+.profile-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center items horizontally */
+  margin-top: 20px; /* Add some top margin for spacing */
+}
+
+.profile-photo-section {
+  margin-bottom: 20px; /* Add some bottom margin for spacing */
+}
+
+.profile-photo {
+  text-align: center;
+  margin-top: 10px; /* Add some top margin for spacing */
+}
+.profile-photo-title{
+  text-align:center;
+}
+/* ... (your existing CSS styles) */
 
 /* Media Queries */
 @media screen and (max-width: 768px) {
