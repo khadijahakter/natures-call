@@ -43,6 +43,23 @@ export default function Map({ lat, long, setLat, setLong,displayBathrooms }) {
   const onUnmount = React.useCallback(function () {
     setMap(null);
   }, []);
+  //geocoder API
+  const getUserLocation = () => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          setLat(position.coords.latitude);
+          setLong(position.coords.longitude);
+        },
+        (error) => {
+          console.error("Error getting user's location:", error);
+        }
+      );
+    } else {
+      console.error("Geolocation is not supported by this browser.");
+    }
+  };
+
 
 
   //converts address to coordinates
@@ -144,6 +161,14 @@ return isLoaded ? (
   <>
   
     <div className= "relative w-full ">
+    <button onClick={getUserLocation} className="bg-cyan-700 hover:bg-cyan-500 text-white font-bold  py-2 px-4 rounded-r">
+        Find Bathrooms
+      </button>
+
+
+
+
+
 
     <div className="search absolute top-2 left-1/4 z-10 p-2 rounded w-2/4 bg-cyan-300 bg-opacity-40 overflow-hidden ">
     <div className="flex items-center bg-cyan-700 rounded ">
