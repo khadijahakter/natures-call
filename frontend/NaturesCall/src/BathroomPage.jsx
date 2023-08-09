@@ -186,17 +186,21 @@ export default function BathroomPage(){
  </p>
  
  <p className="text-lg mb-2 flex items-center space-x-2">
-   Emergency cord: 
+  
    <span className={emergencyCord ? "bg-white rounded-full p-2 inline-flex items-center justify-center" : "bg-gray-400 rounded-full p-2 inline-flex items-center justify-center"}>
      <GrEmergency size={25} className={emergencyCord ? "text-sky-900" : "text-white"}/>
    </span> 
+   Emergency cord: 
+   <span className="font-semibold">{emergencyCord ? "Yes" : "No"}</span>
  </p>
 
 <p className="text-lg mb-2 flex items-center space-x-2">
-   Changing Table: 
+
    <span className={changingTable ? "bg-white rounded-full p-2 inline-flex items-center justify-center" : "bg-gray-400 rounded-full p-2 inline-flex items-center justify-center"}>
      <MdBabyChangingStation size={changingTable ? 45 : 25} className={changingTable ? "text-sky-900" : "text-white"}/>
    </span> 
+   Changing Table: 
+   <span className="font-semibold">{changingTable ? "Yes" : "No"}</span>
  </p>
 
  </div>
