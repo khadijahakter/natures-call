@@ -47,7 +47,7 @@ export default function Profile() {
   console.log("Profile Component Loaded In main.jsx");
 
 const { allBathrooms,  profileData, reviewsData, userBathrooms } = useLoaderData();
-
+console.log("profille photo", profileData.photo);
 const getBathroomNameById = (BathroomId) => {
   console.log('Review BathroomId:', BathroomId, typeof BathroomId);
   const bathroom = allBathrooms.find((bathroom) => {
@@ -57,6 +57,43 @@ const getBathroomNameById = (BathroomId) => {
   return bathroom ? bathroom.name : "Unknown Bathroom";
 };
 
+
+const [newProfilePhoto, setNewProfilePhoto] = useState(""); // State to manage new profile photo URL
+const [updatedProfileData, setUpdatedProfileData] = useState(profileData);
+
+const handleProfilePhotoUpdate = async () => {
+  try {
+    // Send the updated profile photo URL to your backend API for user data update
+    console.log("fetched profileD userId", profileData.user.id);
+    const response = await fetch(`/api/userProfileData/user/updateprofilepic`, {
+      method: "PATCH", // Use the appropriate HTTP method
+      headers: {
+        "Content-Type": "application/json",
+        // Add any necessary headers, like authorization token
+      },
+      body: JSON.stringify({
+   
+        userId: profileData.user.id, // Replace with actual user ID
+        newProfilePhoto: newProfilePhoto,
+      }),
+    });
+
+    if (response.ok) {
+      // Assuming the backend returns updated user data
+      const updatedData = await response.json();
+      setUpdatedProfileData(updatedData);
+      // Update the profileData state with the updated user data
+      // This will cause a re-render and display the new photo
+      // You might need to modify the actual structure of the profileData object
+      // based on the response structure from your API
+      // For example: setProfileData(updatedProfileData);
+    } else {
+      console.error("Failed to update profile photo");
+    }
+  } catch (error) {
+    console.error("Error updating profile photo:", error);
+  }
+};
 
 
   return (
@@ -69,11 +106,11 @@ const getBathroomNameById = (BathroomId) => {
     {/* show profile photo */}
    
       {/* show profile photo if it's not null */}
-      {profileData.photo && (
-        <div className="profile-photo">
-          <img src={profileData.photo} alt="Profile Pic" />
-        </div>
-      )}
+      {updatedProfileData.photo && (
+  <div className="profile-photo">
+    <img src={updatedProfileData.photo} alt="Profile Pic" />
+  </div>
+)}
       <div className="profile-container">
       {/* Profile Photo Section */}
       <div className="profile-photo-section">
@@ -81,9 +118,10 @@ const getBathroomNameById = (BathroomId) => {
         <input
           type="text"
           placeholder="Enter Image URL"
-        
+          value={newProfilePhoto}
+          onChange={(e) => setNewProfilePhoto(e.target.value)}
         />
-        <button >Update Photo</button>
+        <button onClick={handleProfilePhotoUpdate}>Update Photo</button>
       </div>
       </div>
 
