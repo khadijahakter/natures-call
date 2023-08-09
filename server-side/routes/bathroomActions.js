@@ -45,7 +45,7 @@ const { authenticateUser } = require("../middleware/auth");
          });
      
    
-         console.log("bathroom User ID:", userId);
+         console.log("router posted bathroom User ID: (from bathroomActions.jsx)", userId);
          res.status(201).json(newbathroom);
    
        }
