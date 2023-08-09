@@ -111,6 +111,7 @@ return (
                   className="border border-gray-400 py-1 px-2 w-full shadow-md"
                 />
               </fieldset>
+              {authError && <p className="text-red-500 mt-2">{authError}</p>}
               <div className="mt-5 mb-3">
                 <button type="submit" className="w-full bg-blue-600 py-3 text-center text-white rounded hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 transition duration-300 ease-in-out">Login</button>
               </div>
