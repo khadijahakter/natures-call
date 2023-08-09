@@ -85,6 +85,8 @@ const getBathroomNameById = (BathroomId) => {
           <p>Bathroom Id: {bathroom.id}</p>
           <p>Rating: {bathroom.rating} </p>
           <p>Content: {bathroom.content}</p>
+          <p>lat: {bathroom.lat}</p>
+          <p>lng: {bathroom.lng}</p>
           <img src={bathroom.photo} alt={`Photo of ${bathroom.name}`} />
           {/* Render other bathroom details here */}
           <hr />

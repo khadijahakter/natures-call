@@ -1,9 +1,22 @@
 import React from "react";
 import { Form, redirect, Link } from "react-router-dom";
+import { GoogleMap, useJsApiLoader, Marker } from "@react-google-maps/api";
 export async function action({ request, params }) {
     let formData = await request.formData();
     let bathroomData = Object.fromEntries(formData);
-   // const response = await fetch("http://localhost:4000/bathrooms", {
+    const address = formData.get('address');
+    //store lat n long from address into user bathroom
+    const coordinates = await getCoordinatesFromAddress(address);
+
+    if (coordinates) {
+        bathroomData.lat = coordinates.lat;
+        bathroomData.lng = coordinates.lng;
+        console.log("cords found (from AddBAthroom.jsx", coordinates);
+     
+    }
+    if(!coordinates){
+        console.log("no cords found (from AddBAthroom.jsx");
+    }
         const response = await fetch("/api/bathroomActions/createBathroom", {
         
         method: "POST",
@@ -16,6 +29,22 @@ export async function action({ request, params }) {
     console.log("add bathroom response: ", response);
     return redirect('/');
 }
+//gets coordinates from UserInputted Address to store in our user bathroom
+async function getCoordinatesFromAddress(address) {
+    const apiKey =  import.meta.env.VITE_GOOGLE_MAPS_API_KEY
+    const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(address)}&key=${apiKey}`;
+
+    const response = await fetch(url);
+    const data = await response.json();
+
+    if (data.results.length > 0) {
+        const location = data.results[0].geometry.location;
+        return { lat: location.lat, lng: location.lng };
+    }
+
+    return null;
+}
+
 export default function AddBathroom() {
     return (
         <>
