@@ -60,6 +60,25 @@ router.get("/myBathrooms", authenticateUser, async (req, res) => {
       return res.status(401).json({user: null})
     }
   });
+//get all users that made an account and logged in
+
+
+// Route to get all users who have made an account and logged in
+router.get('/allUsers', async (req, res) => {
+  try {
+    const allUsers = await User.findAll();
+    const usersData = allUsers.map(user => ({
+      id: user.id,
+      email: user.email,
+      name: user.name,
+      photo: user.photo
+    }));
+    return res.status(200).json(usersData);
+  } catch (error) {
+    console.error('Error fetching all users:', error);
+    return res.status(500).json({ error: 'Internal server error' });
+  }
+});
 
 //update a profile photo
 

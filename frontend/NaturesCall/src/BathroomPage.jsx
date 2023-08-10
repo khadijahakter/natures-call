@@ -79,6 +79,8 @@ export default function BathroomPage(){
 
           <div className="flex flex-col items-center ">
         <div className="flex items-center space-x-4 justify-center "> {/* flex makes it inline, items-center vertically aligns the items, space-x-4 adds horizontal spacing */}
+         
+          
           <h1 className="text-7xl font-bold py-9 tracking-wide">{name}</h1>
           <RatingDisplay className="scale-150 px-8" rating={rating}/> {/* Assuming you can pass className to RatingDisplay */}
           <p className="text-2xl mb-2 text-gray-300"> {rating} Stars</p>
