@@ -684,16 +684,16 @@ else
   //add new average to the request body 
     const [numberOfAffectedRows, affectedRows] = await Bathroom.update(
 
-      // { 
-      //   rating: Math.round(newAvg) ,
-      //   address: req.body.address,
-      //   name: req.body.name,
-      //   unisex: req.body.unisex,
-      //   petFriendly:req.body.petFriendly,
-      //   emergencyButton:req.body.emergencyButton,
-      //   emergencyCord:req.body.emergencyCord
-      // },
-      {rating: Math.round(newAvg) },
+      { 
+        rating: Math.round(newAvg) ,
+        address: req.body.address,
+        name: req.body.name,
+        unisex: req.body.unisex,
+        petFriendly:req.body.petFriendly,
+        emergencyButton:req.body.emergencyButton,
+        emergencyCord:req.body.emergencyCord
+      },
+      //{rating: Math.round(newAvg) },
       // req.body,
       { where: { id: bathroomId }, returning: true }
     );

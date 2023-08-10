@@ -114,12 +114,7 @@ const handleProfilePhotoUpdate = async () => {
     <h1 className="profile-header">Welcome Back, {profileData.user.name}</h1>
     {/* show profile photo */}
    
-      {/* show profile photo if it's not null */}
-      {/* {updatedProfileData.photo && (
-  <div className="profile-photo">
-    <img src={updatedProfileData.photo} alt="Profile Pic" />
-  </div>
-)} */}
+    
       <div className="profile-container">
       {/* Profile Photo Section */}
       <div className="profile-photo-section" >
@@ -174,8 +169,8 @@ const handleProfilePhotoUpdate = async () => {
     </p>
           <p>Address: {bathroom.address}</p>
           <p>Bathroom ID: {bathroom.id}</p>
-          <p>Rating: {bathroom.rating} stars </p>
-          <p>Description: {bathroom.content}</p>
+          <p>Rating: {bathroom.rating} </p>
+          <p>Content: {bathroom.content}</p>
           {/* <p>lat: {bathroom.lat}</p>
           <p>lng: {bathroom.lng}</p> */}
           <p>Date Created: {bathroom.createdAt}</p>
