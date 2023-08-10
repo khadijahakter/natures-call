@@ -184,7 +184,12 @@ const handleProfilePhotoUpdate = async () => {
        <h2 className = "review-header"> Your Reviews </h2>
       {reviewsData.map((review) => (
         <div key={review.id} className="review-item">
-          <p>Bathroom Name: {getBathroomNameById(review.BathroomId)}</p>
+       <p>
+      Bathroom Name:{" "}
+      <Link className="bathroom-link" to={`/bathrooms/${review.BathroomId}`}>
+        {getBathroomNameById(review.BathroomId)}
+      </Link>
+    </p>
           <p>Review Content: {review.content}</p>
           {/* <p>Review wheelchair: {review.wheelchair}</p> */}
           <p>Bathroom ID: {review.BathroomId}</p>
