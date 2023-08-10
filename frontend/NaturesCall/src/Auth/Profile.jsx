@@ -122,7 +122,7 @@ const handleProfilePhotoUpdate = async () => {
 )} */}
       <div className="profile-container">
       {/* Profile Photo Section */}
-      <div className="profile-photo-section">
+      <div className="profile-photo-section" >
         <h2 className = "profile-photo-title">Update Profile Photo</h2>
         <input
           type="text"
@@ -130,7 +130,14 @@ const handleProfilePhotoUpdate = async () => {
           value={newProfilePhoto}
           onChange={(e) => setNewProfilePhoto(e.target.value)}
         />
-        <button onClick={handleProfilePhotoUpdate}>Update Photo</button>
+      <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "8vh" }}>
+  <button 
+    className="update-photo-button py-2 px-3 text-white bg-blue-500 rounded hover:bg-blue-600"
+    onClick={handleProfilePhotoUpdate}
+  >
+    Update Photo
+  </button>
+</div>
       </div>
       </div>
   {/* Style the profile photo */}
