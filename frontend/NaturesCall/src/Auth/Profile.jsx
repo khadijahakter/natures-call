@@ -167,17 +167,18 @@ const handleProfilePhotoUpdate = async () => {
       {userBathrooms.map((bathroom)  => (
         <div key={bathroom.id} className="bathroom-item">
            <p>
-      Bathroom Name:{" "}
+      Name:{" "}
       <Link className="bathroom-link" to={`/bathrooms/${bathroom.id}`}>
         {bathroom.name}
       </Link>
     </p>
           <p>Address: {bathroom.address}</p>
           <p>Bathroom ID: {bathroom.id}</p>
-          <p>Rating: {bathroom.rating} </p>
-          <p>Content: {bathroom.content}</p>
+          <p>Rating: {bathroom.rating} stars </p>
+          <p>Description: {bathroom.content}</p>
           {/* <p>lat: {bathroom.lat}</p>
           <p>lng: {bathroom.lng}</p> */}
+          <p>Date Created: {bathroom.createdAt}</p>
           <img src={bathroom.photo} alt={`Photo of ${bathroom.name}`} />
           {/* Render other bathroom details here */}
           <hr />
