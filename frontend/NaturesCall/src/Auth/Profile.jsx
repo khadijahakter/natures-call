@@ -179,7 +179,7 @@ const handleProfilePhotoUpdate = async () => {
           {/* <p>lat: {bathroom.lat}</p>
           <p>lng: {bathroom.lng}</p> */}
           <p>Date Created: {bathroom.createdAt}</p>
-          <img src={bathroom.photo} alt={`Photo of ${bathroom.name}`} />
+          {/* <img src={bathroom.photo} alt={`Photo of ${bathroom.name}`} /> */}
           {/* Render other bathroom details here */}
           <hr />
         </div>
