@@ -2,11 +2,14 @@ import { Form, redirect, useLoaderData } from "react-router-dom";
 import{useState,useEffect} from 'react';
 
 
-
 export async function loader({ params }) {
   try {
-    const bathroomResponse = await fetch(`http://localhost:4000/bathrooms/${2}`);
+
+    console.log("params:", params);
+  console.log("paramsID: ", params.id)
+    const bathroomResponse = await fetch(`http://localhost:4000/bathrooms/${params.editId}`);
     const bathroom = await bathroomResponse.json();
+    console.log("LOADER WORKED!!!")
     
     return { bathroom };
   } catch (error) {
@@ -54,7 +57,7 @@ export default function EditBathroom(){
   console.log("prep: ", preparedBathroom)
     // Send the PATCH request to update the bathroom
     try {
-      const response = await fetch(`http://localhost:4000/bathrooms/${2}`, {
+      const response = await fetch(`http://localhost:4000/bathrooms/${brState.id}`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
@@ -74,8 +77,10 @@ export default function EditBathroom(){
           ...newestBathroom,
         };
       });
+      redirect("http://localhost:5173/profile")
   
       console.log("New BR STATE: ", brState);
+      
     } catch (error) {
       console.error("Error updating bathroom:", error);
     }
@@ -145,11 +150,11 @@ export default function EditBathroom(){
             <fieldset className="mb-8" onChange={handleInput} value={brState.emergencyCord}> 
                 <legend className="text-lg font-semibold mb-2">Does it have an Emergency Cord?</legend>
                 <div className="flex items-center space-x-4">
-                    <input onChange={handleInput} type="radio" id="emergencyCordYes" name="emergencyCord" value="1" checked={brState.unisex==1} />
+                    <input onChange={handleInput} type="radio" id="emergencyCordYes" name="emergencyCord" value="1" checked={brState.emergencyCord==1} />
                     <label htmlFor="emergencyCordYes" className="mr-4 dark:text-gray-300">Yes</label>
-                    <input onChange={handleInput} type="radio" id="emergencyCordNo" name="emergencyCord" value="0" checked={brState.unisex==0} />
+                    <input onChange={handleInput} type="radio" id="emergencyCordNo" name="emergencyCord" value="0" checked={brState.emergencyCord==0} />
                     <label htmlFor="emergencyCordNo" className="mr-4 dark:text-gray-300">No</label>
-                    <input onChange={handleInput} type="radio" id="emergencyCordUnknown" name="emergencyCord" value="3" checked={brState.unisex==3} />
+                    <input onChange={handleInput} type="radio" id="emergencyCordUnknown" name="emergencyCord" value="3" checked={brState.unisemergencyCordex==3} />
                     <label htmlFor="emergencyCordUnknown" className="dark:text-gray-300">Unknown</label>
                 </div>
             </fieldset>
@@ -157,11 +162,11 @@ export default function EditBathroom(){
             <fieldset className="mb-8" onChange={handleInput}>
                 <legend className="text-lg font-semibold mb-2">Does it have an Emergency Button?</legend>
                 <div className="flex items-center space-x-4">
-                    <input onChange={handleInput} type="radio" id="emergencyButtonYes" name="emergencyButton" value="1" checked={brState.unisex==1} />
+                    <input onChange={handleInput} type="radio" id="emergencyButtonYes" name="emergencyButton" value="1" checked={brState.emergencyButton==1} />
                     <label htmlFor="emergencyButtonYes" className="mr-4 dark:text-gray-300">Yes</label>
-                    <input onChange={handleInput} type="radio" id="emergencyButtonNo" name="emergencyButton" value="0" checked={brState.unisex==0} />
+                    <input onChange={handleInput} type="radio" id="emergencyButtonNo" name="emergencyButton" value="0" checked={brState.emergencyButton==0} />
                     <label htmlFor="emergencyButtonNo" className="mr-4 dark:text-gray-300">No</label>
-                    <input onChange={handleInput} type="radio" id="emergencyButtonUnknown" name="emergencyButton" value="3" checked={brState.unisex==3} />
+                    <input onChange={handleInput} type="radio" id="emergencyButtonUnknown" name="emergencyButton" value="3" checked={brState.emergencyButton==3} />
                     <label htmlFor="emergencyButtonUnknown" className="dark:text-gray-300">Unknown</label>
                 </div>
             </fieldset>
@@ -169,11 +174,11 @@ export default function EditBathroom(){
             <fieldset className="mb-8" onChange={handleInput}>
                 <legend className="text-lg font-semibold mb-2">Is it Pet Friendly?</legend>
                 <div className="flex items-center space-x-4">
-                    <input onChange={handleInput} type="radio" id="petFriendlyYes" name="petFriendly" value="1" checked={brState.unisex==1} />
+                    <input onChange={handleInput} type="radio" id="petFriendlyYes" name="petFriendly" value="1" checked={brState.petFriendly==1} />
                     <label htmlFor="petFriendlyYes" className="mr-4 dark:text-gray-300">Yes</label>
-                    <input onChange={handleInput} type="radio" id="petFriendlyNo" name="petFriendly" value="0" checked={brState.unisex==0} />
+                    <input onChange={handleInput} type="radio" id="petFriendlyNo" name="petFriendly" value="0" checked={brState.petFriendly==0} />
                     <label htmlFor="petFriendlyNo" className="mr-4 dark:text-gray-300">No</label>
-                    <input onChange={handleInput} type="radio" id="petFriendlyUnknown" name="petFriendly" value="3" checked={brState.unisex==3} />
+                    <input onChange={handleInput} type="radio" id="petFriendlyUnknown" name="petFriendly" value="3" checked={brState.petFriendly==3} />
                     <label htmlFor="petFriendlyUnknown" className="dark:text-gray-300">Unknown</label>
                 </div>
             </fieldset>
@@ -181,7 +186,7 @@ export default function EditBathroom(){
             <button
                     type="submit"
                     className="bg-sky-500 hover:bg-sky-600 text-white p-2 px-4 rounded mb-6 w-full"
-                    onSubmit={handleAddBrFormSubmit}
+                    
                     
                 >
                     Save Edit 
