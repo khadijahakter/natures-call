@@ -166,7 +166,12 @@ const handleProfilePhotoUpdate = async () => {
        <h2 className = "bathroom-header"> Your Bathrooms </h2>
       {userBathrooms.map((bathroom)  => (
         <div key={bathroom.id} className="bathroom-item">
-          <p>Name: {bathroom.name}</p>
+           <p>
+      Bathroom Name:{" "}
+      <Link className="bathroom-link" to={`/bathrooms/${bathroom.id}`}>
+        {bathroom.name}
+      </Link>
+    </p>
           <p>Address: {bathroom.address}</p>
           <p>Bathroom ID: {bathroom.id}</p>
           <p>Rating: {bathroom.rating} </p>
