@@ -21,19 +21,17 @@ export async function loader({params}){
   const Reviews = await reviewsResponse.json();
   const UserResponse = await fetch(`/api/userProfileData/userData`);
   const userData = await UserResponse.json();
-  return {Bathroom, Reviews, userData};
+  const allUserResponse = await fetch('/api/userProfileData/allUsers');
+  const allUsers = await allUserResponse.json();
+  console.log("allUsers fetched: ", allUsers);
+  return {Bathroom, Reviews, userData, allUsers};
   
   }
 
 //action for add a review 
 
 export default function BathroomPage(){
-  const {Bathroom, Reviews, userData} = useLoaderData();
-  
-
-
-
-
+  const { Bathroom, Reviews, userData, allUsers } = useLoaderData();
 
     const {
         sourceid,
@@ -147,16 +145,22 @@ export default function BathroomPage(){
                 <div className="space-y-4 w-3/4">
               <h2 className="text-2xl font-bold mt-8 mb-4 ">Reviews</h2>
       
-                {Reviews.map((review) => (
-                  <div key={review.id} className="bg-gray-900 p-4 mx-2 rounded-lg bg-opacity-70">
-                   <RatingDisplay
-                    rating = {review.rating}/>
-                  <h3 className="text-xl font-bold">{review.rating}</h3>
-                    <h3 className="text-xl font-bold">{review.title}</h3>
-                    {/* <p>Posted by: {review.userName}</p> */}
-                    <p>{review.content}</p>
+              {Reviews.map((review) => {
+              // Find the user associated with the review
+              const reviewUser = allUsers.find(user => user.id === review.UserId);
+              console.log("reviewUser", reviewUser);
+              return (
+                <div key={review.id} className="bg-gray-900 p-4 mx-2 rounded-lg bg-opacity-70">
+                  <div className="flex items-center space-x-4"> {/* Display user photo and other info */}
+                    <img src={reviewUser.photo} alt={`${reviewUser.name}'s Profile Pic`} className="w-8 h-8 rounded-full" />
+                    <h3 className="text-xl font-bold">{reviewUser.name}</h3>
                   </div>
-                ))}
+                  <RatingDisplay rating={review.rating} />
+                  <h3 className="text-xl font-bold">{review.title}</h3>
+                  <p>{review.content}</p>
+                </div>
+              );
+            })}
 
           <div className= "py-5 ">
             <Link to
