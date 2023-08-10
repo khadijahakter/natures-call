@@ -141,7 +141,7 @@ const handleProfilePhotoUpdate = async () => {
       </div>
       </div>
   {/* Style the profile photo */}
-<div className="profile-photo-container">
+<div className="profile-photo-container"style={{ marginBottom: "30px" }}>
 <img
           key={profilePhotoKey} // Use the profilePhotoKey as the key
           className="profile-photo-image"
