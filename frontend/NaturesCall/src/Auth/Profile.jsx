@@ -192,8 +192,8 @@ const handleProfilePhotoUpdate = async () => {
     </p>
           <p>Review Content: {review.content}</p>
           {/* <p>Review wheelchair: {review.wheelchair}</p> */}
-          <p>Bathroom ID: {review.BathroomId}</p>
-          <p>Time Created: {review.createdAt}</p>
+          {/* <p>Bathroom ID: {review.BathroomId}</p> */}
+          <p>Date Created: {review.createdAt}</p>
           {/* Render other review details here */}
           <hr />
         </div>
