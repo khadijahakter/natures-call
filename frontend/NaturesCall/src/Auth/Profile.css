@@ -110,10 +110,12 @@
 .profile-photo {
   text-align: center;
   margin-top: 10px; /* Add some top margin for spacing */
+ 
 }
 .profile-photo-title{
   text-align:center;
 }
+
 /* ... (your existing CSS styles) */
 
 /* Media Queries */
@@ -152,4 +154,15 @@
   border-radius: 50%; /* Create a circular border */
   border: 3px solid #fff; /* Add a white border around the circle */
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.3); /* Add a shadow for depth */
+}
+/* Add this to your existing CSS */
+.bathroom-link {
+  color: inherit;
+  font-weight: normal; /* Default font weight */
+  transition: font-weight 0.3s ease;
+}
+
+.bathroom-link:hover {
+  color: blue; /* Change the color to blue on hover */
+  font-weight: bold; /* Bolder font weight on hover */
 }
