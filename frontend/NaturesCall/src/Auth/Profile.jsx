@@ -59,8 +59,10 @@ const getBathroomNameById = (BathroomId) => {
 
 
 const [newProfilePhoto, setNewProfilePhoto] = useState(""); // State to manage new profile photo URL
-const [updatedProfileData, setUpdatedProfileData] = useState(profileData);
 const [profilePhotoKey, setProfilePhotoKey] = useState(0);
+
+// Update the state for updated profile data
+const [updatedProfileData, setUpdatedProfileData] = useState(profileData);
 const handleProfilePhotoUpdate = async () => {
   try {
     // Send the updated profile photo URL to your backend API for user data update
@@ -84,7 +86,14 @@ const handleProfilePhotoUpdate = async () => {
       const updatedData = await response.json();
       setUpdatedProfileData(updatedData);
       setProfilePhotoKey(prevKey => prevKey + 1); // Update the key
- 
+   // Update the profile photo URL in the component state
+  setUpdatedProfileData(prevData => ({
+    ...prevData,
+    user: {
+      ...prevData.user,
+      photo: newProfilePhoto,
+    },
+  }));
   
     } else {
       console.error("Failed to update profile photo");
@@ -117,7 +126,7 @@ const handleProfilePhotoUpdate = async () => {
         <h2 className = "profile-photo-title">Update Profile Photo</h2>
         <input
           type="text"
-          placeholder="Enter Image URL"
+          placeholder="Enter Image URL"                                                                 
           value={newProfilePhoto}
           onChange={(e) => setNewProfilePhoto(e.target.value)}
         />
@@ -127,11 +136,11 @@ const handleProfilePhotoUpdate = async () => {
   {/* Style the profile photo */}
 <div className="profile-photo-container">
 <img
-  key={profilePhotoKey} // Use the profilePhotoKey as the key
-  className="profile-photo-image"
-  src={profileData.user.photo}
-  alt="Profile Pic"
-/>
+          key={profilePhotoKey} // Use the profilePhotoKey as the key
+          className="profile-photo-image"
+          src={updatedProfileData.user.photo} // Use updatedProfileData here
+          alt="Profile Pic"
+        />
 </div>
 
     <div className = "reviewandbathroomcount">
