@@ -113,6 +113,8 @@ const AuthProvider = ({ children }) => {
     setIsAuthChecked(true);
   }
 
+
+
   return (
     <AuthContext.Provider value={{
       currentUser,
@@ -121,7 +123,8 @@ const AuthProvider = ({ children }) => {
       authError,
       signup,
       login,
-      logout
+      logout,
+    
     }}>
       {children}
     </AuthContext.Provider>

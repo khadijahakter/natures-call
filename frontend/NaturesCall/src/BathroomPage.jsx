@@ -19,16 +19,19 @@ export async function loader({params}){
   const reviewsResponse= await fetch(`http://localhost:4000/bathrooms/${params.id}/reviews`);
 
   const Reviews = await reviewsResponse.json();
-
-  return {Bathroom, Reviews};
+  const UserResponse = await fetch(`/api/userProfileData/userData`);
+  const userData = await UserResponse.json();
+  const allUserResponse = await fetch('/api/userProfileData/allUsers');
+  const allUsers = await allUserResponse.json();
+  console.log("allUsers fetched: ", allUsers);
+  return {Bathroom, Reviews, userData, allUsers};
   
   }
 
 //action for add a review 
 
 export default function BathroomPage(){
-
-const {Bathroom, Reviews} = useLoaderData();
+  const { Bathroom, Reviews, userData, allUsers } = useLoaderData();
 
     const {
         sourceid,
@@ -66,11 +69,16 @@ const {Bathroom, Reviews} = useLoaderData();
       const { id } = useParams();
       return (
 <>
+<Link to="/" className="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">
+        Back To Home
+      </Link>
 <div className=" overflow-scroll overflow-y-auto">
         <div className="container mx-auto p-4 ">
 
           <div className="flex flex-col items-center ">
         <div className="flex items-center space-x-4 justify-center "> {/* flex makes it inline, items-center vertically aligns the items, space-x-4 adds horizontal spacing */}
+         
+          
           <h1 className="text-7xl font-bold py-9 tracking-wide">{name}</h1>
           <RatingDisplay className="scale-150 px-8" rating={rating}/> {/* Assuming you can pass className to RatingDisplay */}
           <p className="text-2xl mb-2 text-gray-300"> {rating} Stars</p>
@@ -137,15 +145,22 @@ const {Bathroom, Reviews} = useLoaderData();
                 <div className="space-y-4 w-3/4">
               <h2 className="text-2xl font-bold mt-8 mb-4 ">Reviews</h2>
       
-                {Reviews.map((review) => (
-                  <div key={review.id} className="bg-gray-900 p-4 mx-2 rounded-lg bg-opacity-70">
-                   <RatingDisplay
-                    rating = {review.rating}/>
-                  <h3 className="text-xl font-bold">{review.rating}</h3>
-                    <h3 className="text-xl font-bold">{review.title}</h3>
-                    <p>{review.content}</p>
+              {Reviews.map((review) => {
+              // Find the user associated with the review
+              const reviewUser = allUsers.find(user => user.id === review.UserId);
+              console.log("reviewUser", reviewUser);
+              return (
+                <div key={review.id} className="bg-gray-900 p-4 mx-2 rounded-lg bg-opacity-70">
+                  <div className="flex items-center space-x-4"> {/* Display user photo and other info */}
+                    <img src={reviewUser.photo} alt={`${reviewUser.name}'s Profile Pic`} className="w-8 h-8 rounded-full" />
+                    <h3 className="text-xl font-bold">{reviewUser.name}</h3>
                   </div>
-                ))}
+                  <RatingDisplay rating={review.rating} />
+                  <h3 className="text-xl font-bold">{review.title}</h3>
+                  <p>{review.content}</p>
+                </div>
+              );
+            })}
 
           <div className= "py-5 ">
             <Link to
@@ -177,17 +192,21 @@ const {Bathroom, Reviews} = useLoaderData();
  </p>
  
  <p className="text-lg mb-2 flex items-center space-x-2">
-   Emergency cord: 
+  
    <span className={emergencyCord ? "bg-white rounded-full p-2 inline-flex items-center justify-center" : "bg-gray-400 rounded-full p-2 inline-flex items-center justify-center"}>
      <GrEmergency size={25} className={emergencyCord ? "text-sky-900" : "text-white"}/>
    </span> 
+   Emergency cord: 
+   <span className="font-semibold">{emergencyCord ? "Yes" : "No"}</span>
  </p>
 
 <p className="text-lg mb-2 flex items-center space-x-2">
-   Changing Table: 
+
    <span className={changingTable ? "bg-white rounded-full p-2 inline-flex items-center justify-center" : "bg-gray-400 rounded-full p-2 inline-flex items-center justify-center"}>
      <MdBabyChangingStation size={changingTable ? 45 : 25} className={changingTable ? "text-sky-900" : "text-white"}/>
    </span> 
+   Changing Table: 
+   <span className="font-semibold">{changingTable ? "Yes" : "No"}</span>
  </p>
 
  </div>
@@ -195,10 +214,18 @@ const {Bathroom, Reviews} = useLoaderData();
  </div>
             </>
           ) : (
-            <p>No reviews available.</p>
+            <>
+            <p className="p-2 my-4">No reviews available.</p>
+            <Link to
+            ={`/bathrooms/${id}/addReview`}
+             className="bg-sky-900 text-white px-4 py-2 rounded-md hover:bg-teal-600 m-4"
+           >
+             Add a Review
+           </Link>
+           </>
           )}
         </div>
-
+   
         </div>
         </>
       );

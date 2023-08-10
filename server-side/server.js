@@ -32,7 +32,7 @@ const getAllBathrooms = async () => {
   while (true) {
     const options = {
       method: 'GET',
-      url: 'https://public-bathrooms.p.rapidapi.com/all',
+      url: 'https://public-bathrooms.p.rapidapi.com/location',
       params: {
         lat: '40.730610',
         lng: '-73.935242',
@@ -43,8 +43,7 @@ const getAllBathrooms = async () => {
         unisex: 'false'
       },
       headers: {
-      //  'X-RapidAPI-Key': '831c853957mshc77689e0a4a42aap148651jsn97b41cae877a',
-      'X-RapidAPI-Key': '137ac3c14amsh0c46764884bab1ap1cae9ejsn41d15eeab940',
+        'X-RapidAPI-Key': process.env.API_KEY,
         'X-RapidAPI-Host': 'public-bathrooms.p.rapidapi.com'
       }
     };
@@ -623,7 +622,7 @@ app.delete("/bathrooms/:bathroomId/:reviewsId", authenticateUser, async (req, re
   if (numberOfAffectedRows > 0) {
       res.status(200).json(affectedRows[0]);
     } else {
-      res.status(404).send({ message: "Comment not found" });
+      res.status(404).send({ message: "review not found" });
     }
   } catch (err) {
     if (err.name === "SequelizeValidationError") {

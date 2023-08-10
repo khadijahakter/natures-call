@@ -27,7 +27,8 @@ router.get("/current_user", async (req, res) => {
       name: req.body.name,
       email: req.body.email,
       password: hashedPass,
-      photo:req.body.photo
+      photo:
+      "https://img.myloview.com/stickers/toilet-vector-icon-toilet-editable-stroke-toilet-linear-symbol-for-use-on-web-and-mobile-apps-logo-print-media-thin-line-illustration-vector-isolated-outline-drawing-700-214573210.jpg"
 
     });
     req.session.userId = user.id;
@@ -49,7 +50,7 @@ router.get("/current_user", async (req, res) => {
         .json({ errors: error.errors.map((e) => e.message) });
     }
     res.status(500).json({
-      message: "Error occurred while creating user  ",
+      message: "Error occurred while creating user. ",
       error: error,
       
     });
