@@ -169,11 +169,14 @@ const handleProfilePhotoUpdate = async () => {
     </p>
           <p>Address: {bathroom.address}</p>
           {/* <p>Bathroom ID: {bathroom.id}</p> */}
-          <p>Rating: {bathroom.rating} stars </p>
-          <p>Content: {bathroom.content}</p>
+          <p>Rating: {bathroom.rating !== null ? bathroom.rating + " stars" : "No rating yet"}</p>
+          <p>Content: {bathroom.content !== null ? bathroom.content : "No content available"}</p>
           {/* <p>lat: {bathroom.lat}</p>
           <p>lng: {bathroom.lng}</p> */}
           <p>Date Created: {bathroom.createdAt}</p>
+          {bathroom.updatedAt !== bathroom.createdAt && ( // Check if updatedAt is different from createdAt
+        <p>Date Updated: {bathroom.updatedAt}</p>
+      )}
           {/* <img src={bathroom.photo} alt={`Photo of ${bathroom.name}`} /> */}
           {/* Render other bathroom details here */}
           <hr />
