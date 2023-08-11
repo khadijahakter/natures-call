@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, NavLink, useLoaderData, } from "react-router-dom";
+import { Link, NavLink, useLoaderData, useNavigate} from "react-router-dom";
 import { Outlet, redirect  } from "react-router-dom";
 import {useState, useEffect} from "react";
 // import axios from "axios";
@@ -179,6 +179,7 @@ const handleProfilePhotoUpdate = async () => {
       )}
           {/* <img src={bathroom.photo} alt={`Photo of ${bathroom.name}`} /> */}
           {/* Render other bathroom details here */}
+         
           <hr />
           <button  className="edit-button">
             <Link to={`/editBathroom/${bathroom.id}`}> Edit Me</Link></button>
