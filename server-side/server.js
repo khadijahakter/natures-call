@@ -681,28 +681,62 @@ else
      newAvg = OldRate + (newRating - OldRate) / (numOfReviews + 1);
  }  
 
+ let variablesToUpdate = [
+  'wheelchair',
+  'unisex',
+  'emergencyCord',
+  'emergencyButton',
+  'petFriendly',
+  'requiresKey',
+  'handDryer',
+  'feminineProducts',
+  'toiletCovers',
+  'bidet',
+  'singleStall',
+  'multipleStall',
+  'changingTable',
+  'trashCan',
+  'goodFlooring',
+  'airFreshener',
+  'automatic',
+  'coatHook',
+  'brailleSign',
+  'hotWater',
+  'firstAid',
+  'sharpsDisposal'
+];
+
+let updates = {};
+
+variablesToUpdate.forEach(variable => {
+  let newValue = curBathroom[variable];
+  if (req.body[variable] == 1) {
+      newValue += 1;
+  }
+  updates[variable] = newValue;
+});
+
+// Assuming you still want to update rating as you did in your provided code
+updates['rating'] = Math.round(newAvg);
+
+await curBathroom.set(updates);
+await curBathroom.save();
+
+res.message("updated");
   //add new average to the request body 
-    const [numberOfAffectedRows, affectedRows] = await Bathroom.update(
+    // const [numberOfAffectedRows, affectedRows] = await Bathroom.update(
 
-      // { 
-      //   rating: Math.round(newAvg) ,
-      //   address: req.body.address,
-      //   name: req.body.name,
-      //   unisex: req.body.unisex,
-      //   petFriendly:req.body.petFriendly,
-      //   emergencyButton:req.body.emergencyButton,
-      //   emergencyCord:req.body.emergencyCord
-      // },
-      {rating: Math.round(newAvg) },
-      // req.body,
-      { where: { id: bathroomId }, returning: true }
-    );
+    //   {wheelchair: newWC},
+    //   {rating: Math.round(newAvg) },
+    //   // req.body,
+    //   { where: { id: bathroomId }, returning: true }
+    // );
 
-    if (numberOfAffectedRows > 0) {
-      res.status(200).json(affectedRows[0]);
-    } else {
-      res.status(404).json({ message: "Bathroom not found" });
-    }
+    // if (numberOfAffectedRows > 0) {
+    //   res.status(200).json(affectedRows[0]);
+    // } else {
+    //   res.status(404).json({ message: "Bathroom not found" });
+    // }
   } catch (err) {
     if (err.name === "SequelizeValidationError") {
       return res.status(422).json({ errors: err.errors.map((e) => e.message) });

@@ -180,7 +180,9 @@ export default function BathroomPage(){
        <GrWheelchair size={25} className="text-sky-900" />
      </span> 
      Wheelchair Accessible: 
-     <span className="font-semibold">{wheelchair ? "Yes" : "No"}</span>
+     <span className="font-semibold">{wheelchair ? 
+     ("Yes " + wheelchair +" votes"
+     ) : "No"}</span>
    </p>
  
  <p className="text-lg mb-2 flex items-center space-x-2">

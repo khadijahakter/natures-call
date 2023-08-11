@@ -1,5 +1,6 @@
 import React from "react";
-import { Form, redirect, Link, useParams} from "react-router-dom";
+import { Form, redirect, Link, useParams, useNavigate} from "react-router-dom";
+// const navigate = useNavigate();
 
 export async function action({ request, params }) {
     let formData = await request.formData();
@@ -16,6 +17,9 @@ export async function action({ request, params }) {
         body: JSON.stringify(bathroomData),
     });
     console.log("review call response:",response);
+
+    // navigate (`/bathrooms/${params.id}`);
+
 //edit bathroom rating
     const updateresponse = await fetch(`http://localhost:4000/bathrooms/${params.id}`, {
         method: "PATCH",
@@ -24,6 +28,9 @@ export async function action({ request, params }) {
         },
         body: JSON.stringify(bathroomData),
     });
+
+    console.log("hannaaaaaaaaaah" + updateresponse);
+
     return redirect(`/bathrooms/${params.id}`);
 
 }
