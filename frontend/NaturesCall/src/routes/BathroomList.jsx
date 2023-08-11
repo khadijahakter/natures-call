@@ -15,6 +15,8 @@ export default function BathroomList() {
   const [long, setLong]=useState(null);
   const [displayBathrooms, setDisplayBathrooms] = useState([]);
   const [selected, setSelected] = useState(null);
+  const [selectedAmenity, setSelectedAmenity] = useState(null);
+
   async function fetchBathrooms() {
     const data={
       lat,
@@ -47,6 +49,7 @@ export default function BathroomList() {
 
   return (
     <>
+
       <div className="flex h-screen">
         {!displayBathrooms.length ? (
           <div className="w-full h-full">
@@ -62,8 +65,40 @@ export default function BathroomList() {
         ) : (
           <>
             <div className=" overflow-scroll Bathroomlist-bg w-1/4 h-full bg-opacity-50 p-4  overflow-y-auto ">
+
+              <h2>
+                Total Bathrooms : {displayBathrooms.length}
+              </h2>
+<label for="amenities">Choose an amenity:</label>
+<select id="amenities" name="amenities" onChange={(e) => setSelectedAmenity(e.target.value === 'none' ? null : e.target.value)}>
+    <option value="none">None</option>
+    <option value="wheelchair">Wheelchair Accessible</option>
+    <option value="unisex">Unisex</option>
+    <option value="emergencyCord">Emergency Cord</option>
+    <option value="emergencyButton">Emergency Button</option>
+    <option value="petFriendly">Pet Friendly</option>
+    <option value="requiresKey">Requires Key</option>
+    <option value="handDryer">Hand Dryer</option>
+    <option value="feminineProducts">Feminine Products</option>
+    <option value="toiletCovers">Toilet Covers</option>
+    <option value="bidet">Bidet</option>
+    <option value="singleStall">Single Stall</option>
+    <option value="multipleStall">Multiple Stall</option>
+    <option value="changingTable">Changing Table</option>
+    <option value="trashCan">Trash Can</option>
+    <option value="goodFlooring">Good Flooring</option>
+    <option value="airFreshener">Air Freshener</option>
+    <option value="automatic">Automatic</option>
+    <option value="coatHook">Coat Hook</option>
+    <option value="brailleSign">Braille Sign</option>
+    <option value="hotWater">Hot Water</option>
+    <option value="firstAid">First Aid</option>
+    <option value="sharpsDisposal">Sharps Disposal</option>
+</select>
+
               <ul className=" flex flex-col space-y-4 text-white">
-                {displayBathrooms.map(bathroom => (
+                {displayBathrooms.filter(bathroom => !selectedAmenity || bathroom[selectedAmenity] > 3)
+                .map(bathroom => (
                   <Link to={`/bathrooms/${bathroom.id}`} key={bathroom.id}>
                     <li className="Bathroom-card flex flex-col  p-4 rounded-lg bg-opacity-30 transform transition duration-200 ease-in-out hover:scale-105">
                      
