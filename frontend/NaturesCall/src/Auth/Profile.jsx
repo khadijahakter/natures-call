@@ -218,17 +218,18 @@ const handleProfilePhotoUpdate = async () => {
           {bathroom.updatedAt !== bathroom.createdAt && ( // Check if updatedAt is different from createdAt
         <p>Date Updated: {bathroom.updatedAt}</p>
       )}
-      <button onClick={() => handleDeleteBathroom(bathroom.id)} disabled={deleteInProgress}>
-  {deleteInProgress ? "Deleting..." : "Delete"}
-</button>
-
+  
           {/* <img src={bathroom.photo} alt={`Photo of ${bathroom.name}`} /> */}
           {/* Render other bathroom details here */}
          
           <hr />
+          <div className="button-container">
           <button  className="edit-button">
             <Link to={`/editBathroom/${bathroom.id}`}> Edit </Link></button>
-
+            <button onClick={() => handleDeleteBathroom(bathroom.id)} disabled={deleteInProgress}>
+  {deleteInProgress ? "Deleting..." : "Delete"}
+</button>
+</div>
         </div>
       ))}
     </div>
