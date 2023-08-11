@@ -1,4 +1,4 @@
-import { Form, redirect, useLoaderData } from "react-router-dom";
+import { Form, redirect, useLoaderData, useNavigate } from "react-router-dom";
 import { useState } from 'react';
 
 
@@ -18,6 +18,7 @@ export async function loader({ params }) {
   }
 }
 export default function EditBathroom() {
+  const history = useNavigate();
   const { bathroom } = useLoaderData();
   console.log("Bathroom data:", bathroom);
 
@@ -73,7 +74,7 @@ export default function EditBathroom() {
           ...newestBathroom,
         };
       });
-      redirect("http://localhost:5173/profile")
+      history("/profile");
 
       console.log("New BR STATE: ", brState);
 
