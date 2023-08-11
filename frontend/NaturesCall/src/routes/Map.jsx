@@ -7,7 +7,7 @@ import './MapStyles.css';
 import { GoogleMap, useJsApiLoader, Marker,InfoWindow } from "@react-google-maps/api";
 
 
-
+import customMarkerIcon from "./bathroomMarker(unclicked).png"; 
 
 const center = {
   lat: 40.587400,
@@ -206,6 +206,7 @@ return isLoaded ? (
         key={displayBathroom.id}
         position={{ lat: parseFloat(displayBathroom.lat), lng: parseFloat(displayBathroom.lng) }}
         onClick={() => setSelectedBathroom(displayBathroom)}
+       // icon={customMarkerIcon} // Set the custom icon
       />
         ))}
           {selectedBathroom && (
