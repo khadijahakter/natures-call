@@ -15,6 +15,7 @@ export default function BathroomList() {
   const [long, setLong]=useState(null);
   const [displayBathrooms, setDisplayBathrooms] = useState([]);
   const [selected, setSelected] = useState(null);
+  const [bathroomCount, setBathroomCount] = useState(0);
   async function fetchBathrooms() {
     const data={
       lat,
@@ -32,7 +33,10 @@ export default function BathroomList() {
     const displayBathrooms = await response.json();
     setDisplayBathrooms(displayBathrooms);
     console.log("display br: ",displayBathrooms)
-    
+      // Calculate the count of displayed bathrooms
+  const bathroomCount = displayBathrooms.length;
+  setBathroomCount(bathroomCount);
+  
     return displayBathrooms;
   }
 
@@ -46,10 +50,20 @@ export default function BathroomList() {
   }, [lat,long]);
 
   return (
+   
     <>
+    {/* found bathroom count displayer */}
+       <div className="bathroom-count-container">
+        <p className="bathroom-count">
+       
+        {bathroomCount} Bathrooms Found
+           
+        </p>
+      </div>
       <div className="flex h-screen">
         {!displayBathrooms.length ? (
           <div className="w-full h-full">
+     
               <div> 
               <h2 className=" bg-cyan-300 text-center text-xl font-bold text-sky-100 rounded-full shadow-lg mx-auto my-2 bg-opacity-50  max-w-lg text-gray-100 tracking-widest">
                 Search to find a bathroom near you
