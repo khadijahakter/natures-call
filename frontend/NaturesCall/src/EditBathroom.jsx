@@ -1,4 +1,4 @@
-import { Form, redirect, useLoaderData, useNavigate } from "react-router-dom";
+import { Form, redirect, useLoaderData, useNavigate, Link} from "react-router-dom";
 import { useState } from 'react';
 
 
@@ -88,6 +88,9 @@ export default function EditBathroom() {
 
   return (
     <>
+       <Link to="/profile" className="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">
+        Back To Profile
+      </Link>
       <Form method="post" className="p-8 bg-blue-200 text-black rounded" id="edit-form" onSubmit={handleAddBrFormSubmit}>
         <h1 className="text-2xl font-bold text-center mb-8">Edit A Bathroom!</h1>
 

@@ -177,7 +177,8 @@ const handleProfilePhotoUpdate = async () => {
           {/* <img src={bathroom.photo} alt={`Photo of ${bathroom.name}`} /> */}
           {/* Render other bathroom details here */}
           <hr />
-          <button><Link to={`/editBathroom/${bathroom.id}`}> Edit Me</Link></button>
+          <button  className="edit-button">
+            <Link to={`/editBathroom/${bathroom.id}`}> Edit Me</Link></button>
 
         </div>
       ))}
