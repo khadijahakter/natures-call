@@ -168,8 +168,8 @@ const handleProfilePhotoUpdate = async () => {
       </Link>
     </p>
           <p>Address: {bathroom.address}</p>
-          <p>Bathroom ID: {bathroom.id}</p>
-          <p>Rating: {bathroom.rating} </p>
+          {/* <p>Bathroom ID: {bathroom.id}</p> */}
+          <p>Rating: {bathroom.rating} stars </p>
           <p>Content: {bathroom.content}</p>
           {/* <p>lat: {bathroom.lat}</p>
           <p>lng: {bathroom.lng}</p> */}
@@ -193,9 +193,11 @@ const handleProfilePhotoUpdate = async () => {
         {getBathroomNameById(review.BathroomId)}
       </Link>
     </p>
+          <p>Rating: {review.rating} stars</p>
           <p>Review Content: {review.content}</p>
           {/* <p>Review wheelchair: {review.wheelchair}</p> */}
           {/* <p>Bathroom ID: {review.BathroomId}</p> */}
+
           <p>Date Created: {review.createdAt}</p>
           {/* Render other review details here */}
           <hr />

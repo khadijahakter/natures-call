@@ -50,6 +50,7 @@ export default function EditBathroom() {
       emergencyButton: brState.emergencyButton,
       petFriendly: brState.petFriendly,
       rating: parseInt(brState.rating, 10),
+      content: brState.content,
     };
     console.log("prep: ", preparedBathroom)
     // Send the PATCH request to update the bathroom
@@ -131,7 +132,7 @@ export default function EditBathroom() {
             />
           </div>
         </fieldset> */}
-
+{/* 
         <fieldset className="mb-8">
           <legend className="text-lg font-semibold mb-2">Is it Unisex?</legend>
           <div className="flex items-center space-x-4">
@@ -178,8 +179,21 @@ export default function EditBathroom() {
             <input onChange={handleInput} type="radio" id="petFriendlyUnknown" name="petFriendly" value="3" checked={brState.petFriendly == 3} />
             <label htmlFor="petFriendlyUnknown" className="dark:text-gray-300">Unknown</label>
           </div>
-        </fieldset>
+        </fieldset> */}
+<fieldset>
+          <div className="flex flex-col gap-4 mb-4">
+            <textarea
+              id="content"
+              name="content"
+              className="border-2 border-blue-500 p-2 rounded"
+              rows="1"
+              placeholder="Enter the description here"
+              onChange={handleInput}
 
+              value={brState.content}
+            />
+          </div>
+        </fieldset>
         <button
           type="submit"
           className="bg-sky-500 hover:bg-sky-600 text-white p-2 px-4 rounded mb-6 w-full"
