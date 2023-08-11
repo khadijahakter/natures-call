@@ -227,7 +227,7 @@ const handleProfilePhotoUpdate = async () => {
          
           <hr />
           <button  className="edit-button">
-            <Link to={`/editBathroom/${bathroom.id}`}> Edit Me</Link></button>
+            <Link to={`/editBathroom/${bathroom.id}`}> Edit </Link></button>
 
         </div>
       ))}
