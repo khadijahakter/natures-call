@@ -54,7 +54,7 @@ export default function EditBathroom() {
     console.log("prep: ", preparedBathroom)
     // Send the PATCH request to update the bathroom
     try {
-      const response = await fetch(`http://localhost:4000/bathrooms/${brState.id}`, {
+      const response = await fetch(`/api/userActions/bathrooms/${brState.id}`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
@@ -118,7 +118,7 @@ export default function EditBathroom() {
             />
           </div>
         </fieldset>
-        <fieldset>
+        {/* <fieldset>
           <div className="flex flex-col gap-4 mb-4">
             <textarea
               id="rating"
@@ -130,7 +130,7 @@ export default function EditBathroom() {
               value={brState.rating}
             />
           </div>
-        </fieldset>
+        </fieldset> */}
 
         <fieldset className="mb-8">
           <legend className="text-lg font-semibold mb-2">Is it Unisex?</legend>

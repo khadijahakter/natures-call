@@ -388,7 +388,7 @@ app.get("/myBathrooms", authenticateUser, async (req, res) => {
         updatedAt: new Date(),
         //UserId: req.session.userId, // Set the UserId to the logged-in user's ID
         UserId: req.session.userId,
-        sourceid:"user1"
+        sourceid:"usercreatedbathroom"
       });
   
 
@@ -640,7 +640,7 @@ app.delete("/bathrooms/:bathroomId/:reviewsId", authenticateUser, async (req, re
 
 
 
-//Edit Rating
+//Edit Rating (edit bathroom)
 
 app.patch("/bathrooms/:bathroomId", async (req, res) => {
   const bathroomId = parseInt(req.params.bathroomId, 10);
