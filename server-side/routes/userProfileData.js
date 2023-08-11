@@ -79,6 +79,18 @@ router.get('/allUsers', async (req, res) => {
     return res.status(500).json({ error: 'Internal server error' });
   }
 });
+//get all bathrooms 
+router.get("/bathrooms", async (req, res) => {
+  try {
+    const allbathrooms = await Bathroom.findAll();
+
+
+    res.status(200).json(allbathrooms);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send({ message: err.message });
+  }
+});
 
 //update a profile photo
 

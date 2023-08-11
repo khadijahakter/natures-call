@@ -409,8 +409,8 @@ app.get("/myBathrooms", authenticateUser, async (req, res) => {
     try {
       const record = await Bathroom.findOne({ where: { id: bathroomId } });
       if (record && record.UserId !== parseInt(req.session.userId, 10)) {
-        console.log("UserID:" , record);
-        console.log("UserID:" , req.session.userId);
+        console.log("UserID in record:", record.UserId);
+  console.log("UserID from session:", req.session.userId);
         return res
           .status(403)
           .json({ message: "You are not authorized to delete this bathroom" });
