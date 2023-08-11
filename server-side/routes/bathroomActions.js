@@ -55,4 +55,26 @@ const { authenticateUser } = require("../middleware/auth");
        }
      });
 
+//get a bathroom by Id
+router.get("/bathrooms/:bathroomId", async (req, res) => {
+
+  const bathroomId = parseInt(req.params.bathroomId, 10);
+  
+  console.log(bathroomId);
+
+
+  try {
+    const bathroom = await Bathroom.findOne({ where: { id: bathroomId } });
+
+    if (bathroom) {
+      res.status(200).json(bathroom);
+    } else {
+      res.status(404).send({ message: "bathroom not found" });
+    }
+  } catch (err) {
+    console.error(err);
+    res.status(500).send({ message: err.message });
+  }
+});
+
      module.exports = router;

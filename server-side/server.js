@@ -349,7 +349,7 @@ app.get("/myBathrooms", authenticateUser, async (req, res) => {
 });
 
   //create a bathroom --- based on user Id ------------------------
-  app.post("/bathrooms",   async (req, res) => {
+  app.post("/bathrooms", authenticateUser,  async (req, res) => {
  try{
         //const userId = req.session.userId;
 
@@ -387,8 +387,8 @@ app.get("/myBathrooms", authenticateUser, async (req, res) => {
         createdAt: new Date(),
         updatedAt: new Date(),
         //UserId: req.session.userId, // Set the UserId to the logged-in user's ID
-        UserId:2,
-        sourceid:"user1"
+        UserId: req.session.userId,
+        sourceid:"usercreatedbathroom"
       });
   
 
@@ -403,7 +403,7 @@ app.get("/myBathrooms", authenticateUser, async (req, res) => {
     }
   });
   //--------------------------------------------------------------------------
-  app.delete("/bathrooms/:bathroomId", authenticateUser, async (req, res) => {
+  app.delete("/bathrooms/:bathroomId", authenticateUser,  async (req, res) => {
     const bathroomId = parseInt(req.params.bathroomId, 10);
 
     try {
@@ -640,7 +640,7 @@ app.delete("/bathrooms/:bathroomId/:reviewsId", authenticateUser, async (req, re
 
 
 
-//Edit Rating
+//Edit Rating (edit bathroom)
 
 app.patch("/bathrooms/:bathroomId", async (req, res) => {
   const bathroomId = parseInt(req.params.bathroomId, 10);

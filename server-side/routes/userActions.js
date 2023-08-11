@@ -81,6 +81,29 @@ router.post("/:bathroomId/reviews",  authenticateUser, async (req, res) => {
       console.error(err);
     }
   });
-
+  //edit bathroom
+  router.patch("/bathrooms/:bathroomId", authenticateUser, async (req, res) => {
+    const bathroomId = parseInt(req.params.bathroomId, 10);
+    try {
+      const record = await Bathroom.findOne({ where: { id: bathroomId } });
+      if (!record) {
+        return res.status(404).json({ message: "Bathroom not found" });
+      }
+  
+      // Check if the bathroom's UserId matches the session userId
+      if (record.UserId !== req.session.userId) {
+        return res.status(403).json({ message: "Unauthorized to edit this bathroom" });
+      }
+  
+      // Update the bathroom with the provided data
+      await record.update(req.body);
+  
+      return res.status(200).json({ message: "Bathroom updated successfully" });
+    } catch (error) {
+      console.error("Error updating bathroom:", error);
+      return res.status(500).json({ message: "Internal server error" });
+    }
+  });
+  
 
   module.exports = router;

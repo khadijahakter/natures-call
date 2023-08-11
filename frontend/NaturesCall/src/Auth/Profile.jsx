@@ -114,12 +114,7 @@ const handleProfilePhotoUpdate = async () => {
     <h1 className="profile-header">Welcome Back, {profileData.user.name}</h1>
     {/* show profile photo */}
    
-      {/* show profile photo if it's not null */}
-      {/* {updatedProfileData.photo && (
-  <div className="profile-photo">
-    <img src={updatedProfileData.photo} alt="Profile Pic" />
-  </div>
-)} */}
+    
       <div className="profile-container">
       {/* Profile Photo Section */}
       <div className="profile-photo-section" >
@@ -173,15 +168,18 @@ const handleProfilePhotoUpdate = async () => {
       </Link>
     </p>
           <p>Address: {bathroom.address}</p>
-          <p>Bathroom ID: {bathroom.id}</p>
+          {/* <p>Bathroom ID: {bathroom.id}</p> */}
           <p>Rating: {bathroom.rating} stars </p>
-          <p>Description: {bathroom.content}</p>
+          <p>Content: {bathroom.content}</p>
           {/* <p>lat: {bathroom.lat}</p>
           <p>lng: {bathroom.lng}</p> */}
           <p>Date Created: {bathroom.createdAt}</p>
           {/* <img src={bathroom.photo} alt={`Photo of ${bathroom.name}`} /> */}
           {/* Render other bathroom details here */}
           <hr />
+          <button  className="edit-button">
+            <Link to={`/editBathroom/${bathroom.id}`}> Edit Me</Link></button>
+
         </div>
       ))}
     </div>
@@ -196,9 +194,11 @@ const handleProfilePhotoUpdate = async () => {
         {getBathroomNameById(review.BathroomId)}
       </Link>
     </p>
+          <p>Rating: {review.rating} stars</p>
           <p>Review Content: {review.content}</p>
           {/* <p>Review wheelchair: {review.wheelchair}</p> */}
           {/* <p>Bathroom ID: {review.BathroomId}</p> */}
+
           <p>Date Created: {review.createdAt}</p>
           {/* Render other review details here */}
           <hr />
