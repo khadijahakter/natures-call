@@ -31,10 +31,11 @@ export default function BathroomList() {
     });
 
     const displayBathrooms = await response.json();
+    const bathroomCount = displayBathrooms.length;
     setDisplayBathrooms(displayBathrooms);
     console.log("display br: ",displayBathrooms)
       // Calculate the count of displayed bathrooms
-  const bathroomCount = displayBathrooms.length;
+ 
   setBathroomCount(bathroomCount);
   
     return displayBathrooms;
