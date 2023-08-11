@@ -7,7 +7,7 @@ export async function loader({ params }) {
 
     console.log("params:", params);
     console.log("paramsID: ", params.id)
-    const bathroomResponse = await fetch(`http://localhost:4000/bathrooms/${params.editId}`);
+    const bathroomResponse = await fetch(`/api/bathroomActions/bathrooms/${params.editId}`);
     const bathroom = await bathroomResponse.json();
     console.log("LOADER WORKED!!!")
 
