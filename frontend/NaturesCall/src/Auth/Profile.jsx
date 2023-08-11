@@ -54,7 +54,7 @@ const getBathroomNameById = (BathroomId) => {
     return Number(bathroom.id) === Number(BathroomId); // Added "return"
   });
 
-  return bathroom ? bathroom.name : "Unknown Bathroom";
+  return bathroom ? bathroom.name : "Unknown Bathroom. Bathroom may be deleted :( ";
 };
 
 
