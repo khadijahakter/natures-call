@@ -78,14 +78,14 @@ const handleDeleteBathroom = async (bathroomId) => {
       // Update the userBathrooms state to remove the deleted bathroom
       setUpdatedProfileData(prevData => ({
         ...prevData,
-        userBathrooms: prevData.userBathrooms.filter(bathroom => bathroom.id !== bathroomId),
+        userBathrooms: userBathrooms.filter(bathroom => bathroom.id !== bathroomId),
         // Make sure to update other properties if needed
       }));
     
   
       
       // You can navigate to a different page or refresh the data here
-     // navigate('/profile');
+      navigate('/profile');
     } else {
       console.error("Failed to delete bathroom");
     }
