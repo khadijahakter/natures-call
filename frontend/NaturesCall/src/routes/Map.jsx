@@ -3,7 +3,7 @@ import { useState } from "react";
 
 import { Link } from "react-router-dom";
 
-
+import './MapStyles.css';
 import { GoogleMap, useJsApiLoader, Marker,InfoWindow } from "@react-google-maps/api";
 
 
@@ -209,16 +209,26 @@ return isLoaded ? (
       />
         ))}
           {selectedBathroom && (
-    <InfoWindow
-      position={{ lat: parseFloat(selectedBathroom.lat), lng: parseFloat(selectedBathroom.lng) }}
-      onCloseClick={() => setSelectedBathroom(null)}
-    >
-      <div>
-        <h4>{selectedBathroom.name}</h4>
-        <p className= "text-black">Rating: {selectedBathroom.rating}</p>
-        <Link to={`/bathrooms/${selectedBathroom.id}`}>View Details</Link>
-      </div>
-    </InfoWindow>
+  <InfoWindow
+  position={{ lat: parseFloat(selectedBathroom.lat), lng: parseFloat(selectedBathroom.lng) }}
+  onCloseClick={() => setSelectedBathroom(null)}
+>
+  <div className="info-window">
+    <h4>{selectedBathroom.name}</h4>
+    <div className="rating">
+      {[1, 2, 3, 4, 5].map((index) => (
+        <span
+          key={index}
+          className={`star ${selectedBathroom.rating >= index ? 'yellow' : 'gray'}`}
+        >
+          ★
+        </span>
+      ))}
+    </div>
+    <Link to={`/bathrooms/${selectedBathroom.id}`}>View Details</Link>
+  </div>
+</InfoWindow>
+
   )}
         <></>
 
