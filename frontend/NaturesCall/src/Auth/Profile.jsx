@@ -44,6 +44,7 @@ export async function loader({ params }) {
 
 
 export default function Profile() {
+  const [deleteInProgress, setDeleteInProgress] = useState(false);
   console.log("Profile Component Loaded In main.jsx");
   
   const navigate = useNavigate();
@@ -57,7 +58,12 @@ const getBathroomNameById = (BathroomId) => {
 
   return bathroom ? bathroom.name : "Unknown Bathroom. Bathroom may be deleted :( ";
 };
+
+
 const handleDeleteBathroom = async (bathroomId) => {
+  const confirmDelete = window.confirm("Are you sure you want to delete this bathroom?");
+  if (confirmDelete) {
+    setDeleteInProgress(true);
   try {
     const response = await fetch(`/api/bathroomActions/bathrooms/${bathroomId}`, {
       method: "DELETE",
@@ -67,7 +73,7 @@ const handleDeleteBathroom = async (bathroomId) => {
       },
       body: JSON.stringify({ userId: profileData.user.id }), // Pass the user ID in the body
     });
-
+  
     if (response.ok) {
       // Update the userBathrooms state to remove the deleted bathroom
       setUpdatedProfileData(prevData => ({
@@ -75,15 +81,19 @@ const handleDeleteBathroom = async (bathroomId) => {
         userBathrooms: prevData.userBathrooms.filter(bathroom => bathroom.id !== bathroomId),
         // Make sure to update other properties if needed
       }));
+    
+  
       
       // You can navigate to a different page or refresh the data here
-      navigate('/profile'); // Navigate back to the profile page, for example
+     // navigate('/profile');
     } else {
       console.error("Failed to delete bathroom");
     }
   } catch (error) {
     console.error("Error deleting bathroom:", error);
   }
+  setDeleteInProgress(false);
+}
 };
 
 
@@ -116,12 +126,14 @@ const handleProfilePhotoUpdate = async () => {
       setUpdatedProfileData(updatedData);
       setProfilePhotoKey(prevKey => prevKey + 1); // Update the key
    // Update the profile photo URL in the component state
-  setUpdatedProfileData(prevData => ({
+  
+   setUpdatedProfileData(prevData => ({
     ...prevData,
     user: {
       ...prevData.user,
       photo: newProfilePhoto,
     },
+ 
   }));
   
     } else {
@@ -206,7 +218,10 @@ const handleProfilePhotoUpdate = async () => {
           {bathroom.updatedAt !== bathroom.createdAt && ( // Check if updatedAt is different from createdAt
         <p>Date Updated: {bathroom.updatedAt}</p>
       )}
-         <button onClick={() => handleDeleteBathroom(bathroom.id)}>Delete</button>
+      <button onClick={() => handleDeleteBathroom(bathroom.id)} disabled={deleteInProgress}>
+  {deleteInProgress ? "Deleting..." : "Delete"}
+</button>
+
           {/* <img src={bathroom.photo} alt={`Photo of ${bathroom.name}`} /> */}
           {/* Render other bathroom details here */}
          
