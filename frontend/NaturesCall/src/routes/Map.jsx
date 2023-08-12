@@ -1,10 +1,12 @@
 import React from "react";
-import { useState } from "react";
+import { useState,useRef } from "react";
 
 import { Link } from "react-router-dom";
 
 
-import { GoogleMap, useJsApiLoader, Marker } from "@react-google-maps/api";
+
+import { GoogleMap, useJsApiLoader, Marker,Autocomplete,
+  DirectionsRenderer, } from "@react-google-maps/api";
 
 
 
@@ -13,18 +15,27 @@ const center = {
   lat: 40.7128,
   lng: -74.0060
 };
-
+const libraries = ["places"];
 export default function Map({ lat, long, setLat, setLong,displayBathrooms }) {
   
-
+  const [directionsResponse, setDirectionsResponse] = useState(null)
+  const [distance, setDistance] = useState('')
+  const [duration, setDuration] = useState('')
   const [geocoder, setGeocoder] = useState(null);
   const [address, setAddress] = useState('');
+
+/** @type React.MutableRefObject<HTMLInputElement> */
+const originRef = useRef()
+/** @type React.MutableRefObject<HTMLInputElement> */
+const destiantionRef = useRef()
+
 
 
 
   const { isLoaded } = useJsApiLoader({
     id: 'google-map-script',
-    googleMapsApiKey: import.meta.env.VITE_GOOGLE_MAPS_API_KEY
+    googleMapsApiKey: import.meta.env.VITE_GOOGLE_MAPS_API_KEY,
+    libraries: libraries,
 
   })
   const [map, setMap] = React.useState(null)
@@ -43,13 +54,57 @@ export default function Map({ lat, long, setLat, setLong,displayBathrooms }) {
   const onUnmount = React.useCallback(function () {
     setMap(null);
   }, []);
+
+
+  async function calculateRoute() {
+    if (originRef.current.value === '' || destiantionRef.current.value === '') {
+      return
+    }
+    // eslint-disable-next-line no-undef
+    const directionsService = new google.maps.DirectionsService()
+    const results = await directionsService.route({
+      origin: originRef.current.value,
+      destination: destiantionRef.current.value,
+      // eslint-disable-next-line no-undef
+      travelMode: google.maps.TravelMode.DRIVING,
+    })
+    console.log("Calculate Route:", originRef.current.value);
+    
+    setDirectionsResponse(results)
+    setDistance(results.routes[0].legs[0].distance.text)
+    setDuration(results.routes[0].legs[0].duration.text)
+  }
+  function clearRoute() {
+    setDirectionsResponse(null)
+    setDistance('')
+    setDuration('')
+    originRef.current.value = ''
+    destiantionRef.current.value = ''
+  }
   //geocoder API
   const getUserLocation = () => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
-        (position) => {
-          setLat(position.coords.latitude);
-          setLong(position.coords.longitude);
+        async (position) => {
+          const { latitude, longitude } = position.coords;
+  
+          try {
+            const response = await fetch(
+              `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=${import.meta.env.VITE_GOOGLE_MAPS_API_KEY}`
+            );
+            const data = await response.json();
+  
+            if (data.results.length > 0) {
+              const address = data.results[0].formatted_address;
+              console.log("my address:", address);
+              setLat(latitude);
+              setLong(longitude);
+              originRef.current.value = address;
+              console.log("originRef.current.value:", originRef.current.value);
+            }
+          } catch (error) {
+            console.error("Error getting address from coordinates:", error);
+          }
         },
         (error) => {
           console.error("Error getting user's location:", error);
@@ -59,6 +114,7 @@ export default function Map({ lat, long, setLat, setLong,displayBathrooms }) {
       console.error("Geolocation is not supported by this browser.");
     }
   };
+  
 
 
 
@@ -113,51 +169,13 @@ const blueMapStyles = [
       { "color": "##E5ECE4" }
     ]
   },
-  // {
-  //   "featureType": "road",
-  //   "elementType": "geometry",
-  //   "stylers": [
-  //     { "color": "#fae37d" }
-  //   ]
-  // },
-  // {
-  //   "featureType": "poi",
-  //   "elementType": "geometry",
-  //   "stylers": [
-  //     { "color": "#176B87" }
-  //   ]
-  // },
-  // {
-  //   "featureType": "transit",
-  //   "stylers": [
-  //     { "color": "#176B87" }
-  //   ]
-  // },
-  // {
-  //   "elementType": "labels.text.stroke",
-  //   "stylers": [
-  //     { "visibility": "on" },
-  //     { "color": "#DAFFFB" }
-  //   ]
-  // },
-  // {
-  //   "elementType": "labels.text",
-  //   "stylers": [
-  //     { "saturation": -1 },
-  //     // { "color": "#DAFFFB" }
-  //   ]
-  // },
-  // {
-  //   "elementType": "labels.icon",
-  //   "stylers": [
-  //     { "visibility": "on" }
-  //   ]
-  // }
+  
 ];
 
 
 
 return isLoaded ? (
+  
   <>
   
     <div className= "relative w-full ">
@@ -172,6 +190,7 @@ return isLoaded ? (
 
     <div className="search absolute top-2 left-1/4 z-10 p-2 rounded w-2/4 bg-cyan-300 bg-opacity-40 overflow-hidden ">
     <div className="flex items-center bg-cyan-700 rounded ">
+      <Autocomplete>
       <input
         type="text"
         value={address}
@@ -179,6 +198,7 @@ return isLoaded ? (
         placeholder="Enter address"
         className="px-4 py-2 flex-grow text-white bg-cyan-900 bg-opacity-90"
       />
+      </Autocomplete>
       <button onClick={onGeocode} className="bg-cyan-700 hover:bg-cyan-500 text-white font-bold  py-2 px-4 rounded-r">
         Find Bathrooms
       </button>
@@ -206,9 +226,30 @@ return isLoaded ? (
 
           />
         ))}
-        <></>
+         <Marker position={center} />
+          {directionsResponse && (
+            <DirectionsRenderer directions={directionsResponse} />
+          )}
 
         </GoogleMap>
+        
+        <Autocomplete>
+              <input type='text' placeholder='Origin' ref={originRef} className="text-black" />
+            </Autocomplete>
+            <Autocomplete>
+              <input
+                type='text'
+                placeholder='Destination'
+                ref={destiantionRef}
+                className="text-black"
+              />
+            </Autocomplete>
+
+            <button colorScheme='pink' type='submit' onClick={calculateRoute}>
+              Calculate Route
+            </button>
+            <text>Distance: {distance} </text>
+          <text>Duration: {duration} </text>
 
         <div className="absolute bottom-7 right-20 z-10">
 
