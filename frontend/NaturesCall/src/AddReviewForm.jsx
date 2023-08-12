@@ -1,6 +1,7 @@
 import React from "react";
 import { Form, redirect, Link, useParams, useNavigate} from "react-router-dom";
 // const navigate = useNavigate();
+import { useState } from "react";
 
 export async function action({ request, params }) {
     let formData = await request.formData();
@@ -36,12 +37,15 @@ export async function action({ request, params }) {
 }
 
 
-
-
-
-
 export default function AddReviewForm() {
+
     const { id } = useParams();
+    const [rating, setRating] = useState(0);
+
+    const handleRating = (star) => {
+        setRating(star);
+      };
+
     
     const handleSubmit = (event) => {
         const rating = event.target.rating.value;
@@ -62,20 +66,23 @@ export default function AddReviewForm() {
       </Link>
             <h1 className="text-2xl font-bold text-center mb-8">Create Review</h1>
 
-            <fieldset>
-                <div className="flex flex-col gap-4 mb-4">
-                    <textarea
-                        id="rating"
-                        name="rating"
-                        className="border-2 border-blue-500 p-2 rounded"
-                        rows="1"
-                        placeholder="Enter your rating here"
-                        required
-                        min="1"
-                        max="5"
-                    />
-                </div>
-            </fieldset>
+<fieldset>
+  <div className="flex flex-col gap-4 mb-4">
+    <div className="star-rating">
+      {[1, 2, 3, 4, 5].map((star) => (
+        <span
+          key={star}
+          className={`star ${rating >= star ? "filled" : ""}`}
+          onClick={() => handleRating(star)}
+        >
+          ★
+        </span>
+      ))}
+    </div>
+    <input type="hidden" id="rating" name="rating" value={rating} />
+  </div>
+</fieldset>
+
 
             <fieldset>
                 <div className="flex flex-col gap-4 mb-4">

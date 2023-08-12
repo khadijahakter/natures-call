@@ -63,7 +63,7 @@ export default function BathroomList() {
            
         </p>
       </div>
-      
+
       <div className="flex h-screen">
         {!displayBathrooms.length ? (
           <div className="w-full h-full">
@@ -80,36 +80,46 @@ export default function BathroomList() {
         ) : (
           <>
             <div className=" overflow-scroll Bathroomlist-bg w-1/4 h-full bg-opacity-50 p-4  overflow-y-auto ">
+            
+<div className="flex flex-row items-center mb-2 bg-sky-800 opacity-60 rounded">
+    <label 
+        htmlFor="amenities" 
+        className="font-semibold text-sm px-4 text-gray-400"
+    >
+        Filter:
+    </label>
+    <select 
+        id="amenities" 
+        name="amenities" 
+        onChange={(e) => setSelectedAmenity(e.target.value === 'none' ? null : e.target.value)}
+        className="m-1 mr-4 text-sm bg-cyan-950 block w-full rounded shadow-sm focus:ring-2 focus:outline-none opacity-80"
+    >
+        <option value="none">None</option>
+        <option value="wheelchair">Wheelchair Accessible</option>
+        <option value="unisex">Unisex</option>
+        <option value="emergencyCord">Emergency Cord</option>
+        <option value="emergencyButton">Emergency Button</option>
+        <option value="petFriendly">Pet Friendly</option>
+        <option value="requiresKey">Requires Key</option>
+        <option value="handDryer">Hand Dryer</option>
+        <option value="feminineProducts">Feminine Products</option>
+        <option value="toiletCovers">Toilet Covers</option>
+        <option value="bidet">Bidet</option>
+        <option value="singleStall">Single Stall</option>
+        <option value="multipleStall">Multiple Stall</option>
+        <option value="changingTable">Changing Table</option>
+        <option value="trashCan">Trash Can</option>
+        <option value="goodFlooring">Good Flooring</option>
+        <option value="airFreshener">Air Freshener</option>
+        <option value="automatic">Automatic</option>
+        <option value="coatHook">Coat Hook</option>
+        <option value="brailleSign">Braille Sign</option>
+        <option value="hotWater">Hot Water</option>
+        <option value="firstAid">First Aid</option>
+        <option value="sharpsDisposal">Sharps Disposal</option>
+    </select>
+</div>
 
-              <h2>
-                Total Bathrooms : {displayBathrooms.length}
-              </h2>
-<label for="amenities">Choose an amenity:</label>
-<select id="amenities" name="amenities" onChange={(e) => setSelectedAmenity(e.target.value === 'none' ? null : e.target.value)}>
-    <option value="none">None</option>
-    <option value="wheelchair">Wheelchair Accessible</option>
-    <option value="unisex">Unisex</option>
-    <option value="emergencyCord">Emergency Cord</option>
-    <option value="emergencyButton">Emergency Button</option>
-    <option value="petFriendly">Pet Friendly</option>
-    <option value="requiresKey">Requires Key</option>
-    <option value="handDryer">Hand Dryer</option>
-    <option value="feminineProducts">Feminine Products</option>
-    <option value="toiletCovers">Toilet Covers</option>
-    <option value="bidet">Bidet</option>
-    <option value="singleStall">Single Stall</option>
-    <option value="multipleStall">Multiple Stall</option>
-    <option value="changingTable">Changing Table</option>
-    <option value="trashCan">Trash Can</option>
-    <option value="goodFlooring">Good Flooring</option>
-    <option value="airFreshener">Air Freshener</option>
-    <option value="automatic">Automatic</option>
-    <option value="coatHook">Coat Hook</option>
-    <option value="brailleSign">Braille Sign</option>
-    <option value="hotWater">Hot Water</option>
-    <option value="firstAid">First Aid</option>
-    <option value="sharpsDisposal">Sharps Disposal</option>
-</select>
 
               <ul className=" flex flex-col space-y-4 text-white">
                 {displayBathrooms.filter(bathroom => !selectedAmenity || bathroom[selectedAmenity] > 3)

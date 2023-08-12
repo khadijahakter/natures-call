@@ -173,8 +173,8 @@ export default function BathroomPage(){
 
               </div>
 
-  <div className="flex flex-col mx-2 px-4 py-6 space-y-4 w-1/4 bg-sky-900 rounded-lg bg-opacity-70 text-white shadow-lg">
-   
+  <div className="flex flex-col mx-2 px-4 py-6 space-y-4 w-1/4 bg-sky-900 rounded-lg bg-opacity-20 text-white shadow-lg">
+   <div className="bathroom-veil p-2">
    <p className="text-lg mb-2 flex items-center space-x-2">
      <span className="bg-white rounded-full p-2 inline-flex items-center justify-center">
        <GrWheelchair size={25} className="text-sky-900" />
@@ -210,7 +210,7 @@ export default function BathroomPage(){
    Changing Table: 
    <span className="font-semibold">{changingTable ? "Yes" : "No"}</span>
  </p>
-
+</div>
  </div>
 
  </div>
