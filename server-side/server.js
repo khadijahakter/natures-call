@@ -725,8 +725,8 @@ app.use("/api/bathroomActions", BathroomActionRouter);
 // fetch data from api
 getAllBathrooms();
 // -- cronjob scheduling --
-cron.schedule('0 0 6 * *', () => {
-  // upsert logic  
+cron.schedule('0 0 1,15 * *', () => {
+  getAllBathrooms(); 
 });
 
 
