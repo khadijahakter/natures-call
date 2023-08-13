@@ -67,6 +67,7 @@ export default function BathroomPage(){
       } = Bathroom;
 
       const { id } = useParams();
+      const totalReviewCount = Reviews.filter((review) => review.BathroomId === parseInt(id)).length;
       return (
 <>
 <Link to="/" className="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">
@@ -144,7 +145,7 @@ export default function BathroomPage(){
 
                 <div className="space-y-4 w-3/4">
               <h2 className="text-2xl font-bold mt-8 mb-4 ">Reviews</h2>
-      
+              <p className="text-lg text-gray-500">{totalReviewCount} Reviews</p>
               {Reviews.map((review) => {
               // Find the user associated with the review
               const reviewUser = allUsers.find(user => user.id === review.UserId);
