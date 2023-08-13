@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useState,useRef } from "react";
 
 import { Link } from "react-router-dom";
@@ -16,7 +16,7 @@ const center = {
   lng: -74.0060
 };
 const libraries = ["places"];
-export default function Map({ lat, long, setLat, setLong,displayBathrooms }) {
+export default function Map({ selectedBathroom, lat,long, setLat, setLong,displayBathrooms }) {
   
   const [directionsResponse, setDirectionsResponse] = useState(null)
   const [distance, setDistance] = useState('')
@@ -57,23 +57,22 @@ const destiantionRef = useRef()
 
 
   async function calculateRoute() {
-    if (originRef.current.value === '' || destiantionRef.current.value === '') {
-      return
-    }
-    // eslint-disable-next-line no-undef
-    const directionsService = new google.maps.DirectionsService()
+    // if (originRef.current.value === '' || destiantionRef.current.value === '') {
+    //   return;
+    // }
+  
+    const directionsService = new window.google.maps.DirectionsService();
     const results = await directionsService.route({
-      origin: originRef.current.value,
-      destination: destiantionRef.current.value,
-      // eslint-disable-next-line no-undef
-      travelMode: google.maps.TravelMode.DRIVING,
-    })
-    console.log("Calculate Route:", originRef.current.value);
-    
-    setDirectionsResponse(results)
-    setDistance(results.routes[0].legs[0].distance.text)
-    setDuration(results.routes[0].legs[0].duration.text)
+      origin: `${lat},${long}`, // User's location
+      destination: `${selectedBathroom.lat},${selectedBathroom.lng}`, // Marker's address
+      travelMode: window.google.maps.TravelMode.WALKING,
+    });
+  
+    setDirectionsResponse(results);
+    setDistance(results.routes[0].legs[0].distance.text);
+    setDuration(results.routes[0].legs[0].duration.text);
   }
+  
   function clearRoute() {
     setDirectionsResponse(null)
     setDistance('')
@@ -99,8 +98,9 @@ const destiantionRef = useRef()
               console.log("my address:", address);
               setLat(latitude);
               setLong(longitude);
-              originRef.current.value = address;
-              console.log("originRef.current.value:", originRef.current.value);
+              //originRef.current.value = address;
+              //console.log("originRef.current.value:", originRef.current.value);
+              
             }
           } catch (error) {
             console.error("Error getting address from coordinates:", error);
@@ -115,7 +115,14 @@ const destiantionRef = useRef()
     }
   };
   
+  //useEffect(getUserLocation,[])
 
+  useEffect(() => {
+    if(selectedBathroom){
+      calculateRoute()
+    }
+  }, [selectedBathroom]);
+  
 
 
   //converts address to coordinates
@@ -171,6 +178,16 @@ const blueMapStyles = [
   },
   
 ];
+function onMarkerClick(markerAddress) {
+  if (originRef.current.value !== null) {
+    
+    destiantionRef.current.value = markerAddress;
+    calculateRoute();
+  } else {
+    console.log("Don't have your location");
+  }
+}
+
 
 
 
@@ -222,7 +239,7 @@ return isLoaded ? (
             <Marker
               key={displayBathroom.id}
               position={{ lat: parseFloat(displayBathroom.lat), lng: parseFloat(displayBathroom.lng) }}
-            // icon={createCustomMarkerIcon("#FF0000")} 
+              onClick={() => onMarkerClick(displayBathroom.address)}
 
           />
         ))}
@@ -233,7 +250,7 @@ return isLoaded ? (
 
         </GoogleMap>
         
-        <Autocomplete>
+        {/* <Autocomplete>
               <input type='text' placeholder='Origin' ref={originRef} className="text-black" />
             </Autocomplete>
             <Autocomplete>
@@ -243,7 +260,7 @@ return isLoaded ? (
                 ref={destiantionRef}
                 className="text-black"
               />
-            </Autocomplete>
+            </Autocomplete> */}
 
             <button colorScheme='pink' type='submit' onClick={calculateRoute}>
               Calculate Route
