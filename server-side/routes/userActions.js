@@ -15,6 +15,7 @@ router.post("/:bathroomId/reviews",  authenticateUser, async (req, res) => {
   // console.log("userId", userId); // Get the user ID from the session
     try {
       const review = await Review.create({
+        rating: req.body.rating,
         content: req.body.content,
         photo: req.body.photo,
         wheelchair: req.body.wheelchair,

@@ -12,6 +12,10 @@ module.exports = (sequelize, DataTypes) => {
   }
   Review.init({
     content: DataTypes.STRING,
+    rating: {
+       allowNull: false,
+      type: DataTypes.INTEGER,
+     },
     photo: {
       type : DataTypes.STRING,
       allowNull: true
