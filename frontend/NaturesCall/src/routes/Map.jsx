@@ -39,7 +39,7 @@ const destiantionRef = useRef()
 
 
 
-  const [selectedBathroom, setSelectedBathroom] = useState(null);
+  const [selected, setSelected] = useState(null);
 
   
  
@@ -192,15 +192,15 @@ const blueMapStyles = [
   },
   
 ];
-function onMarkerClick(markerAddress) {
-  if (originRef.current.value !== null) {
+// function onMarkerClick(markerAddress) {
+//   if (originRef.current.value !== null) {
     
-    destiantionRef.current.value = markerAddress;
-    calculateRoute();
-  } else {
-    console.log("Don't have your location");
-  }
-}
+//     destiantionRef.current.value = markerAddress;
+//     calculateRoute();
+//   } else {
+//     console.log("Don't have your location");
+//   }
+// }
 
 
 
@@ -245,56 +245,50 @@ return isLoaded ? (
       <div style={{position: 'relative', width: '100%', height: '100%'}}>
       <text>Distance: {distance} </text>
           <text>Duration: {duration} </text>
-        <GoogleMap
-          mapContainerStyle={containerStyle}
-          center={center}
-          zoom={8}
-          onLoad={onLoad}
-          onUnmount={onUnmount}
-          options={{ styles: blueMapStyles }}
-        >
-          { /* Took bathroom list from parent component and added a marker in their positions */}
-          {displayBathrooms.map((displayBathroom) => (
+          <GoogleMap
+      mapContainerStyle={containerStyle}
+      center={center}
+      zoom={8}
+      onLoad={onLoad}
+      onUnmount={onUnmount}
+      options={{ styles: blueMapStyles }}
+    >
+      {/* Render DirectionsRenderer only if directionsResponse exists */}
+      {directionsResponse && <DirectionsRenderer directions={directionsResponse} />}
 
-           
-         
-          {directionsResponse && (
-            <DirectionsRenderer directions={directionsResponse} />
-          )}
-
+      {/* Map over displayBathrooms to render Markers */}
+      {displayBathrooms.map((displayBathroom) => (
         <Marker
-        key={displayBathroom.id}
-        position={{ lat: parseFloat(displayBathroom.lat), lng: parseFloat(displayBathroom.lng) }}
-        onClick={() => setSelectedBathroom(displayBathroom)}
-       // icon={customMarkerIcon} // Set the custom icon
-      />
-        ))}
-          {selectedBathroom && (
-  <InfoWindow
-  position={{ lat: parseFloat(selectedBathroom.lat), lng: parseFloat(selectedBathroom.lng) }}
-  onCloseClick={() => setSelectedBathroom(null)}
->
-  <div className="info-window">
-    <h4>{selectedBathroom.name}</h4>
-    <div className="rating">
-      {[1, 2, 3, 4, 5].map((index) => (
-        <span
-          key={index}
-          className={`star ${selectedBathroom.rating >= index ? 'yellow' : 'gray'}`}
-        >
-          ★
-        </span>
+          key={displayBathroom.id}
+          position={{ lat: parseFloat(displayBathroom.lat), lng: parseFloat(displayBathroom.lng) }}
+          onClick={() => setSelectedBathroom(displayBathroom)}
+          // icon={customMarkerIcon} // Set the custom icon
+        />
       ))}
-    </div>
-    <Link to={`/bathrooms/${selectedBathroom.id}`}>View Details</Link>
-  </div>
-</InfoWindow>
 
-  )}
-        <></>
-
-
-        </GoogleMap>
+      {/* Render InfoWindow if selectedBathroom exists */}
+      {selected && (
+        <InfoWindow
+          position={{ lat: parseFloat(selected.lat), lng: parseFloat(selected.lng) }}
+          onCloseClick={() => setSelected(null)}
+        >
+          <div className="info-window">
+            <h4>{selected.name}</h4>
+            <div className="rating">
+              {[1, 2, 3, 4, 5].map((index) => (
+                <span
+                  key={index}
+                  className={`star ${selected.rating >= index ? 'yellow' : 'gray'}`}
+                >
+                  ★
+                </span>
+              ))}
+            </div>
+            <Link to={`/bathrooms/${selected.id}`}>View Details</Link>
+          </div>
+        </InfoWindow>
+      )}
+    </GoogleMap>
         
         {/* <Autocomplete>
               <input type='text' placeholder='Origin' ref={originRef} className="text-black" />

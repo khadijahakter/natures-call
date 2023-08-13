@@ -14,7 +14,7 @@ export default function BathroomList() {
   const [lat, setLat]=useState(null);
   const [long, setLong]=useState(null);
   const [displayBathrooms, setDisplayBathrooms] = useState([]);
-
+const [bathroomCount,setBathroomCount]=useState(null);
   const [selectedBathroom, setSelectedBathroom] = useState(null);
 
   async function fetchBathrooms() {
