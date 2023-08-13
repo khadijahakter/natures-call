@@ -53,7 +53,8 @@ router.get("/myBathrooms", authenticateUser, async (req, res) => {
           id: user.id,
           email: user.email,
           name: user.name,
-          photo: user.photo
+          photo: user.photo,
+          createdAt: user.createdAt
         }
       });
     } else {
