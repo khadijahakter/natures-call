@@ -96,6 +96,43 @@ const handleDeleteBathroom = async (bathroomId) => {
 }
 };
 
+const handleDeleteReview = async (reviewId) => {
+  const confirmDelete = window.confirm("Are you sure you want to delete this review?");
+  if (confirmDelete) {
+    setDeleteInProgress(true);
+  try {
+    const response = await fetch(`/api/bathroomActions/userReviews/${reviewId}`, {
+      method: "DELETE",
+      headers: {
+
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ userId: profileData.user.id }), // Pass the user ID in the body
+    });
+  
+    if (response.ok) {
+      // Update the userBathrooms state to remove the deleted bathroom
+      setUpdatedProfileData(prevData => ({
+        ...prevData,
+        reviewsData: reviewsData.filter(review => review.id !== reviewId),
+        // Make sure to update other properties if needed
+      }));
+    
+  
+      
+      // You can navigate to a different page or refresh the data here
+      navigate('/profile');
+    } else {
+      console.error("Failed to delete bathroom");
+    }
+  } catch (error) {
+    console.error("Error deleting bathroom:", error);
+  }
+  setDeleteInProgress(false);
+}
+};
+
+
 
 const [newProfilePhoto, setNewProfilePhoto] = useState(""); // State to manage new profile photo URL
 const [profilePhotoKey, setProfilePhotoKey] = useState(0);
@@ -255,7 +292,7 @@ const handleProfilePhotoUpdate = async () => {
           <div className="button-container">
           <button  className="edit-button">
             <Link to={`/editReview/${review.id}`}> Edit </Link></button>
-            <button onClick={() => handleDeleteBathroom(review.id)} disabled={deleteInProgress}>
+            <button onClick={() => handleDeleteReview(review.id)} disabled={deleteInProgress}>
   {deleteInProgress ? "Deleting..." : "Delete"}
 </button>
 </div>

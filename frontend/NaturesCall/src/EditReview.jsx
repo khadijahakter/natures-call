@@ -143,6 +143,7 @@ export async function loader({ params }) {
     </div>
 </fieldset>
 <div className="grid grid-cols-2 gap-4">
+    
 <fieldset className="mb-8 p-6 border rounded-lg shadow-md bg-white dark:bg-gray-300">
                     <p className="text-lg font-semibold mb-2">Is it Unisex?</p>
                     <div className="flex items-center space-x-4">

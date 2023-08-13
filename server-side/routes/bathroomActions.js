@@ -100,5 +100,29 @@ console.log("UserID from session:", req.session.userId);
     res.status(500).send({ message: err.message });
   }
 });
+//--------------delete a review
+router.delete("/userReviews/:reviewId", authenticateUser,  async (req, res) => {
+  const reviewId = parseInt(req.params.reviewId, 10);
+
+  try {
+    const record = await Review.findOne({ where: { id: reviewId } });
+    if (record && record.UserId !== parseInt(req.session.userId, 10)) {
+      console.log("UserID in record:", record.UserId);
+console.log("UserID from session:", req.session.userId);
+      return res
+        .status(403)
+        .json({ message: "You are not authorized to delete this bathroom" });
+    }
+    const deleteOp = await Review.destroy({ where: { id: reviewId } });
+    if (deleteOp > 0) {
+      res.status(200).send({ message: "Bathroom deleted successfully" });
+    } else {
+      res.status(404).send({ message: "Bathroom not found" });
+    }
+  } catch (err) {
+    console.error(err);
+    res.status(500).send({ message: err.message });
+  }
+});
 
      module.exports = router;
