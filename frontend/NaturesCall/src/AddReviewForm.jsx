@@ -17,7 +17,7 @@ export async function action({ request, params }) {
     });
     console.log("review call response:",response);
 //edit bathroom rating
-    const updateresponse = await fetch(`http://localhost:4000/bathrooms/${params.id}`, {
+    const updateresponse = await fetch(`/api/bathroomActions/bathroomsrating/${params.id}`, {
         method: "PATCH",
         headers: {
             "Content-Type": "application/json",

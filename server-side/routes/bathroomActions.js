@@ -9,7 +9,7 @@ const { authenticateUser } = require("../middleware/auth");
            const userId = req.session.userId;
    
            const newbathroom = await Bathroom.create({
-           sourceid: "usercreated", 
+          sourceid: "usercreated",
            address: req.body.address,
            lat: req.body.lat,
            lng: req.body.lng,
@@ -50,8 +50,9 @@ const { authenticateUser } = require("../middleware/auth");
    
        }
        catch(err){
-         console.error(err);
-         res.status(500).send({message: err.message});
+        console.error("Error creating bathroom:", err.message); // Log the error message
+        console.log("Request body:", req.body); // Log the request body for debugging
+        res.status(500).send({ message: err.message });
        }
      });
 
@@ -122,6 +123,75 @@ console.log("UserID from session:", req.session.userId);
   } catch (err) {
     console.error(err);
     res.status(500).send({ message: err.message });
+  }
+});
+
+//----update bathroom rating from reviews rating
+router.patch("/bathroomsrating/:bathroomId", async (req, res) => {
+  const bathroomId = parseInt(req.params.bathroomId, 10);
+  try {
+    const record = await Bathroom.findOne({ where: { id: bathroomId } });
+    if (!record) {
+      return res.status(404).json({ message: "Bathroom not found" });
+    }
+
+    // Check if the user is authorized to edit the bathroom
+    // if (record.UserId !== parseInt(req.session.userId, 10)) {
+    //   return res
+    //     .status(403)
+    //     .json({ message: "You are not authorized to edit this bathroom." });
+    // }
+
+
+    //get bathroomid bathrooms current rating:
+    const curBathroom = await Bathroom.findOne({ where: { id: bathroomId } });
+    const OldRate = curBathroom.rating;
+
+
+    var newAvg;
+    //NEED A CONDITION FOR NULL 
+    if (curBathroom.rating === null) {
+      newAvg = req.body.rating
+    }
+    else {
+      const numOfReviews = await Review.count({ where: { BathroomId: bathroomId } });
+
+
+      // New rating from the request
+      const newRating = req.body.rating;
+
+      // Moving average calculation
+      newAvg = OldRate + (newRating - OldRate) / (numOfReviews + 1);
+    }
+
+    //add new average to the request body 
+    const [numberOfAffectedRows, affectedRows] = await Bathroom.update(
+
+      {
+        rating: Math.round(newAvg),
+        address: req.body.address,
+        name: req.body.name,
+        unisex: req.body.unisex,
+        petFriendly: req.body.petFriendly,
+        emergencyButton: req.body.emergencyButton,
+        emergencyCord: req.body.emergencyCord
+      },
+      //{rating: Math.round(newAvg) },
+      // req.body,
+      { where: { id: bathroomId }, returning: true }
+    );
+
+    if (numberOfAffectedRows > 0) {
+      res.status(200).json(affectedRows[0]);
+    } else {
+      res.status(404).json({ message: "Bathroom not found" });
+    }
+  } catch (err) {
+    if (err.name === "SequelizeValidationError") {
+      return res.status(422).json({ errors: err.errors.map((e) => e.message) });
+    }
+    res.status(500).json({ message: "An error occurred while updating the bathroom" });
+    console.error(err);
   }
 });
 
