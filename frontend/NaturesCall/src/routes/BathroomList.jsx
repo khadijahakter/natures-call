@@ -14,8 +14,9 @@ export default function BathroomList() {
   const [lat, setLat]=useState(null);
   const [long, setLong]=useState(null);
   const [displayBathrooms, setDisplayBathrooms] = useState([]);
-  const [selected, setSelected] = useState(null);
-  const [bathroomCount, setBathroomCount] = useState(0);
+
+  const [selectedBathroom, setSelectedBathroom] = useState(null);
+
   async function fetchBathrooms() {
     const data={
       lat,
@@ -79,7 +80,7 @@ export default function BathroomList() {
             <div className=" overflow-scroll Bathroomlist-bg w-1/4 h-full bg-opacity-50 p-4  overflow-y-auto ">
               <ul className=" flex flex-col space-y-4 text-white">
                 {displayBathrooms.map(bathroom => (
-                  <Link to={`/bathrooms/${bathroom.id}`} key={bathroom.id}>
+                  <div >
                     <li className="Bathroom-card flex flex-col  p-4 rounded-lg bg-opacity-30 transform transition duration-200 ease-in-out hover:scale-105">
                      
                       <div>
@@ -89,23 +90,28 @@ export default function BathroomList() {
                               {bathroom.rating ? bathroom.rating : "Na"} */}
                               <RatingDisplay rating={bathroom.rating} />
                       </p>
+                      <Link to={`/bathrooms/${bathroom.id}`} key={bathroom.id}>
+  <button>View Reviews</button>
+</Link>
+
                       </div>
 
                       <p className="text-sm text-gray-600">
                         <strong className="font-medium">Address: </strong>
                         {bathroom.address}
                       </p>
-      
+                <button onClick={()=>{ setSelectedBathroom(bathroom)}}>Direction</button>
                      
                     </li>
-                  </Link>
+                    
+                  </div>
                 ))}
               </ul>
             </div>
 
             <div className="w-3/4 h-full ">
               <div className="">
-                <Map displayBathrooms={displayBathrooms} lat={lat} long={long} setLat={setLat} setLong={setLong} />
+                <Map displayBathrooms={displayBathrooms} lat={lat} long={long} setLat={setLat} setLong={setLong} selectedBathroom={selectedBathroom}/>
               </div>
             </div>
           </>
