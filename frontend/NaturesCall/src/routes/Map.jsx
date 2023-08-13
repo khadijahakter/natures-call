@@ -5,16 +5,22 @@ import { Link } from "react-router-dom";
 
 
 
+
 import { GoogleMap, useJsApiLoader, Marker,Autocomplete,
-  DirectionsRenderer, } from "@react-google-maps/api";
+  DirectionsRenderer, InfoWindow} from "@react-google-maps/api";
+
+
+import './MapStyles.css';
 
 
 
+import customMarkerIcon from "./bathroomMarker(unclicked).png"; 
 
 const center = {
-  lat: 40.7128,
-  lng: -74.0060
+  lat: 40.587400,
+  lng: -74.148660
 };
+
 const libraries = ["places"];
 export default function Map({ selectedBathroom, lat,long, setLat, setLong,displayBathrooms }) {
   
@@ -32,6 +38,16 @@ const destiantionRef = useRef()
 
 
 
+
+  const [selectedBathroom, setSelectedBathroom] = useState(null);
+
+  
+ 
+
+  const [center, setCenter] = useState({ lat: 40.587400, lng: -74.148660 });
+
+
+
   const { isLoaded } = useJsApiLoader({
     id: 'google-map-script',
     googleMapsApiKey: import.meta.env.VITE_GOOGLE_MAPS_API_KEY,
@@ -41,15 +57,16 @@ const destiantionRef = useRef()
   const [map, setMap] = React.useState(null)
 
   const onLoad = React.useCallback(function callback(map) {
-
-
     const bounds = new window.google.maps.LatLngBounds(center);
     const geocoder = new window.google.maps.Geocoder();
     map.fitBounds(bounds);
-
-    setMap(map)
-    setGeocoder(geocoder)
-  }, [])
+  
+    setMap(map);
+    setGeocoder(geocoder);
+  
+ 
+  }, []);
+ 
 
   const onUnmount = React.useCallback(function () {
     setMap(null);
@@ -128,27 +145,24 @@ const destiantionRef = useRef()
   //converts address to coordinates
 
   const onGeocode = () => {
-
     if (geocoder) {
       geocoder.geocode({ address: address }, (results, status) => {
-
         if (status === window.google.maps.GeocoderStatus.OK && results[0]) {
           const location = results[0].geometry.location;
           map.setCenter(location);
 
+          // Update center based on geocoded location
+          setCenter({ lat: location.lat(), lng: location.lng() });
 
-
-          //add the coordinates to the state
-          setLat(location.lat())
-          setLong(location.lng())
-
+          // Update lat and long states
+          setLat(location.lat());
+          setLong(location.lng());
         } else {
           console.error("Geocode was not successful for the following reason:", status);
         }
       });
     }
   };
-
 
 
 
@@ -196,7 +210,10 @@ return isLoaded ? (
   <>
   
     <div className= "relative w-full ">
-    <button onClick={getUserLocation} className="bg-cyan-700 hover:bg-cyan-500 text-white font-bold  py-2 px-4 rounded-r">
+    <button 
+    onClick={getUserLocation} 
+   //  onClick={handleFindNearbyClick}
+    className="bg-cyan-700 hover:bg-cyan-500 text-white font-bold  py-2 px-4 rounded-r">
         Find Nearby Bathrooms
       </button>
 
@@ -238,17 +255,44 @@ return isLoaded ? (
         >
           { /* Took bathroom list from parent component and added a marker in their positions */}
           {displayBathrooms.map((displayBathroom) => (
-            <Marker
-              key={displayBathroom.id}
-              position={{ lat: parseFloat(displayBathroom.lat), lng: parseFloat(displayBathroom.lng) }}
-              onClick={() => onMarkerClick(displayBathroom.address)}
 
-          />
-        ))}
-         <Marker position={center} />
+           
+         
           {directionsResponse && (
             <DirectionsRenderer directions={directionsResponse} />
           )}
+
+        <Marker
+        key={displayBathroom.id}
+        position={{ lat: parseFloat(displayBathroom.lat), lng: parseFloat(displayBathroom.lng) }}
+        onClick={() => setSelectedBathroom(displayBathroom)}
+       // icon={customMarkerIcon} // Set the custom icon
+      />
+        ))}
+          {selectedBathroom && (
+  <InfoWindow
+  position={{ lat: parseFloat(selectedBathroom.lat), lng: parseFloat(selectedBathroom.lng) }}
+  onCloseClick={() => setSelectedBathroom(null)}
+>
+  <div className="info-window">
+    <h4>{selectedBathroom.name}</h4>
+    <div className="rating">
+      {[1, 2, 3, 4, 5].map((index) => (
+        <span
+          key={index}
+          className={`star ${selectedBathroom.rating >= index ? 'yellow' : 'gray'}`}
+        >
+          ★
+        </span>
+      ))}
+    </div>
+    <Link to={`/bathrooms/${selectedBathroom.id}`}>View Details</Link>
+  </div>
+</InfoWindow>
+
+  )}
+        <></>
+
 
         </GoogleMap>
         

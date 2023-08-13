@@ -4,7 +4,7 @@ const app = express();
 const port = 4000;
 const session = require("express-session");
 const Sequelize = require('sequelize');
-const {User, Bathroom, Review} = require("./models"); // Replace the path with the correct one for your project
+const { User, Bathroom, Review } = require("./models"); // Replace the path with the correct one for your project
 // const {Bathroom, Review, User} = require("./models"); // Replace the path with the correct one for your project
 const axios = require("axios");
 require("dotenv").config();
@@ -55,83 +55,90 @@ const getAllBathrooms = async () => {
           var wheelchair_accessible = +bathroom.accessible;
           var unisex = +bathroom.unisex;
           var changingTable = +bathroom.changing_table;
-          const newbathroom = await Bathroom.create({
-            sourceid: bathroom.id,
-            address: bathroom.street + ', ' + bathroom.city + ', ' + bathroom.state, // Assuming these fields exist
-            lat: bathroom.latitude,
-            lng: bathroom.longitude,
-            name: bathroom.name,
-            rating: null, // Assuming this comes from your request or some other source
-            content: null,
-            photo: null,
-            wheelchair: wheelchair_accessible,
-            unisex: unisex,
-            emergencyCord: null,
-            emergencyButton: null,
-            petFriendly: null,
-            requiresKey: null,
-            handDryer: null,
-            feminineProducts: null,
-            toiletCovers: null,
-            bidet: null,
-            singleStall: null,
-            multipleStall: null,
-            changingTable: changingTable, // Assuming this field exists
-            trashCan: null,
-            goodFlooring: null,
-            airFreshener: null,
-            automatic: null,
-            coatHook: null,
-            brailleSign: null,
-            hotWater: null,
-            firstAid: null,
-            sharpsDisposal: null,
-            createdAt: new Date(),
-            updatedAt: new Date(),
-            UserId: null,
-          });
-          console.log(newbathroom);
-        }
 
-      } else {
+          try {
+            const [newbathroom, created] = await Bathroom.upsert({
+              sourceid: bathroom.id,
+              address: bathroom.street + ', ' + bathroom.city + ', ' + bathroom.state, // Assuming these fields exist
+              lat: bathroom.latitude,
+              lng: bathroom.longitude,
+              name: bathroom.name,
+              rating: null, // Assuming this comes from your request or some other source
+              content: null,
+              photo: null,
+              wheelchair: wheelchair_accessible,
+              unisex: unisex,
+              emergencyCord: null,
+              emergencyButton: null,
+              petFriendly: null,
+              requiresKey: null,
+              handDryer: null,
+              feminineProducts: null,
+              toiletCovers: null,
+              bidet: null,
+              singleStall: null,
+              multipleStall: null,
+              changingTable: changingTable, // Assuming this field exists
+              trashCan: null,
+              goodFlooring: null,
+              airFreshener: null,
+              automatic: null,
+              coatHook: null,
+              brailleSign: null,
+              hotWater: null,
+              firstAid: null,
+              sharpsDisposal: null,
+              createdAt: new Date(),
+              updatedAt: new Date(),
+              UserId: null,
+            }, {
+              returning: true,
+              conflictFields: ["sourceid"]
+            });
+
+            if (created) {
+              console.log("Created a new bathroom:", newbathroom);
+            } else {
+              console.log("Updated existing bathroom:", newbathroom);
+            }
+          } catch (upsertError) {
+            console.error(`Error while upserting bathroom with source id ${bathroom.id}.`, upsertError);
+          }
+        }
+      }
+      page += 1;
+      if (!response.data || response.data.length === 0) {
         break; // No more data, exit the loop
       }
     } catch (error) {
       console.error(error);
       break; // Error occurred, exit the loop
     }
-
-    page += 1;
   }
 };
-
-
-
-
-
 
 //prints to the console what request was made and the status returned
 app.use((req, res, next) => {
   console.log(`Request: ${req.method} ${req.originalUrl}`);
   res.on("finish", () => {
-      // the 'finish' event will be emitted when the response is handed over to the OS
-      console.log(`Response Status: ${res.statusCode}`);
+    // the 'finish' event will be emitted when the response is handed over to the OS
+    console.log(`Response Status: ${res.statusCode}`);
   });
   next();
 });
 
 app.use(express.json());
 app.use(
-    session({
-      secret: process.env.SESSION_SECRET,
-  
-      resave: false,
-      saveUninitialized: false,
-      cookie: {
-        maxAge: 3600000, 
-      },
-    })
-  );
+  session({
+    secret: process.env.SESSION_SECRET,
+
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+      maxAge: 3600000,
+    },
+  })
+);
 //--------------------------------------welcome-------------------------------
 //-----------------------login auth---------------------------------------------
 app.post("/logins", async (req, res) => {
@@ -170,16 +177,16 @@ app.post("/logins", async (req, res) => {
       .json({ message: "An error occurred during the login process" });
   }
 });
- //signUp
- app.post("/signups", async (req, res) => {
+//signUp
+app.post("/signups", async (req, res) => {
   const hashedPass = await bcrypt.hash(req.body.password, 10);
-  
+
   try {
-    const user = await User.create({ 
+    const user = await User.create({
       name: req.body.name,
       email: req.body.email,
       password: hashedPass,
-      photo:req.body.photo
+      photo: req.body.photo
 
     });
     req.session.userId = user.id;
@@ -189,7 +196,7 @@ app.post("/logins", async (req, res) => {
       user: {
         name: user.name,
         email: user.email,
-       UserId: req.session.userId,
+        UserId: req.session.userId,
       },
     });
   } catch (error) {
@@ -203,7 +210,7 @@ app.post("/logins", async (req, res) => {
     res.status(500).json({
       message: "Error occurred while creating user  ",
       error: error,
-      
+
     });
   }
 
@@ -213,9 +220,9 @@ app.get("/", (req, res) => {
 });
 
 //get the user name and email by userID
-app.get("/users/:userId",  async (req,res) =>{
+app.get("/users/:userId", async (req, res) => {
   const userId = parseInt(req.params.userId, 10);
-  
+
   console.log(userId);
 
   try {
@@ -232,7 +239,7 @@ app.get("/users/:userId",  async (req,res) =>{
   }
 });
 
-app.get("/profile/userData", async (req,res) =>{
+app.get("/profile/userData", async (req, res) => {
 
   if (req.session.userId) {
     const user = await User.findByPk(req.session.userId);
@@ -244,7 +251,7 @@ app.get("/profile/userData", async (req,res) =>{
       }
     });
   } else {
-    return res.status(401).json({user: null})
+    return res.status(401).json({ user: null })
   }
 });
 
@@ -256,7 +263,7 @@ app.get("/profile/userData", async (req,res) =>{
 //     }
 
 //     res.clearCookie("connect.sid");
-    
+
 //     return res.status(200).json({ message: "Logout successful" });
 //   });
 // });
@@ -293,7 +300,7 @@ app.get("/bathrooms", async (req, res) => {
 app.get("/bathrooms/:bathroomId", async (req, res) => {
 
   const bathroomId = parseInt(req.params.bathroomId, 10);
-  
+
   console.log(bathroomId);
 
 
@@ -333,8 +340,8 @@ app.get("/bathrooms/user/:userId", authenticateUser, async (req, res) => {
 app.get("/myBathrooms", authenticateUser, async (req, res) => {
 
 
-  const userId = parseInt(req.session.userId,10);
- 
+  const userId = parseInt(req.session.userId, 10);
+
   console.log("robert", userId);
   try {
     const userBathrooms = await Bathroom.findAll({
@@ -343,13 +350,13 @@ app.get("/myBathrooms", authenticateUser, async (req, res) => {
 
     res.status(200).json(userBathrooms);
   } catch (err) {
-   // console.error(err);
+    // console.error(err);
     res.status(500).send({ message: err.message });
   }
 });
 
   //create a bathroom --- based on user Id ------------------------
-  app.post("/bathrooms",   async (req, res) => {
+  app.post("/bathrooms", authenticateUser,  async (req, res) => {
  try{
         //const userId = req.session.userId;
 
@@ -387,8 +394,8 @@ app.get("/myBathrooms", authenticateUser, async (req, res) => {
         createdAt: new Date(),
         updatedAt: new Date(),
         //UserId: req.session.userId, // Set the UserId to the logged-in user's ID
-        UserId:2,
-        sourceid:"user1"
+        UserId: req.session.userId,
+        sourceid:"usercreatedbathroom"
       });
   
 
@@ -403,14 +410,14 @@ app.get("/myBathrooms", authenticateUser, async (req, res) => {
     }
   });
   //--------------------------------------------------------------------------
-  app.delete("/bathrooms/:bathroomId", authenticateUser, async (req, res) => {
+  app.delete("/bathrooms/:bathroomId", authenticateUser,  async (req, res) => {
     const bathroomId = parseInt(req.params.bathroomId, 10);
 
     try {
       const record = await Bathroom.findOne({ where: { id: bathroomId } });
       if (record && record.UserId !== parseInt(req.session.userId, 10)) {
-        console.log("UserID:" , record);
-        console.log("UserID:" , req.session.userId);
+        console.log("UserID in record:", record.UserId);
+  console.log("UserID from session:", req.session.userId);
         return res
           .status(403)
           .json({ message: "You are not authorized to delete this bathroom" });
@@ -427,6 +434,22 @@ app.get("/myBathrooms", authenticateUser, async (req, res) => {
     }
   });
   
+//----------------admin delete (no user authentixation)-----------
+app.delete("/adminbathrooms/:bathroomId", async (req, res) => {
+  const bathroomId = parseInt(req.params.bathroomId, 10);
+
+  try {
+    const deleteOp = await Bathroom.destroy({ where: { id: bathroomId } });
+    if (deleteOp > 0) {
+      res.status(200).send({ message: "Bathroom deleted successfully" });
+    } else {
+      res.status(404).send({ message: "Bathroom not found" });
+    }
+  } catch (err) {
+    console.error(err);
+    res.status(500).send({ message: err.message });
+  }
+});
 
 
 ///-------------------------------REVIEWS------------------------------------------
@@ -439,12 +462,12 @@ app.get("/bathrooms/:bathroomId/reviews", async (req, res) => {
 
   try {
 
-  //testing  
-  // const allReviews = await Review.findAll();
-  // res.status(200).json(allReviews);
+    //testing  
+    // const allReviews = await Review.findAll();
+    // res.status(200).json(allReviews);
 
-  const bathroomReviews = await Review.findAll({where: {BathroomId : bathroomId}});
-  res.status(200).json(bathroomReviews);
+    const bathroomReviews = await Review.findAll({ where: { BathroomId: bathroomId } });
+    res.status(200).json(bathroomReviews);
 
   } catch (err) {
     console.error(err);
@@ -491,10 +514,10 @@ app.post("/nearby", async (req, res) => {
 
 //creating review for specific bathroom
 app.post("/bathrooms/:bathroomId/reviews", authenticateUser, async (req, res) => {
- 
+
   const bathroomId = parseInt(req.params.bathroomId, 10);
- const userId = req.session.userId;
- console.log("userId", userId); // Get the user ID from the session
+  const userId = req.session.userId;
+  console.log("userId", userId); // Get the user ID from the session
   try {
     const review = await Review.create({
       content: req.body.content,
@@ -522,8 +545,8 @@ app.post("/bathrooms/:bathroomId/reviews", authenticateUser, async (req, res) =>
       firstAid: req.body.firstAid,
       sharpsDisposal: req.body.sharpsDisposal,
       BathroomId: bathroomId,
-       UserId: userId, // Set the UserId to the logged-in user's ID
-     // UserId: 1, // Set the UserId to the logged-in user's ID
+      UserId: userId, // Set the UserId to the logged-in user's ID
+      // UserId: 1, // Set the UserId to the logged-in user's ID
       createdAt: new Date(),
       updatedAt: new Date()
     });
@@ -543,12 +566,12 @@ app.get("/myReviews", authenticateUser, async (req, res) => {
 
   try {
 
-  //testing  
-  // const allReviews = await Review.findAll();
-  // res.status(200).json(allReviews);
+    //testing  
+    // const allReviews = await Review.findAll();
+    // res.status(200).json(allReviews);
 
-  const userReviews = await Review.findAll({where: {UserId : userId}});
-  res.status(200).json(userReviews);
+    const userReviews = await Review.findAll({ where: { UserId: userId } });
+    res.status(200).json(userReviews);
 
   } catch (err) {
     console.error(err);
@@ -564,12 +587,12 @@ app.get("/:userId/reviews", async (req, res) => {
 
   try {
 
-  //testing  
-  // const allReviews = await Review.findAll();
-  // res.status(200).json(allReviews);
+    //testing  
+    // const allReviews = await Review.findAll();
+    // res.status(200).json(allReviews);
 
-  const userReviews = await Review.findAll({where: {UserId : userId}});
-  res.status(200).json(userReviews);
+    const userReviews = await Review.findAll({ where: { UserId: userId } });
+    res.status(200).json(userReviews);
 
   } catch (err) {
     console.error(err);
@@ -605,9 +628,9 @@ app.delete("/bathrooms/:bathroomId/:reviewsId", authenticateUser, async (req, re
 });
 //edit a review 
 
- app.patch("/bathrooms/:bathroomId/:reviewId", authenticateUser, async (req, res) => {
+app.patch("/bathrooms/:bathroomId/:reviewId", authenticateUser, async (req, res) => {
   const reviewId = parseInt(req.params.reviewId, 10);
- try {
+  try {
     const record = await Review.findOne({ where: { id: reviewId } });
     if (record && record.UserId !== parseInt(req.session.userId, 10)) {
       return res
@@ -619,7 +642,7 @@ app.delete("/bathrooms/:bathroomId/:reviewsId", authenticateUser, async (req, re
       req.body,
       { where: { id: reviewId }, returning: true }
     );
-  if (numberOfAffectedRows > 0) {
+    if (numberOfAffectedRows > 0) {
       res.status(200).json(affectedRows[0]);
     } else {
       res.status(404).send({ message: "review not found" });
@@ -640,7 +663,7 @@ app.delete("/bathrooms/:bathroomId/:reviewsId", authenticateUser, async (req, re
 
 
 
-//Edit Rating
+//Edit Rating (edit bathroom)
 
 app.patch("/bathrooms/:bathroomId", async (req, res) => {
   const bathroomId = parseInt(req.params.bathroomId, 10);
@@ -657,41 +680,39 @@ app.patch("/bathrooms/:bathroomId", async (req, res) => {
     //     .json({ message: "You are not authorized to edit this bathroom." });
     // }
 
-  
+
     //get bathroomid bathrooms current rating:
-    const curBathroom = await Bathroom.findOne({where : {id : bathroomId}});
+    const curBathroom = await Bathroom.findOne({ where: { id: bathroomId } });
     const OldRate = curBathroom.rating;
 
 
     var newAvg;
-//NEED A CONDITION FOR NULL 
-if (curBathroom.rating === null)
-{
- newAvg = req.body.rating
-}
-else
-{
-    const numOfReviews = await Review.count({ where: { BathroomId: bathroomId } });
-    
+    //NEED A CONDITION FOR NULL 
+    if (curBathroom.rating === null) {
+      newAvg = req.body.rating
+    }
+    else {
+      const numOfReviews = await Review.count({ where: { BathroomId: bathroomId } });
 
-    // New rating from the request
-    const newRating = req.body.rating;
-    
-    // Moving average calculation
-     newAvg = OldRate + (newRating - OldRate) / (numOfReviews + 1);
- }  
 
-  //add new average to the request body 
+      // New rating from the request
+      const newRating = req.body.rating;
+
+      // Moving average calculation
+      newAvg = OldRate + (newRating - OldRate) / (numOfReviews + 1);
+    }
+
+    //add new average to the request body 
     const [numberOfAffectedRows, affectedRows] = await Bathroom.update(
 
-      { 
-        rating: Math.round(newAvg) ,
+      {
+        rating: Math.round(newAvg),
         address: req.body.address,
         name: req.body.name,
         unisex: req.body.unisex,
-        petFriendly:req.body.petFriendly,
-        emergencyButton:req.body.emergencyButton,
-        emergencyCord:req.body.emergencyCord
+        petFriendly: req.body.petFriendly,
+        emergencyButton: req.body.emergencyButton,
+        emergencyCord: req.body.emergencyCord
       },
       //{rating: Math.round(newAvg) },
       // req.body,
@@ -712,19 +733,19 @@ else
   }
 });
 
-
-app.use("/api/auth", authRouter );
+app.use("/api/auth", authRouter);
 app.use("/api/userProfileData", ProfileRouter);
 app.use("/api/userActions", UserActionRouter);
 app.use("/api/bathroomActions", BathroomActionRouter);
+
+// fetch data from api
+getAllBathrooms();
 // -- cronjob scheduling --
-cron.schedule('0 0 6 * *', () => {
-  console.log('running a task every minute');
-  getAllBathrooms();
-  
+cron.schedule('0 0 1,15 * *', () => {
+  getAllBathrooms(); 
 });
 
-  
+
 
 app.listen(port, () => {
   console.log(`Server is running at http://localhost:${port}`);

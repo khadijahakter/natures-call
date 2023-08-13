@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, NavLink, useLoaderData, } from "react-router-dom";
+import { Link, NavLink, useLoaderData, useNavigate} from "react-router-dom";
 import { Outlet, redirect  } from "react-router-dom";
 import {useState, useEffect} from "react";
 // import axios from "axios";
@@ -13,7 +13,7 @@ export async function loader({ params }) {
 
   try {
     const [allBathroomsResponse,profileresponse ,reviewsResponse, bathroomsResponse,] = await Promise.all([
-      fetch(`http://localhost:4000/bathrooms`),
+      fetch(`/api/userProfileData/bathrooms`),
       fetch(`/api/userProfileData/userData`),
       fetch(`/api/userProfileData/myReviews`),
       fetch(`/api/userProfileData/myBathrooms`),//fetching user bathrooms (uses session id from server.js , using authnetication)
@@ -44,8 +44,10 @@ export async function loader({ params }) {
 
 
 export default function Profile() {
+  const [deleteInProgress, setDeleteInProgress] = useState(false);
   console.log("Profile Component Loaded In main.jsx");
-
+  
+  const navigate = useNavigate();
 const { allBathrooms,  profileData, reviewsData, userBathrooms } = useLoaderData();
 console.log("profille photo", profileData.photo);
 const getBathroomNameById = (BathroomId) => {
@@ -54,7 +56,44 @@ const getBathroomNameById = (BathroomId) => {
     return Number(bathroom.id) === Number(BathroomId); // Added "return"
   });
 
-  return bathroom ? bathroom.name : "Unknown Bathroom";
+  return bathroom ? bathroom.name : "Unknown Bathroom. It may have been deleted :( ";
+};
+
+
+const handleDeleteBathroom = async (bathroomId) => {
+  const confirmDelete = window.confirm("Are you sure you want to delete this bathroom?");
+  if (confirmDelete) {
+    setDeleteInProgress(true);
+  try {
+    const response = await fetch(`/api/bathroomActions/bathrooms/${bathroomId}`, {
+      method: "DELETE",
+      headers: {
+
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ userId: profileData.user.id }), // Pass the user ID in the body
+    });
+  
+    if (response.ok) {
+      // Update the userBathrooms state to remove the deleted bathroom
+      setUpdatedProfileData(prevData => ({
+        ...prevData,
+        userBathrooms: userBathrooms.filter(bathroom => bathroom.id !== bathroomId),
+        // Make sure to update other properties if needed
+      }));
+    
+  
+      
+      // You can navigate to a different page or refresh the data here
+      navigate('/profile');
+    } else {
+      console.error("Failed to delete bathroom");
+    }
+  } catch (error) {
+    console.error("Error deleting bathroom:", error);
+  }
+  setDeleteInProgress(false);
+}
 };
 
 
@@ -87,12 +126,14 @@ const handleProfilePhotoUpdate = async () => {
       setUpdatedProfileData(updatedData);
       setProfilePhotoKey(prevKey => prevKey + 1); // Update the key
    // Update the profile photo URL in the component state
-  setUpdatedProfileData(prevData => ({
+  
+   setUpdatedProfileData(prevData => ({
     ...prevData,
     user: {
       ...prevData.user,
       photo: newProfilePhoto,
     },
+ 
   }));
   
     } else {
@@ -168,17 +209,27 @@ const handleProfilePhotoUpdate = async () => {
       </Link>
     </p>
           <p>Address: {bathroom.address}</p>
-          <p>Bathroom ID: {bathroom.id}</p>
-          <p>Rating: {bathroom.rating} </p>
-          <p>Content: {bathroom.content}</p>
+          {/* <p>Bathroom ID: {bathroom.id}</p> */}
+          <p>Rating: {bathroom.rating !== null ? bathroom.rating + " stars" : "No rating yet"}</p>
+          <p>Content: {bathroom.content !== null ? bathroom.content : "No content available"}</p>
           {/* <p>lat: {bathroom.lat}</p>
           <p>lng: {bathroom.lng}</p> */}
           <p>Date Created: {bathroom.createdAt}</p>
+          {bathroom.updatedAt !== bathroom.createdAt && ( // Check if updatedAt is different from createdAt
+        <p>Date Updated: {bathroom.updatedAt}</p>
+      )}
+  
           {/* <img src={bathroom.photo} alt={`Photo of ${bathroom.name}`} /> */}
           {/* Render other bathroom details here */}
+         
           <hr />
-          <button><Link to={`/editBathroom/${bathroom.id}`}> Edit Me</Link></button>
-
+          <div className="button-container">
+          <button  className="edit-button">
+            <Link to={`/editBathroom/${bathroom.id}`}> Edit </Link></button>
+            <button onClick={() => handleDeleteBathroom(bathroom.id)} disabled={deleteInProgress}>
+  {deleteInProgress ? "Deleting..." : "Delete"}
+</button>
+</div>
         </div>
       ))}
     </div>
@@ -193,9 +244,11 @@ const handleProfilePhotoUpdate = async () => {
         {getBathroomNameById(review.BathroomId)}
       </Link>
     </p>
+          <p>Rating: {review.rating} stars</p>
           <p>Review Content: {review.content}</p>
           {/* <p>Review wheelchair: {review.wheelchair}</p> */}
           {/* <p>Bathroom ID: {review.BathroomId}</p> */}
+
           <p>Date Created: {review.createdAt}</p>
           {/* Render other review details here */}
           <hr />

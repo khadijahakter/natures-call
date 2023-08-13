@@ -1,4 +1,4 @@
-import { Form, redirect, useLoaderData } from "react-router-dom";
+import { Form, redirect, useLoaderData, useNavigate, Link} from "react-router-dom";
 import { useState } from 'react';
 
 
@@ -7,7 +7,7 @@ export async function loader({ params }) {
 
     console.log("params:", params);
     console.log("paramsID: ", params.id)
-    const bathroomResponse = await fetch(`http://localhost:4000/bathrooms/${params.editId}`);
+    const bathroomResponse = await fetch(`/api/bathroomActions/bathrooms/${params.editId}`);
     const bathroom = await bathroomResponse.json();
     console.log("LOADER WORKED!!!")
 
@@ -18,6 +18,7 @@ export async function loader({ params }) {
   }
 }
 export default function EditBathroom() {
+  const history = useNavigate();
   const { bathroom } = useLoaderData();
   console.log("Bathroom data:", bathroom);
 
@@ -49,11 +50,12 @@ export default function EditBathroom() {
       emergencyButton: brState.emergencyButton,
       petFriendly: brState.petFriendly,
       rating: parseInt(brState.rating, 10),
+      content: brState.content,
     };
     console.log("prep: ", preparedBathroom)
     // Send the PATCH request to update the bathroom
     try {
-      const response = await fetch(`http://localhost:4000/bathrooms/${brState.id}`, {
+      const response = await fetch(`/api/userActions/bathrooms/${brState.id}`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
@@ -73,7 +75,7 @@ export default function EditBathroom() {
           ...newestBathroom,
         };
       });
-      redirect("http://localhost:5173/profile")
+      history("/profile");
 
       console.log("New BR STATE: ", brState);
 
@@ -86,6 +88,9 @@ export default function EditBathroom() {
 
   return (
     <>
+       <Link to="/profile" className="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">
+        Back To Profile
+      </Link>
       <Form method="post" className="p-8 bg-blue-200 text-black rounded" id="edit-form" onSubmit={handleAddBrFormSubmit}>
         <h1 className="text-2xl font-bold text-center mb-8">Edit A Bathroom!</h1>
 
@@ -117,7 +122,7 @@ export default function EditBathroom() {
             />
           </div>
         </fieldset>
-        <fieldset>
+        {/* <fieldset>
           <div className="flex flex-col gap-4 mb-4">
             <textarea
               id="rating"
@@ -129,8 +134,8 @@ export default function EditBathroom() {
               value={brState.rating}
             />
           </div>
-        </fieldset>
-
+        </fieldset> */}
+{/* 
         <fieldset className="mb-8">
           <legend className="text-lg font-semibold mb-2">Is it Unisex?</legend>
           <div className="flex items-center space-x-4">
@@ -177,8 +182,21 @@ export default function EditBathroom() {
             <input onChange={handleInput} type="radio" id="petFriendlyUnknown" name="petFriendly" value="3" checked={brState.petFriendly == 3} />
             <label htmlFor="petFriendlyUnknown" className="dark:text-gray-300">Unknown</label>
           </div>
-        </fieldset>
+        </fieldset> */}
+<fieldset>
+          <div className="flex flex-col gap-4 mb-4">
+            <textarea
+              id="content"
+              name="content"
+              className="border-2 border-blue-500 p-2 rounded"
+              rows="1"
+              placeholder="Enter the description here"
+              onChange={handleInput}
 
+              value={brState.content}
+            />
+          </div>
+        </fieldset>
         <button
           type="submit"
           className="bg-sky-500 hover:bg-sky-600 text-white p-2 px-4 rounded mb-6 w-full"

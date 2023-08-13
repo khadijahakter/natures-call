@@ -55,4 +55,50 @@ const { authenticateUser } = require("../middleware/auth");
        }
      });
 
+//get a bathroom by Id
+router.get("/bathrooms/:bathroomId", async (req, res) => {
+
+  const bathroomId = parseInt(req.params.bathroomId, 10);
+  
+  console.log(bathroomId);
+
+
+  try {
+    const bathroom = await Bathroom.findOne({ where: { id: bathroomId } });
+
+    if (bathroom) {
+      res.status(200).json(bathroom);
+    } else {
+      res.status(404).send({ message: "bathroom not found" });
+    }
+  } catch (err) {
+    console.error(err);
+    res.status(500).send({ message: err.message });
+  }
+});
+ //--------------------------------------------------------------------------
+ router.delete("/bathrooms/:bathroomId", authenticateUser,  async (req, res) => {
+  const bathroomId = parseInt(req.params.bathroomId, 10);
+
+  try {
+    const record = await Bathroom.findOne({ where: { id: bathroomId } });
+    if (record && record.UserId !== parseInt(req.session.userId, 10)) {
+      console.log("UserID in record:", record.UserId);
+console.log("UserID from session:", req.session.userId);
+      return res
+        .status(403)
+        .json({ message: "You are not authorized to delete this bathroom" });
+    }
+    const deleteOp = await Bathroom.destroy({ where: { id: bathroomId } });
+    if (deleteOp > 0) {
+      res.status(200).send({ message: "Bathroom deleted successfully" });
+    } else {
+      res.status(404).send({ message: "Bathroom not found" });
+    }
+  } catch (err) {
+    console.error(err);
+    res.status(500).send({ message: err.message });
+  }
+});
+
      module.exports = router;
