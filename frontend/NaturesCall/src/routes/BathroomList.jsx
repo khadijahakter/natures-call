@@ -14,10 +14,11 @@ export default function BathroomList() {
   const [lat, setLat]=useState(null);
   const [long, setLong]=useState(null);
   const [displayBathrooms, setDisplayBathrooms] = useState([]);
-  const [selected, setSelected] = useState(null);
+const [bathroomCount,setBathroomCount]=useState(null);
   const [selectedAmenity, setSelectedAmenity] = useState(null);
 
-  const [bathroomCount, setBathroomCount] = useState(0);
+  const [selectedBathroom, setSelectedBathroom] = useState(null);
+
   async function fetchBathrooms() {
     const data={
       lat,
@@ -124,11 +125,15 @@ export default function BathroomList() {
               <ul className=" flex flex-col space-y-4 text-white">
                 {displayBathrooms.filter(bathroom => !selectedAmenity || bathroom[selectedAmenity] > 3)
                 .map(bathroom => (
-                  <Link to={`/bathrooms/${bathroom.id}`} key={bathroom.id}>
+
+
+                  
                     <li className="Bathroom-card flex flex-col  p-4 rounded-lg bg-opacity-30 transform transition duration-200 ease-in-out hover:scale-105">
                      
                       <div>
-                      <h3 className="text-xl font-bold text-sky-900">{bathroom.name}</h3>
+                        <Link to={`/bathrooms/${bathroom.id}`} key={bathroom.id}>
+                      <h3 className="text-xl font-bold text-sky-900">{bathroom.name}</h3> 
+                       </Link>
                       <p className="text-sm text-gray-600 py-1 ">
                               {/* <strong className="font-medium">Rating: </strong>
                               {bathroom.rating ? bathroom.rating : "Na"} */}
@@ -141,9 +146,9 @@ export default function BathroomList() {
                         {bathroom.address}
                       </p>
       
-                     
+                      <button onClick={()=>{ setSelectedBathroom(bathroom)}}>Direction</button>
                     </li>
-                  </Link>
+                
                 ))}
               </ul>
             </div>

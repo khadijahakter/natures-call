@@ -183,3 +183,8 @@
 .edit-button:hover {
   color: blue; /* Change text color on hover */
 }
+.button-container {
+  display: flex;
+  gap: 8px; /* Adjust this value to control the space between buttons */
+}
+
