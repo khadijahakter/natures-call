@@ -12,6 +12,10 @@ module.exports = {
       content: {
         type: Sequelize.STRING
       },
+      rating: {
+        allowNull: false,
+        type: Sequelize.INTEGER,
+      },
       photo: {
         type: Sequelize.STRING
       },
