@@ -226,6 +226,8 @@ return isLoaded ? (
 
 
       <div style={{position: 'relative', width: '100%', height: '100%'}}>
+      <text>Distance: {distance} </text>
+          <text>Duration: {duration} </text>
         <GoogleMap
           mapContainerStyle={containerStyle}
           center={center}
@@ -262,11 +264,10 @@ return isLoaded ? (
               />
             </Autocomplete> */}
 
-            <button colorScheme='pink' type='submit' onClick={calculateRoute}>
+            {/* <button colorScheme='pink' type='submit' onClick={calculateRoute}>
               Calculate Route
-            </button>
-            <text>Distance: {distance} </text>
-          <text>Duration: {duration} </text>
+            </button> */}
+            
 
         <div className="absolute bottom-7 right-20 z-10">
 
