@@ -11,7 +11,7 @@ import { GoogleMap, useJsApiLoader, Marker,Autocomplete,
 
 
 import './MapStyles.css';
-
+import StarRating from "./StarRating"; 
 
 
 import customMarkerIcon from "./bathroomMarker(unclicked).png"; 
@@ -262,33 +262,27 @@ return isLoaded ? (
         <Marker
           key={displayBathroom.id}
           position={{ lat: parseFloat(displayBathroom.lat), lng: parseFloat(displayBathroom.lng) }}
-          onClick={() => setSelectedBathroom(displayBathroom)}
+          onClick={() => setSelected(displayBathroom)}
+
           // icon={customMarkerIcon} // Set the custom icon
         />
       ))}
 
-      {/* Render InfoWindow if selectedBathroom exists */}
-      {selected && (
-        <InfoWindow
-          position={{ lat: parseFloat(selected.lat), lng: parseFloat(selected.lng) }}
-          onCloseClick={() => setSelected(null)}
-        >
-          <div className="info-window">
-            <h4>{selected.name}</h4>
-            <div className="rating">
-              {[1, 2, 3, 4, 5].map((index) => (
-                <span
-                  key={index}
-                  className={`star ${selected.rating >= index ? 'yellow' : 'gray'}`}
-                >
-                  ★
-                </span>
-              ))}
-            </div>
-            <Link to={`/bathrooms/${selected.id}`}>View Details</Link>
-          </div>
-        </InfoWindow>
-      )}
+        {/* Render InfoWindow if selectedBathroom exists */}
+        {selected && (
+              <InfoWindow
+                position={{ lat: parseFloat(selected.lat), lng: parseFloat(selected.lng) }}
+                onCloseClick={() => setSelected(null)}
+              >
+                <div className="info-window">
+                  <h4>{selected.name}</h4>
+                  <div className="rating">
+                    <StarRating rating={selected.rating} /> {/* Use the StarRating component */}
+                  </div>
+                  <Link to={`/bathrooms/${selected.id}`}>View Details</Link>
+                </div>
+              </InfoWindow>
+            )}
     </GoogleMap>
         
         {/* <Autocomplete>
