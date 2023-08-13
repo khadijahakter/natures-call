@@ -245,6 +245,7 @@ return isLoaded ? (
       <div style={{position: 'relative', width: '100%', height: '100%'}}>
       <text>Distance: {distance} </text>
           <text>Duration: {duration} </text>
+          <button onClick={clearRoute}>Clear Routes</button>
           <GoogleMap
       mapContainerStyle={containerStyle}
       center={center}
