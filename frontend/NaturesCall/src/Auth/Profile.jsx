@@ -287,6 +287,9 @@ const handleProfilePhotoUpdate = async () => {
           {/* <p>Bathroom ID: {review.BathroomId}</p> */}
 
           <p>Date Created: {review.createdAt}</p>
+          {review.updatedAt !== review.createdAt && ( // Check if updatedAt is different from createdAt
+        <p>Date Updated: {review.updatedAt}</p>
+      )}
           {/* Render other review details here */}
           <hr />
           <div className="button-container">
