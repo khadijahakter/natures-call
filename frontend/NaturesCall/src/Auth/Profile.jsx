@@ -252,6 +252,14 @@ const handleProfilePhotoUpdate = async () => {
           <p>Date Created: {review.createdAt}</p>
           {/* Render other review details here */}
           <hr />
+          <div className="button-container">
+          <button  className="edit-button">
+            <Link to={`/editReview/${review.id}`}> Edit </Link></button>
+            <button onClick={() => handleDeleteBathroom(review.id)} disabled={deleteInProgress}>
+  {deleteInProgress ? "Deleting..." : "Delete"}
+</button>
+</div>
+        
         </div>
       ))}
     </div>
