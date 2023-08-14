@@ -178,7 +178,7 @@ export default function BathroomPage() {
                       const reviewUser = allUsers.find(user => user.id === review.UserId);
                       console.log("reviewUser", reviewUser);
                       return (
-                        <div key={review.id} className="bg-sky-950 p-4 mx-2 rounded-lg bg-opacity-70">
+                        <div key={review.id} className="bg-lime-950 p-4 mx-2 rounded-lg bg-opacity-70">
                           <div className="flex items-center space-x-4"> {/* Display user photo and other info */}
                             <img src={reviewUser.photo} alt={`${reviewUser.name}'s Profile Pic`} className="w-8 h-8 rounded-full" />
                             <h3 className="text-xl font-bold">{reviewUser.name}</h3>

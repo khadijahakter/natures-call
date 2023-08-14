@@ -302,7 +302,7 @@ return isLoaded ? (
         <div className="absolute bottom-7 right-20 z-10">
 
           {/* <button><Link to={"/editBathroom"}>Edit Bathroom</Link></button> */}
-        <Link to={"/addBathroom"}>Add Bathroom
+        <Link to={"/addBathroom"}>
           <button className="bg-sky-900 text-white rounded-full p-4 hover:bg-blue-800 focus:outline-none">
           Add Bathroom</button></Link>
         </div>
