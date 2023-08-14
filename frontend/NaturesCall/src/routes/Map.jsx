@@ -285,22 +285,7 @@ return isLoaded ? (
             )}
     </GoogleMap>
         
-        {/* <Autocomplete>
-              <input type='text' placeholder='Origin' ref={originRef} className="text-black" />
-            </Autocomplete>
-            <Autocomplete>
-              <input
-                type='text'
-                placeholder='Destination'
-                ref={destiantionRef}
-                className="text-black"
-              />
-            </Autocomplete> */}
-
-            {/* <button colorScheme='pink' type='submit' onClick={calculateRoute}>
-              Calculate Route
-            </button> */}
-            
+       
 
         <div className="absolute bottom-7 right-20 z-10">
 
