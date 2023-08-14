@@ -19,20 +19,6 @@
   margin-bottom: 40px;
 }
 
-/* Username and Email */
-.profile-text {
-  font-size: 1.2rem;
-  color: black;
-  margin: 5px 0;
-}
-
-/* User Image */
-.profile-image {
-  width: 100px;
-  height: 100px;
-  border-radius: 50%;
-  object-fit: cover;
-}
 
 /* Container for Bathrooms and Reviews */
 .bathrooms-reviews-container {
@@ -45,7 +31,7 @@
 
 /* Bathrooms Container */
 .bathrooms-container {
-  width: 45%; /* Adjust as needed */
+  width: 45%; 
 }
 
 /* Reviews Container */
@@ -61,22 +47,13 @@
 }
 
 /* Bathroom and Review Items */
-.bathroom-item{
-  background-color: #f9f9f9;
-  border-radius: 10px;
-  padding: 20px;
-  margin-bottom: 20px;
-  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
-  color:black;
-  
-}
 .review-item {
-  background-color: #f9f9f9;
+  background-color: #e4e4e4;
   border-radius: 10px;
   padding: 20px;
   margin-bottom: 20px;
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
-  color:black;
+  color:rgb(8, 42, 66);
   
 }
 
@@ -95,25 +72,6 @@
   height: auto;
   border-radius: 5px;
   margin-top: 15px;
-}
-.profile-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center; /* Center items horizontally */
-  margin-top: 20px; /* Add some top margin for spacing */
-}
-
-.profile-photo-section {
-  margin-bottom: 20px; /* Add some bottom margin for spacing */
-}
-
-.profile-photo {
-  text-align: center;
-  margin-top: 10px; /* Add some top margin for spacing */
- 
-}
-.profile-photo-title{
-  text-align:center;
 }
 
 
@@ -157,15 +115,14 @@
 /* Add this to your existing CSS */
 .bathroom-link {
   color: inherit;
-  font-weight: normal; /* Default font weight */
+  font-weight: bold; /* Default font weight */
   transition: font-weight 0.3s ease;
 }
 
 .bathroom-link:hover {
-  color: blue; /* Change the color to blue on hover */
+  color: rgb(29, 29, 133); /* Change the color to blue on hover */
   font-weight: bold; /* Bolder font weight on hover */
 }
-/* In your Profile.css or your preferred stylesheet */
 
 /* Styling for the "Edit Me" button */
 .edit-button {
@@ -249,9 +206,11 @@
   height: 100vh;
 }
 
+
 .main-content {
   flex: 1;
   padding: 20px;
+  overflow-y: auto; /* This makes it scrollable if the content exceeds its height */
   box-shadow: 0 0 10px rgba(0,0,0,0.1);
   max-width: calc(100% - 280px); /* Adjusted for 240px sidebar width + 40px margin */
 }
@@ -267,7 +226,9 @@
 }
 
 .right-sidebar {
-  margin-left: 20px;
+  width: 300px; 
+  overflow-y: auto; /* This makes it scrollable if the content exceeds its height */
+  padding: 1rem; /* add padding as necessary */
 }
 
 .container {
@@ -336,4 +297,8 @@
 .profile-header {
   animation: fadeIn 1s ease-in-out forwards;
   /* Add any other styles specific to this class as needed */
+}
+
+.text-shadow-effect {
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
 }
