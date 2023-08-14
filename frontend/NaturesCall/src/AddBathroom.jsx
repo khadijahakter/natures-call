@@ -8,6 +8,7 @@ export async function action({ request, params }) {
     //store lat n long from address into user bathroom
     const coordinates = await getCoordinatesFromAddress(address);
 
+
     if (coordinates) {
         bathroomData.lat = coordinates.lat;
         bathroomData.lng = coordinates.lng;
@@ -18,7 +19,7 @@ export async function action({ request, params }) {
         console.log("no cords found (from AddBAthroom.jsx");
     }
         const response = await fetch("/api/bathroomActions/createBathroom", {
-        
+       
         method: "POST",
         headers: {
             "Content-Type": "application/json"
@@ -34,16 +35,20 @@ async function getCoordinatesFromAddress(address) {
     const apiKey =  import.meta.env.VITE_GOOGLE_MAPS_API_KEY
     const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(address)}&key=${apiKey}`;
 
+
     const response = await fetch(url);
     const data = await response.json();
+
 
     if (data.results.length > 0) {
         const location = data.results[0].geometry.location;
         return { lat: location.lat, lng: location.lng };
     }
 
+
     return null;
 }
+
 
 export default function AddBathroom() {
     return (
@@ -77,6 +82,7 @@ export default function AddBathroom() {
                         </div>
                     </fieldset>
 
+
                     <fieldset className="mb-8">
                         <h4 className="mb-1 font-semibold text-gray-900 dark:text-sky-950 tracking-widest">Is it Unisex?</h4>
                         <ul className="items-center w-full text-sm font-medium text-sky-900 bg-white border border-gray-200 rounded-lg sm:flex dark:bg-sky-950 dark:border-sky-600 dark:text-sky-100">
@@ -100,7 +106,9 @@ export default function AddBathroom() {
                             </li>
                         </ul>
 
+
                     </fieldset>
+
 
                     <fieldset className="mb-8">
                         <h4 className="mb-1 font-semibold text-gray-900 dark:text-sky-950 tracking-widest">Does it have an Emergency Cord?</h4>
@@ -149,6 +157,7 @@ export default function AddBathroom() {
                         </ul>
                     </fieldset>
 
+
                     <fieldset className="mb-8">
                         <h4 className="mb-1 font-semibold text-gray-900 dark:text-sky-950 tracking-widest">Is it Pet Friendly?</h4>
                         <ul className="items-center w-full text-sm font-medium text-sky-900 bg-white border border-gray-200 rounded-lg sm:flex dark:bg-sky-950 dark:border-sky-600 dark:text-sky-100">
@@ -173,6 +182,7 @@ export default function AddBathroom() {
                         </ul>
                     </fieldset>
 
+
                     <button
                         type="submit"
                         className="bg-sky-500 hover:bg-sky-600 text-white p-2 px-4 rounded mb-6 w-full"
@@ -180,7 +190,8 @@ export default function AddBathroom() {
                         Submit Bathroom
                     </button>
                 </Form>
-          
+         
         </>
     );
 }
+

@@ -1,5 +1,5 @@
 import React from "react";
-import { Form, redirect, Link, useParams, useNavigate } from "react-router-dom";
+import { Form, redirect, Link, useParams, useNavigate} from "react-router-dom";
 // const navigate = useNavigate();
 import { useState } from "react";
 
@@ -17,11 +17,11 @@ export async function action({ request, params }) {
         },
         body: JSON.stringify(bathroomData),
     });
-    console.log("review call response:", response);
+    console.log("review call response:",response);
 
     // navigate (`/bathrooms/${params.id}`);
 
-    //edit bathroom rating
+//edit bathroom rating
     const updateresponse = await fetch(`http://localhost:4000/bathrooms/${params.id}`, {
         method: "PATCH",
         headers: {
@@ -44,10 +44,9 @@ export default function AddReviewForm() {
 
     const handleRating = (star) => {
         setRating(star);
-        console.log("Testing testing stars")
-    };
+      };
 
-
+    
     const handleSubmit = (event) => {
         const rating = event.target.rating.value;
 
@@ -67,22 +66,22 @@ export default function AddReviewForm() {
             </Link>
             <h1 className="text-2xl font-bold text-center mb-8">Create Review</h1>
 
-            <fieldset>
-                <div className="flex flex-col gap-4 mb-4">
-                    <div className="star-rating">
-                        {[1, 2, 3, 4, 5].map((star) => (
-                            <span
-                                key={star}
-                                className={`star ${rating >= star ? "filled" : ""}`}
-                                onClick={() => handleRating(star)}
-                            >
-                                ★
-                            </span>
-                        ))}
-                    </div>
-                    <input type="hidden" id="rating" name="rating" value={rating} />
-                </div>
-            </fieldset>
+<fieldset>
+  <div className="flex flex-col gap-4 mb-4">
+    <div className="star-rating">
+      {[1, 2, 3, 4, 5].map((star) => (
+        <span
+          key={star}
+          className={`star ${rating >= star ? "filled" : ""}`}
+          onClick={() => handleRating(star)}
+        >
+          ★
+        </span>
+      ))}
+    </div>
+    <input type="hidden" id="rating" name="rating" value={rating} />
+  </div>
+</fieldset>
 
 
             <fieldset>

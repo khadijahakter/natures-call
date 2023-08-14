@@ -1,12 +1,9 @@
-import React from "react";
-import { useState } from "react";
-
+import React, { useEffect } from "react";
+import { useState,useRef } from "react";
 import { Link } from "react-router-dom";
-
+import { GoogleMap, useJsApiLoader, Marker,Autocomplete,
+  DirectionsRenderer, InfoWindow} from "@react-google-maps/api";
 import './MapStyles.css';
-import { GoogleMap, useJsApiLoader, Marker,InfoWindow } from "@react-google-maps/api";
-
-
 import customMarkerIcon from "./bathroomMarker(unclicked).png"; 
 
 const center = {
@@ -14,19 +11,37 @@ const center = {
   lng: -74.148660
 };
 
-
-export default function Map({ lat, long, setLat, setLong,displayBathrooms }) {
-  const [selectedBathroom, setSelectedBathroom] = useState(null);
-
+const libraries = ["places"];
+export default function Map({ selectedBathroom, lat,long, setLat, setLong,displayBathrooms }) {
+  
+  const [directionsResponse, setDirectionsResponse] = useState(null)
+  const [distance, setDistance] = useState('')
+  const [duration, setDuration] = useState('')
   const [geocoder, setGeocoder] = useState(null);
   const [address, setAddress] = useState('');
+
+/** @type React.MutableRefObject<HTMLInputElement> */
+const originRef = useRef()
+/** @type React.MutableRefObject<HTMLInputElement> */
+const destiantionRef = useRef()
+
+
+
+
+
+  const [selected, setSelected] = useState(null);
+
+  
+ 
 
   const [center, setCenter] = useState({ lat: 40.587400, lng: -74.148660 });
 
 
+
   const { isLoaded } = useJsApiLoader({
     id: 'google-map-script',
-    googleMapsApiKey: import.meta.env.VITE_GOOGLE_MAPS_API_KEY
+    googleMapsApiKey: import.meta.env.VITE_GOOGLE_MAPS_API_KEY,
+    libraries: libraries,
 
   })
   const [map, setMap] = React.useState(null)
@@ -46,13 +61,57 @@ export default function Map({ lat, long, setLat, setLong,displayBathrooms }) {
   const onUnmount = React.useCallback(function () {
     setMap(null);
   }, []);
+
+
+  async function calculateRoute() {
+    // if (originRef.current.value === '' || destiantionRef.current.value === '') {
+    //   return;
+    // }
+  
+    const directionsService = new window.google.maps.DirectionsService();
+    const results = await directionsService.route({
+      origin: `${lat},${long}`, // User's location
+      destination: `${selectedBathroom.lat},${selectedBathroom.lng}`, // Marker's address
+      travelMode: window.google.maps.TravelMode.WALKING,
+    });
+  
+    setDirectionsResponse(results);
+    setDistance(results.routes[0].legs[0].distance.text);
+    setDuration(results.routes[0].legs[0].duration.text);
+  }
+  
+  function clearRoute() {
+    setDirectionsResponse(null)
+    setDistance('')
+    setDuration('')
+    originRef.current.value = ''
+    destiantionRef.current.value = ''
+  }
   //geocoder API
   const getUserLocation = () => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
-        (position) => {
-          setLat(position.coords.latitude);
-          setLong(position.coords.longitude);
+        async (position) => {
+          const { latitude, longitude } = position.coords;
+  
+          try {
+            const response = await fetch(
+              `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=${import.meta.env.VITE_GOOGLE_MAPS_API_KEY}`
+            );
+            const data = await response.json();
+  
+            if (data.results.length > 0) {
+              const address = data.results[0].formatted_address;
+              console.log("my address:", address);
+              setLat(latitude);
+              setLong(longitude);
+              //originRef.current.value = address;
+              //console.log("originRef.current.value:", originRef.current.value);
+              
+            }
+          } catch (error) {
+            console.error("Error getting address from coordinates:", error);
+          }
         },
         (error) => {
           console.error("Error getting user's location:", error);
@@ -62,7 +121,16 @@ export default function Map({ lat, long, setLat, setLong,displayBathrooms }) {
       console.error("Geolocation is not supported by this browser.");
     }
   };
+  
+  //useEffect(getUserLocation,[])
 
+  useEffect(() => {
+    if(selectedBathroom){
+      calculateRoute()
+      // console.log(origin.current.value + " dir:" + direction.current.value)
+    }
+  }, [selectedBathroom]);
+  
 
 
   //converts address to coordinates
@@ -113,51 +181,26 @@ const blueMapStyles = [
       { "color": "##E5ECE4" }
     ]
   },
-  // {
-  //   "featureType": "road",
-  //   "elementType": "geometry",
-  //   "stylers": [
-  //     { "color": "#fae37d" }
-  //   ]
-  // },
-  // {
-  //   "featureType": "poi",
-  //   "elementType": "geometry",
-  //   "stylers": [
-  //     { "color": "#176B87" }
-  //   ]
-  // },
-  // {
-  //   "featureType": "transit",
-  //   "stylers": [
-  //     { "color": "#176B87" }
-  //   ]
-  // },
-  // {
-  //   "elementType": "labels.text.stroke",
-  //   "stylers": [
-  //     { "visibility": "on" },
-  //     { "color": "#DAFFFB" }
-  //   ]
-  // },
-  // {
-  //   "elementType": "labels.text",
-  //   "stylers": [
-  //     { "saturation": -1 },
-  //     // { "color": "#DAFFFB" }
-  //   ]
-  // },
-  // {
-  //   "elementType": "labels.icon",
-  //   "stylers": [
-  //     { "visibility": "on" }
-  //   ]
-  // }
+  
 ];
+// function onMarkerClick(markerAddress) {
+//   if (originRef.current.value !== null) {
+    
+//     destiantionRef.current.value = markerAddress;
+//     calculateRoute();
+//   } else {
+//     console.log("Don't have your location");
+//   }
+// }
+
+
+
+// console.log("hannah", displayBathrooms);
 
 
 
 return isLoaded ? (
+  
   <>
   
     <div className= "relative w-full ">
@@ -170,11 +213,9 @@ return isLoaded ? (
 
 
 
-
-
-
     <div className="search absolute top-2 left-1/4 z-10 p-2 rounded w-2/4 bg-cyan-300 bg-opacity-40 overflow-hidden ">
     <div className="flex items-center bg-cyan-700 rounded ">
+      <Autocomplete>
       <input
         type="text"
         value={address}
@@ -182,6 +223,7 @@ return isLoaded ? (
         placeholder="Enter address"
         className="px-4 py-2 flex-grow text-white bg-cyan-900 bg-opacity-90"
       />
+      </Autocomplete>
       <button onClick={onGeocode} className="bg-cyan-700 hover:bg-cyan-500 text-white font-bold  py-2 px-4 rounded-r">
         Find Bathrooms
       </button>
@@ -192,53 +234,75 @@ return isLoaded ? (
 
 
       <div style={{position: 'relative', width: '100%', height: '100%'}}>
-        <GoogleMap
-          mapContainerStyle={containerStyle}
-          center={center}
-          zoom={8}
-          onLoad={onLoad}
-          onUnmount={onUnmount}
-          options={{ styles: blueMapStyles }}
-        >
-          { /* Took bathroom list from parent component and added a marker in their positions */}
-          {displayBathrooms.map((displayBathroom) => (
+      <text>Distance: {distance} </text>
+          <text>Duration: {duration} </text>
+          <button onClick={clearRoute}>Clear Routes</button>
+          <GoogleMap
+      mapContainerStyle={containerStyle}
+      center={center}
+      zoom={8}
+      onLoad={onLoad}
+      onUnmount={onUnmount}
+      options={{ styles: blueMapStyles }}
+    >
+      {/* Render DirectionsRenderer only if directionsResponse exists */}
+      {directionsResponse && <DirectionsRenderer directions={directionsResponse} />}
+
+      {/* Map over displayBathrooms to render Markers */}
+      {displayBathrooms.map((displayBathroom) => (
         <Marker
-        key={displayBathroom.id}
-        position={{ lat: parseFloat(displayBathroom.lat), lng: parseFloat(displayBathroom.lng) }}
-        onClick={() => setSelectedBathroom(displayBathroom)}
-       // icon={customMarkerIcon} // Set the custom icon
-      />
-        ))}
-          {selectedBathroom && (
-  <InfoWindow
-  position={{ lat: parseFloat(selectedBathroom.lat), lng: parseFloat(selectedBathroom.lng) }}
-  onCloseClick={() => setSelectedBathroom(null)}
->
-  <div className="info-window">
-    <h4>{selectedBathroom.name}</h4>
-    <div className="rating">
-      {[1, 2, 3, 4, 5].map((index) => (
-        <span
-          key={index}
-          className={`star ${selectedBathroom.rating >= index ? 'yellow' : 'gray'}`}
-        >
-          ★
-        </span>
+          key={displayBathroom.id}
+          position={{ lat: parseFloat(displayBathroom.lat), lng: parseFloat(displayBathroom.lng) }}
+          onClick={() => setSelectedBathroom(displayBathroom)}
+          // icon={customMarkerIcon} // Set the custom icon
+        />
       ))}
-    </div>
-    <Link to={`/bathrooms/${selectedBathroom.id}`}>View Details</Link>
-  </div>
-</InfoWindow>
 
-  )}
-        <></>
+      {/* Render InfoWindow if selectedBathroom exists */}
+      {selected && (
+        <InfoWindow
+          position={{ lat: parseFloat(selected.lat), lng: parseFloat(selected.lng) }}
+          onCloseClick={() => setSelected(null)}
+        >
+          <div className="info-window">
+            <h4>{selected.name}</h4>
+            <div className="rating">
+              {[1, 2, 3, 4, 5].map((index) => (
+                <span
+                  key={index}
+                  className={`star ${selected.rating >= index ? 'yellow' : 'gray'}`}
+                >
+                  ★
+                </span>
+              ))}
+            </div>
+            <Link to={`/bathrooms/${selected.id}`}>View Details</Link>
+          </div>
+        </InfoWindow>
+      )}
+    </GoogleMap>
+        
+        {/* <Autocomplete>
+              <input type='text' placeholder='Origin' ref={originRef} className="text-black" />
+            </Autocomplete>
+            <Autocomplete>
+              <input
+                type='text'
+                placeholder='Destination'
+                ref={destiantionRef}
+                className="text-black"
+              />
+            </Autocomplete> */}
 
-        </GoogleMap>
+            {/* <button colorScheme='pink' type='submit' onClick={calculateRoute}>
+              Calculate Route
+            </button> */}
+            
 
         <div className="absolute bottom-7 right-20 z-10">
 
           {/* <button><Link to={"/editBathroom"}>Edit Bathroom</Link></button> */}
-        <Link to={"/addBathroom"}>Add Bathroom
+        <Link to={"/addBathroom"}>
           <button className="bg-sky-900 text-white rounded-full p-4 hover:bg-blue-800 focus:outline-none">
           Add Bathroom</button></Link>
         </div>
