@@ -4,6 +4,9 @@ import { Link } from "react-router-dom";
 import { GoogleMap, useJsApiLoader, Marker,Autocomplete,
   DirectionsRenderer, InfoWindow} from "@react-google-maps/api";
 import './MapStyles.css';
+import StarRating from "./StarRating"; 
+
+
 import customMarkerIcon from "./bathroomMarker(unclicked).png"; 
 
 const center = {
@@ -217,12 +220,18 @@ return isLoaded ? (
     <div className="flex items-center bg-cyan-700 rounded ">
       <Autocomplete>
       <input
-        type="text"
-        value={address}
-        onChange={(e) => setAddress(e.target.value)}
-        placeholder="Enter address"
-        className="px-4 py-2 flex-grow text-white bg-cyan-900 bg-opacity-90"
-      />
+  type="text"
+  value={address}
+  onChange={(e) => setAddress(e.target.value)}
+  onKeyDown={(e) => {
+    if (e.key === "Enter") {
+      e.preventDefault(); // Prevent default Enter behavior
+      onGeocode(); // Trigger geocoding process
+    }
+  }}
+  placeholder="Enter address"
+  className="px-4 py-2 flex-grow text-white bg-cyan-900 bg-opacity-90"
+/>
       </Autocomplete>
       <button onClick={onGeocode} className="bg-cyan-700 hover:bg-cyan-500 text-white font-bold  py-2 px-4 rounded-r">
         Find Bathrooms
@@ -253,33 +262,27 @@ return isLoaded ? (
         <Marker
           key={displayBathroom.id}
           position={{ lat: parseFloat(displayBathroom.lat), lng: parseFloat(displayBathroom.lng) }}
-          onClick={() => setSelectedBathroom(displayBathroom)}
+          onClick={() => setSelected(displayBathroom)}
+
           // icon={customMarkerIcon} // Set the custom icon
         />
       ))}
 
-      {/* Render InfoWindow if selectedBathroom exists */}
-      {selected && (
-        <InfoWindow
-          position={{ lat: parseFloat(selected.lat), lng: parseFloat(selected.lng) }}
-          onCloseClick={() => setSelected(null)}
-        >
-          <div className="info-window">
-            <h4>{selected.name}</h4>
-            <div className="rating">
-              {[1, 2, 3, 4, 5].map((index) => (
-                <span
-                  key={index}
-                  className={`star ${selected.rating >= index ? 'yellow' : 'gray'}`}
-                >
-                  ★
-                </span>
-              ))}
-            </div>
-            <Link to={`/bathrooms/${selected.id}`}>View Details</Link>
-          </div>
-        </InfoWindow>
-      )}
+        {/* Render InfoWindow if selectedBathroom exists */}
+        {selected && (
+              <InfoWindow
+                position={{ lat: parseFloat(selected.lat), lng: parseFloat(selected.lng) }}
+                onCloseClick={() => setSelected(null)}
+              >
+                <div className="info-window">
+                  <h4>{selected.name}</h4>
+                  <div className="rating">
+                    <StarRating rating={selected.rating} /> {/* Use the StarRating component */}
+                  </div>
+                  <Link to={`/bathrooms/${selected.id}`}>View Details</Link>
+                </div>
+              </InfoWindow>
+            )}
     </GoogleMap>
         
         {/* <Autocomplete>

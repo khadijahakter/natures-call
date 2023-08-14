@@ -1,8 +1,39 @@
 const express = require("express");
+const multer = require("multer");
+const path = require("path");
 const router = express.Router();
 const { User, Bathroom, Review } = require("../models");
 const { authenticateUser } = require("../middleware/auth");
+// Set up multer for file storage
+const storage = multer.diskStorage({
+  destination: path.join(__dirname, "../public/uploads"), // Make sure to adjust the destination path
+  filename: (req, file, cb) => {
+    cb(null, `${Date.now()}-${file.originalname}`);
+  },
+});
 
+const upload = multer({ storage });
+// PATCH endpoint to update user profile pic via file
+router.patch("/updateprofilepicFile", authenticateUser, upload.single("profilePhoto"), async (req, res) => {
+  try {
+    const photoUrl = `/uploads/${req.file.filename}`;
+
+    // Update the user's photo field using the update method
+    const updatedUser = await User.update(
+      { photo: photoUrl },
+      { where: { id: req.session.userId }, returning: true }
+    );
+
+    if (updatedUser[0] === 1) {
+      res.status(200).json({ photoUrl });
+    } else {
+      res.status(404).json({ message: "User not found" });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "An error occurred while updating the profile photo" });
+  }
+});
 //get all reviews from a user (Jean method from robert)
 router.get("/myReviews", authenticateUser, async (req, res) => {
 
@@ -66,6 +97,7 @@ router.get("/userData", async (req, res) => {
     return res.status(401).json({ user: null })
   }
 });
+   
 //get all users that made an account and logged in
 
 
@@ -131,4 +163,6 @@ router.patch("/user/updateprofilepic", authenticateUser, async (req, res) => {
   }
 });
 
-module.exports = router;
+
+
+   module.exports = router;

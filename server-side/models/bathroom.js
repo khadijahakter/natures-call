@@ -10,10 +10,12 @@ module.exports = (sequelize, DataTypes) => {
       
     }
   }
+
   Bathroom.init({
     sourceid: { 
       type: DataTypes.STRING,
-      allowNull:false
+      allowNull:false,
+      
     },
     address: { 
       type: DataTypes.STRING,

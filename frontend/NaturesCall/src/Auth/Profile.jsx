@@ -42,7 +42,42 @@ export default function Profile() {
     const bathroom = allBathrooms.find((bathroom) => Number(bathroom.id) === Number(BathroomId));
     return bathroom ? bathroom.name : "Unknown Bathroom. It may have been deleted :( ";
   };
-
+  const handleDeleteReview = async (reviewId) => {
+    const confirmDelete = window.confirm("Are you sure you want to delete this review?");
+    if (confirmDelete) {
+      setDeleteInProgress(true);
+    try {
+      const response = await fetch(`/api/bathroomActions/userReviews/${reviewId}`, {
+        method: "DELETE",
+        headers: {
+  
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ userId: profileData.user.id }), // Pass the user ID in the body
+      });
+    
+      if (response.ok) {
+        // Update the userBathrooms state to remove the deleted bathroom
+        setUpdatedProfileData(prevData => ({
+          ...prevData,
+          reviewsData: reviewsData.filter(review => review.id !== reviewId),
+          // Make sure to update other properties if needed
+        }));
+      
+    
+        
+        // You can navigate to a different page or refresh the data here
+        navigate('/profile');
+      } else {
+        console.error("Failed to delete bathroom");
+      }
+    } catch (error) {
+      console.error("Error deleting bathroom:", error);
+    }
+    setDeleteInProgress(false);
+  }
+  };
+  
   const handleDeleteBathroom = async (bathroomId) => {
     const confirmDelete = window.confirm("Are you sure you want to delete this bathroom?");
     if (confirmDelete) {
@@ -171,6 +206,15 @@ export default function Profile() {
         <p className="text-sm text-gray-600 mb-2 font-bold" style={{ color: '#0F3D5F' }}>{review.content}</p>
         <p className="text-xs text-right text-gray-500">{formatDate(review.createdAt)}</p>
         <hr className="mt-4" />
+        <div className="button-container">
+          <button  className="edit-button">
+            <Link to={`/editReview/${review.id}`}> Edit </Link></button>
+            <button onClick={() => handleDeleteReview(review.id)} disabled={deleteInProgress}>
+  {deleteInProgress ? "Deleting..." : "Delete"}
+</button>
+</div>
+        
+       
     </div>
 ))}
 

@@ -19,7 +19,7 @@ import BathroomPage, {loader as bathroomLoader} from './BathroomPage.jsx';
 import AddReviewForm, {action as AddReview} from './AddReviewForm.jsx';
 import AddBathroom, {action as addBrAction} from './AddBathroom';
 import EditBathroom,{ loader as loader } from './EditBathroom';
-
+import EditReview, {loader as editReviewLoader} from './EditReview';
 
 import Profile, {loader as UserBathroomLoader} from './Auth/Profile.jsx';
 
@@ -71,6 +71,11 @@ const router = createBrowserRouter([
         element: <EditBathroom />,
         loader: loader,
         
+      },
+      {
+        path: "/editReview/:editId",
+        element: <EditReview/>,
+        loader: editReviewLoader,
       },
       {
         path: "/addBathroom",

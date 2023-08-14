@@ -17,12 +17,9 @@ export async function action({ request, params }) {
         },
         body: JSON.stringify(bathroomData),
     });
-    console.log("review call response:", response);
-
-    // navigate (`/bathrooms/${params.id}`);
-
-    //edit bathroom rating
-    const updateresponse = await fetch(`http://localhost:4000/bathrooms/${params.id}`, {
+    console.log("review call response:",response);
+//edit bathroom rating
+    const updateresponse = await fetch(`/api/bathroomActions/bathroomsrating/${params.id}`, {
         method: "PATCH",
         headers: {
             "Content-Type": "application/json",

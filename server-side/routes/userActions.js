@@ -6,7 +6,7 @@ const { authenticateUser } = require("../middleware/auth");
 
 
 
-//create a review for a bathroom
+//create a review for a bathroom (now has rating)
 router.post("/:bathroomId/reviews",  authenticateUser, async (req, res) => {
  
     const bathroomId = parseInt(req.params.bathroomId, 10);
@@ -15,6 +15,7 @@ router.post("/:bathroomId/reviews",  authenticateUser, async (req, res) => {
   // console.log("userId", userId); // Get the user ID from the session
     try {
       const review = await Review.create({
+        rating: req.body.rating,
         content: req.body.content,
         photo: req.body.photo,
         wheelchair: req.body.wheelchair,
@@ -53,34 +54,7 @@ router.post("/:bathroomId/reviews",  authenticateUser, async (req, res) => {
     }
   });
   
-  //editing review
-  router.patch("/bathrooms/:bathroomId/:reviewId", authenticateUser, async (req, res) => {
-    const reviewId = parseInt(req.params.reviewId, 10);
-   try {
-      const record = await Review.findOne({ where: { id: reviewId } });
-      if (record && record.UserId !== parseInt(req.session.userId, 10)) {
-        return res
-          .status(403)
-          .json({ message: "You are not authorized to perform that action." });
-      }
-  
-      const [numberOfAffectedRows, affectedRows] = await Review.update(
-        req.body,
-        { where: { id: reviewId }, returning: true }
-      );
-    if (numberOfAffectedRows > 0) {
-        res.status(200).json(affectedRows[0]);
-      } else {
-        res.status(404).send({ message: "Comment not found" });
-      }
-    } catch (err) {
-      if (err.name === "SequelizeValidationError") {
-        return res.status(422).json({ errors: err.errors.map((e) => e.message) });
-      }
-      res.status(500).send({ message: err.message });
-      console.error(err);
-    }
-  });
+ 
   //edit bathroom
   router.patch("/bathrooms/:bathroomId", authenticateUser, async (req, res) => {
     const bathroomId = parseInt(req.params.bathroomId, 10);
@@ -106,6 +80,57 @@ router.post("/:bathroomId/reviews",  authenticateUser, async (req, res) => {
   });
 
   
+  //get a review by ID (for editReview.jsx)
+
+router.get("/userReviews/:reviewId", async (req, res) => {
+
+  const reviewId = parseInt(req.params.reviewId, 10);
   
+  console.log(reviewId);
+
+
+  try {
+    const review = await Review.findOne({ where: { id: reviewId } });
+
+    if (review) {
+      res.status(200).json(review);
+    } else {
+      res.status(404).send({ message: "review not found" });
+    }
+  } catch (err) {
+    console.error(err);
+    res.status(500).send({ message: err.message });
+  }
+});
+
+//edit a review by user authentication (for EditReview.jsx)
+
+ router.patch("/userReviews/:reviewId", authenticateUser, async (req, res) => {
+  const reviewId = parseInt(req.params.reviewId, 10);
+ try {
+    const record = await Review.findOne({ where: { id: reviewId } });
+    if (record && record.UserId !== parseInt(req.session.userId, 10)) {
+      return res
+        .status(403)
+        .json({ message: "You are not authorized to perform that action." });
+    }
+
+    const [numberOfAffectedRows, affectedRows] = await Review.update(
+      req.body,
+      { where: { id: reviewId }, returning: true }
+    );
+  if (numberOfAffectedRows > 0) {
+      res.status(200).json(affectedRows[0]);
+    } else {
+      res.status(404).send({ message: "Comment not found" });
+    }
+  } catch (err) {
+    if (err.name === "SequelizeValidationError") {
+      return res.status(422).json({ errors: err.errors.map((e) => e.message) });
+    }
+    res.status(500).send({ message: err.message });
+    console.error(err);
+  }
+});
 
   module.exports = router;
