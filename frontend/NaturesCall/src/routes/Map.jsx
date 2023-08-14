@@ -5,6 +5,7 @@ import { GoogleMap, useJsApiLoader, Marker,Autocomplete,
   DirectionsRenderer, InfoWindow} from "@react-google-maps/api";
 import './MapStyles.css';
 import StarRating from "./StarRating"; 
+import {TbLocation} from 'react-icons/tb'
 
 
 import customMarkerIcon from "./bathroomMarker(unclicked).png"; 
@@ -207,18 +208,19 @@ return isLoaded ? (
   <>
   
     <div className= "relative w-full ">
-    <button 
-    onClick={getUserLocation} 
-   //  onClick={handleFindNearbyClick}
-    className="bg-cyan-700 hover:bg-cyan-500 text-white font-bold  py-2 px-4 rounded-r">
-        Find Nearby Bathrooms
-      </button>
+   
 
 
 
     <div className="search absolute top-2 left-1/4 z-10 p-2 rounded w-2/4 bg-cyan-300 bg-opacity-40 overflow-hidden ">
-    <div className="flex items-center bg-cyan-700 rounded ">
-      <Autocomplete>
+    <div className="flex items-center justify-between bg-cyan-700 rounded ">
+
+    <button 
+    onClick={getUserLocation} 
+    className="bg-cyan-700 hover:bg-cyan-500 text-white font-bold  py-2 px-4 rounded-r">
+      <TbLocation/>
+      </button>
+      <Autocomplete className="flex-1 mx-2 bg-cyan-900 ">
       <input
   type="text"
   value={address}
@@ -230,7 +232,7 @@ return isLoaded ? (
     }
   }}
   placeholder="Enter address"
-  className="px-4 py-2 flex-grow text-white bg-cyan-900 bg-opacity-90"
+  className="px-8 py-2 flex-grow text-white bg-cyan-900 bg-opacity-90"
 />
       </Autocomplete>
       <button onClick={onGeocode} className="bg-cyan-700 hover:bg-cyan-500 text-white font-bold  py-2 px-4 rounded-r">

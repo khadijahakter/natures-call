@@ -50,6 +50,7 @@ export async function loader({ params }) {
 
 export default function BathroomPage() {
   const { Bathroom, Reviews, userData, allUsers } = useLoaderData();
+  const [showFullList, setShowFullList] = useState(false);
 
   const {
     sourceid,
@@ -83,6 +84,111 @@ export default function BathroomPage() {
     firstAid,
     sharpsDisposal,
   } = Bathroom;
+
+  const amenities = [
+    {
+        name: 'Wheelchair Accessible',
+        icon: <PiWheelchairFill size={20} className={wheelchair ? "text-sky-900" : "text-white"} />,
+        value: wheelchair
+    },
+    {
+        name: 'Unisex',
+        icon: <PiGenderNeuterLight size={25} className={unisex ? "text-sky-900" : "text-white"}/>,
+        value: unisex
+    },
+    {
+        name: 'Emergency cord',
+        icon: <GrEmergency size={25} className={emergencyCord ? "text-sky-900" : "text-white"}/>,
+        value: emergencyCord
+    },
+    {
+      name: 'Changing Table',
+      icon: <MdBabyChangingStation size={20} className={changingTable ? "text-sky-900" : "text-white"} />,
+      value: changingTable
+  },
+  {
+      name: 'Emergency Button',
+      icon: <GiButtonFinger size={20} className={emergencyButton ? "text-sky-900" : "text-white"} />,
+      value: emergencyButton
+  }, 
+  {
+    name: 'Pet Friendly',
+    icon: <MdPets size={20} className={petFriendly ? "text-sky-900" : "text-white"} />,
+    value: petFriendly
+},
+{
+    name: 'Requires Key',
+    icon: <ImKey size={20} className={requiresKey ? "text-sky-900" : "text-white"} />,
+    value: requiresKey
+},
+{
+  name: 'Hand Dryer',
+  icon: <MdOutlineAir size={20} className={handDryer ? "text-sky-900" : "text-white"} />,
+  value: handDryer
+},
+{
+  name: 'Feminine Products',
+  icon: <LiaFemaleSolid size={20} className={feminineProducts ? "text-sky-900" : "text-white"} />,
+  value: feminineProducts
+},
+{
+  name: 'Toilet Covers',
+  icon: <MdAirlineSeatLegroomNormal size={20} className={toiletCovers ? "text-sky-900" : "text-white"} />,
+  value: toiletCovers
+},
+{
+  name: 'Bidet',
+  icon: <GiSplashyStream size={20} className={bidet ? "text-sky-900" : "text-white"} />,
+  value: bidet
+},
+{
+  name: 'Single Stall',
+  icon: <LiaToiletSolid size={20} className={singleStall ? "text-sky-900" : "text-white"} />,
+  value: singleStall
+},
+{
+  name: 'Multiple Stalls',
+  icon: <HiUserGroup size={20} className={multipleStall ? "text-sky-900" : "text-white"} />,
+  value: multipleStall
+},
+{
+  name: 'Trash Can',
+  icon: <BsFillTrash3Fill size={20} className={trashCan ? "text-sky-900" : "text-white"} />,
+  value: trashCan
+},
+{
+  name: 'Good Flooring',
+  icon: <GiWoodBeam size={20} className={goodFlooring ? "text-sky-900" : "text-white"} />,
+  value: goodFlooring
+},
+{
+  name: 'Coat Hook',
+  icon: <PiCoatHangerBold size={20} className={coatHook ? "text-sky-900" : "text-white"} />,
+  value: coatHook
+},
+{
+  name: 'Braille Sign',
+  icon: <BiBraille size={20} className={brailleSign ? "text-sky-900" : "text-white"} />,
+  value: brailleSign
+},
+{
+  name: 'Hot Water',
+  icon: <PiThermometerHotFill size={20} className={hotWater ? "text-sky-900" : "text-white"} />,
+  value: hotWater
+},
+{
+  name: 'First Aid Kit',
+  icon: <PiFirstAidKit size={20} className={firstAid ? "text-sky-900" : "text-white"} />,
+  value: firstAid
+},
+{
+  name: 'Sharps Disposal',
+  icon: <PiSyringe size={20} className={sharpsDisposal ? "text-sky-900" : "text-white"} />,
+  value: sharpsDisposal
+},
+
+
+];
 
   const { id } = useParams();
 
@@ -219,338 +325,50 @@ export default function BathroomPage() {
           </div>
 
           <div className="flex flex-col mx-2 px-4 py-6 space-y-4 max-w-sm w-full md:w-1/4 bg-sky-800 rounded-lg bg-opacity-60 text-white shadow-lg p-2">
-
-              <p className="text-sm md:text-lg mb-2 flex flex-wrap items-center space-x-2">
-                <span className={wheelchair ? "bg-white mr-2 rounded-full p-2 inline-flex items-center justify-center" : "bg-gray-400 mr-2 rounded-full p-2 inline-flex items-center justify-center opacity-60"}>
-                  <PiWheelchairFill size={20} className={wheelchair ? "text-sky-900" : "text-white"} />
-                </span>
-                Wheelchair Accessible:
-                <span className="font-semibold flex-shrink-0">
-                  {wheelchair ? (
-                    <span className="flex items-center">
-                      Yes
-                      <span className="ml-1">{wheelchair}</span>
-                      <BiLike className="ml-1" />
-                    </span>) : "No"}
-                </span>
-              </p>
-              <p className="text-sm md:text-lg mb-2 flex flex-wrap items-center space-x-2">
-                <span className={unisex ? "bg-white mr-2 rounded-full p-2 inline-flex items-center justify-center" : "bg-gray-400 mr-2 rounded-full p-2 inline-flex items-center justify-center opacity-60"}>
-                  <PiGenderNeuterLight size={20} className={unisex ? "text-sky-900" : "text-white"} />
-                </span>
-                Unisex:
-                <span className="font-semibold flex-shrink-0">
-                  {unisex ? (
-                    <span className="flex items-center">
-                      Yes
-                      <span className="ml-1">{unisex}</span>
-                      <BiLike className="ml-1" />
-                    </span>) : "No"}
-                </span>
-              </p>
-
-              <p className="text-sm md:text-lg mb-2 flex flex-wrap items-center space-x-2">
-                <span className={emergencyCord ? "bg-white mr-2 rounded-full p-2 inline-flex items-center justify-center" : "bg-gray-400 mr-2 rounded-full p-2 inline-flex items-center justify-center opacity-60"}>
-                  <GrEmergency size={20} className={emergencyCord ? "text-sky-900" : "text-white"} />
-                </span>
-                Emergency cord:
-                <span className="font-semibold flex-shrink-0">
-                  {emergencyCord ? (
-                    <span className="flex items-center">
-                      Yes
-                      <span className="ml-1">{emergencyCord}</span>
-                      <BiLike className="ml-1" />
-                    </span>) : "No"}
-                </span>
-              </p>
-
-              <p className="text-sm md:text-lg mb-2 flex flex-wrap items-center space-x-2">
-                <span className={changingTable ? "bg-white mr-2 rounded-full p-2 inline-flex items-center justify-center" : "bg-gray-400 mr-2 rounded-full p-2 inline-flex items-center justify-center opacity-60"}>
-                  <MdBabyChangingStation size={20} className={changingTable ? "text-sky-900" : "text-white"} />
-                </span>
-                Changing Table:
-                <span className="font-semibold flex-shrink-0">
-                  {changingTable ? (
-                    <span className="flex items-center">
-                      Yes
-                      <span className="ml-1">{changingTable}</span>
-                      <BiLike className="ml-1" />
-                    </span>) : "No"}
-                </span>
-              </p>
-
-              <p className="text-sm md:text-lg mb-2 flex flex-wrap items-center space-x-2">
-                <span className={emergencyButton ? "bg-white mr-2 rounded-full p-2 inline-flex items-center justify-center" : "bg-gray-400 mr-2 rounded-full p-2 inline-flex items-center justify-center opacity-60"}>
-                  <GiButtonFinger size={20} className={emergencyButton ? "text-sky-900" : "text-white"} />
-                </span>
-                Emergency Button:
-                <span className="font-semibold flex-shrink-0">
-                  {emergencyButton ? (
-                    <span className="flex items-center">
-                      Yes
-                      <span className="ml-1">{emergencyButton}</span>
-                      <BiLike className="ml-1" />
-                    </span>) : "No"}
-                </span>
-              </p>
-
-              <p className="text-sm md:text-lg mb-2 flex flex-wrap items-center space-x-2">
-                <span className={petFriendly ? "bg-white mr-2 rounded-full p-2 inline-flex items-center justify-center" : "bg-gray-400 mr-2 rounded-full p-2 inline-flex items-center justify-center opacity-60"}>
-                  <MdPets size={20} className={petFriendly ? "text-sky-900" : "text-white"} />
-                </span>
-                Pet Friendly:
-                <span className="font-semibold flex-shrink-0">
-                  {petFriendly ? (
-                    <span className="flex items-center">
-                      Yes
-                      <span className="ml-1">{petFriendly}</span>
-                      <BiLike className="ml-1" />
-                    </span>) : "No"}
-                </span>
-              </p>
-
-              <p className="text-sm md:text-lg mb-2 flex flex-wrap items-center space-x-2">
-                <span className={requiresKey ? "bg-white mr-2 rounded-full p-2 inline-flex items-center justify-center" : "bg-gray-400 mr-2 rounded-full p-2 inline-flex items-center justify-center opacity-60"}>
-                  <ImKey size={20} className={requiresKey ? "text-sky-900" : "text-white"} />
-                </span>
-                Requires Key:
-                <span className="font-semibold flex-shrink-0">
-                  {requiresKey ? (
-                    <span className="flex items-center">
-                      Yes
-                      <span className="ml-1">{requiresKey}</span>
-                      <BiLike className="ml-1" />
-                    </span>) : "No"}
-                </span>
-              </p>
-
-              <p className="text-sm md:text-lg mb-2 flex flex-wrap items-center space-x-2">
-                <span className={handDryer ? "bg-white mr-2 rounded-full p-2 inline-flex items-center justify-center" : "bg-gray-400 mr-2 rounded-full p-2 inline-flex items-center justify-center opacity-60"}>
-                  <MdOutlineAir size={20} className={handDryer ? "text-sky-900" : "text-white"} />
-                </span>
-                Hand Dryer:
-                <span className="font-semibold flex-shrink-0">
-                  {handDryer ? (
-                    <span className="flex items-center">
-                      Yes
-                      <span className="ml-1">{handDryer}</span>
-                      <BiLike className="ml-1" />
-                    </span>)
-                    : "No"}
-                </span>
-              </p>
-
-              <p className="text-sm md:text-lg mb-2 flex flex-wrap items-center space-x-2">
-                <span className={feminineProducts ? "bg-white mr-2 rounded-full p-2 inline-flex items-center justify-center" : "bg-gray-400 mr-2 rounded-full p-2 inline-flex items-center justify-center opacity-60"}>
-                  <LiaFemaleSolid size={20} className={feminineProducts ? "text-sky-900" : "text-white"} />
-                </span>
-                Feminine Products:
-                <span className="font-semibold flex-shrink-0">
-                  {feminineProducts ? (
-                    <span className="flex items-center">
-                      Yes
-                      <span className="ml-1">{feminineProducts}</span>
-                      <BiLike className="ml-1" />
-                    </span>) : "No"}
-                </span>
-              </p>
-
-              <p className="text-sm md:text-lg mb-2 flex flex-wrap items-center space-x-2">
-                <span className={toiletCovers ? "bg-white mr-2 rounded-full p-2 inline-flex items-center justify-center" : "bg-gray-400 mr-2 rounded-full p-2 inline-flex items-center justify-center opacity-60"}>
-                  <MdAirlineSeatLegroomNormal size={20} className={toiletCovers ? "text-sky-900" : "text-white"} />
-                </span>
-                Toilet Covers:
-                <span className="font-semibold flex-shrink-0">
-                  {toiletCovers ? (
-                    <span className="flex items-center">
-                      Yes
-                      <span className="ml-1">{toiletCovers}</span>
-                      <BiLike className="ml-1" />
-                    </span>) : "No"}
-                </span>
-              </p>
-
-              <p className="text-sm md:text-lg mb-2 flex flex-wrap items-center space-x-2">
-                <span className={bidet ? "bg-white mr-2 rounded-full p-2 inline-flex items-center justify-center" : "bg-gray-400 mr-2 rounded-full p-2 inline-flex items-center justify-center opacity-60"}>
-                  <GiSplashyStream size={20} className={bidet ? "text-sky-900" : "text-white"} />
-                </span>
-                Bidet:
-                <span className="font-semibold flex-shrink-0">
-                  {bidet ? (
-                    <span className="flex items-center">
-                      Yes
-                      <span className="ml-1">{bidet}</span>
-                      <BiLike className="ml-1" />
-                    </span>) : "No"}
-                </span>
-              </p>
-
-              <p className="text-sm md:text-lg mb-2 flex flex-wrap items-center space-x-2">
-                <span className={singleStall ? "bg-white mr-2 rounded-full p-2 inline-flex items-center justify-center" : "bg-gray-400 mr-2 rounded-full p-2 inline-flex items-center justify-center opacity-60"}>
-                  <LiaToiletSolid size={20} className={singleStall ? "text-sky-900" : "text-white"} />
-                </span>
-                Single Stall:
-                <span className="font-semibold flex-shrink-0">
-                  {singleStall ? (
-                    <span className="flex items-center">
-                      Yes
-                      <span className="ml-1">{singleStall}</span>
-                      <BiLike className="ml-1" />
-                    </span>) : "No"}
-                </span>
-              </p>
-
-              <p className="text-sm md:text-lg mb-2 flex flex-wrap items-center space-x-2">
-                <span className={multipleStall ? "bg-white mr-2 rounded-full p-2 inline-flex items-center justify-center" : "bg-gray-400 mr-2 rounded-full p-2 inline-flex items-center justify-center opacity-60"}>
-                  <HiUserGroup size={20} className={multipleStall ? "text-sky-900" : "text-white"} />
-                </span>
-                Multiple Stalls:
-                <span className="font-semibold flex-shrink-0">
-                  {multipleStall ? (
-                    <span className="flex items-center">
-                      Yes
-                      <span className="ml-1">{multipleStall}</span>
-                      <BiLike className="ml-1" />
-                    </span>) : "No"}
-                </span>
-              </p>
-
-              <p className="text-sm md:text-lg mb-2 flex flex-wrap items-center space-x-2">
-                <span className={trashCan ? "bg-white mr-2 rounded-full p-2 inline-flex items-center justify-center" : "bg-gray-400 mr-2 rounded-full p-2 inline-flex items-center justify-center opacity-60"}>
-                  <BsFillTrash3Fill size={20} className={trashCan ? "text-sky-900" : "text-white"} />
-                </span>
-                Trash Can:
-                <span className="font-semibold flex-shrink-0">
-                  {trashCan ? (
-                    <span className="flex items-center">
-                      Yes
-                      <span className="ml-1">{trashCan}</span>
-                      <BiLike className="ml-1" />
-                    </span>) : "No"}
-                </span>
-              </p>
-
-              <p className="text-sm md:text-lg mb-2 flex flex-wrap items-center space-x-2">
-   <span className={goodFlooring ? "bg-white mr-2 rounded-full p-2 inline-flex items-center justify-center" : "bg-gray-400 mr-2 rounded-full p-2 inline-flex items-center justify-center opacity-60"}>
-       <GiWoodBeam size={20} className={goodFlooring ? "text-sky-900" : "text-white"}/>
-   </span>
-   Good Flooring:
-   <span className="font-semibold flex-shrink-0">
-        {goodFlooring ? ( 
-          <span className="flex items-center">
-            Yes 
-            <span className="ml-1">{goodFlooring}</span>
-            <BiLike className="ml-1"/>
-          </span>) : "No"}
-      </span>
-</p>
-
-<p className="text-sm md:text-lg mb-2 flex flex-wrap items-center space-x-2">
-   <span className={airFreshener ? "bg-white mr-2 rounded-full p-2 inline-flex items-center justify-center" : "bg-gray-400 mr-2 rounded-full p-2 inline-flex items-center justify-center opacity-60"}>
-       <BiSprayCan size={20} className={airFreshener ? "text-sky-900" : "text-white"}/>
-   </span>
-   Air Freshener:
-   <span className="font-semibold flex-shrink-0">
-        {airFreshener ? ( 
-          <span className="flex items-center">
-            Yes 
-            <span className="ml-1">{airFreshener}</span>
-            <BiLike className="ml-1"/>
-          </span>) : "No"}
-      </span>
-</p>
-
-<p className="text-sm md:text-lg mb-2 flex flex-wrap items-center space-x-2">
-   <span className={automatic ? "bg-white mr-2 rounded-full p-2 inline-flex items-center justify-center" : "bg-gray-400 mr-2 rounded-full p-2 inline-flex items-center justify-center opacity-60"}>
-       <MdSensors size={20} className={automatic ? "text-sky-900" : "text-white"}/>
-   </span>
-   Automatic:
-   <span className="font-semibold flex-shrink-0">
-        {automatic ? ( 
-          <span className="flex items-center">
-            Yes 
-            <span className="ml-1">{automatic}</span>
-            <BiLike className="ml-1"/>
-          </span>) : "No"}
-      </span>
-</p>
-
-<p className="text-sm md:text-lg mb-2 flex flex-wrap items-center space-x-2">
-   <span className={coatHook ? "bg-white mr-2 rounded-full p-2 inline-flex items-center justify-center" : "bg-gray-400 mr-2 rounded-full p-2 inline-flex items-center justify-center opacity-60"}>
-       <PiCoatHangerBold size={20} className={coatHook ? "text-sky-900" : "text-white"}/>
-   </span>
-   Coat Hook:
-   <span className="font-semibold flex-shrink-0">
-        {coatHook ? ( 
-          <span className="flex items-center">
-            Yes 
-            <span className="ml-1">{coatHook}</span>
-            <BiLike className="ml-1"/>
-          </span>) : "No"}
-   </span>
-</p>
-
-<p className="text-sm md:text-lg mb-2 flex flex-wrap items-center space-x-2">
-   <span className={brailleSign ? "bg-white mr-2 rounded-full p-2 inline-flex items-center justify-center" : "bg-gray-400 mr-2 rounded-full p-2 inline-flex items-center justify-center opacity-60"}>
-       <BiBraille size={20} className={brailleSign ? "text-sky-900" : "text-white"}/>
-   </span>
-   Braille Sign:
-   <span className="font-semibold flex-shrink-0">
-        {brailleSign ? ( 
-          <span className="flex items-center">
-            Yes 
-            <span className="ml-1">{brailleSign}</span>
-            <BiLike className="ml-1"/>
-          </span>) : "No"}
-      </span>
-</p>
-
-<p className="text-sm md:text-lg mb-2 flex flex-wrap items-center space-x-2">
-    <span className={hotWater ? "bg-white mr-2 rounded-full p-2 inline-flex items-center justify-center" : "bg-gray-400 mr-2 rounded-full p-2 inline-flex items-center justify-center opacity-60"}>
-        <PiThermometerHotFill size={20} className={hotWater ? "text-sky-900" : "text-white"} />
-    </span>
-    Hot Water:
-    <span className="font-semibold flex-shrink-0">
-        {hotWater ? ( 
-            <span className="flex items-center">
-                Yes 
-                <span className="ml-1">{hotWater}</span>
-                <BiLike className="ml-1"/>
-            </span>) : "No"}
-    </span>
-</p>
-
-<p className="text-sm md:text-lg mb-2 flex flex-wrap items-center space-x-2">
-   <span className={firstAid ? "bg-white mr-2 rounded-full p-2 inline-flex items-center justify-center" : "bg-gray-400 mr-2 rounded-full p-2 inline-flex items-center justify-center opacity-60"}>
-       <PiFirstAidKit size={20} className={firstAid ? "text-sky-900" : "text-white"}/>
-   </span>
-   First Aid Kit:
-   <span className="font-semibold flex-shrink-0">
-        {firstAid ? ( 
-          <span className="flex items-center">
-            Yes 
-            <span className="ml-1">{firstAid}</span>
-            <BiLike className="ml-1"/>
-          </span>) : "No"}
-      </span>
-</p>
-
-
-
-              <p className="text-sm md:text-lg mb-2 flex flex-wrap items-center space-x-2">
-                <span className={sharpsDisposal ? "bg-white mr-2 rounded-full p-2 inline-flex items-center justify-center" : "bg-gray-400 mr-2 rounded-full p-2 inline-flex items-center justify-center opacity-60"}>
-                  <PiSyringe size={20} className={sharpsDisposal ? "text-sky-900" : "text-white"} />
-                </span>
-                Sharps Disposal:
-                <span className="font-semibold flex-shrink-0">
-                  {sharpsDisposal ? (
-                    <span className="flex items-center">
-                      Yes
-                      <span className="ml-1">{sharpsDisposal}</span>
-                      <BiLike className="ml-1" />
-                    </span>) : "No"}
-                </span>
-              </p>
+          <div>
+            {showFullList ? (
+                <div>
+                    {amenities.map((amenity, index) => (
+                        <p key={index} className="text-sm md:text-lg mb-2 flex flex-wrap items-center space-x-2">
+                            <span className={amenity.value ? "bg-white mr-2 rounded-full p-2 inline-flex items-center justify-center" : "bg-gray-400 mr-2 rounded-full p-2 inline-flex items-center justify-center opacity-60"}>
+                                {amenity.icon}
+                            </span>
+                            {amenity.name}:
+                            <span className="font-semibold flex-shrink-0">
+                                {amenity.value ? ( 
+                                <span className="flex items-center">
+                                Yes 
+                                <span className="ml-1">{amenity.value}</span>
+                                <BiLike className="ml-1"/>
+                                </span>) : "No"}
+                            </span>
+                        </p>
+                    ))}
+                </div>
+            ) : (
+                <div>
+                    {amenities.slice(0, 5).map((amenity, index) => (
+                        <p key={index} className="text-sm md:text-lg mb-2 flex flex-wrap items-center space-x-2">
+                            <span className={amenity.value ? "bg-white mr-2 rounded-full p-2 inline-flex items-center justify-center" : "bg-gray-400 mr-2 rounded-full p-2 inline-flex items-center justify-center opacity-60"}>
+                                {amenity.icon}
+                            </span>
+                            {amenity.name}:
+                            <span className="font-semibold flex-shrink-0">
+                                {amenity.value ? ( 
+                                <span className="flex items-center">
+                                Yes 
+                                <span className="ml-1">{amenity.value}</span>
+                                <BiLike className="ml-1"/>
+                                </span>) : "No"}
+                            </span>
+                        </p>
+                    ))}
+                </div>
+            )}
+            <button onClick={() => setShowFullList(!showFullList)}>
+                {showFullList ? 'Show Less' : 'Show More'}
+            </button>
+        </div>
 
           </div>
 
