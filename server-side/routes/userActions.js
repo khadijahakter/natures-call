@@ -6,7 +6,7 @@ const { authenticateUser } = require("../middleware/auth");
 
 
 
-//create a review for a bathroom
+//create a review for a bathroom (now has rating)
 router.post("/:bathroomId/reviews",  authenticateUser, async (req, res) => {
  
     const bathroomId = parseInt(req.params.bathroomId, 10);
