@@ -15,73 +15,58 @@ import About from './routes/About.jsx'
 import Popup from './routes/Popup.jsx'
 import Signup from './Auth/Signup.jsx'
 import Login from './Auth/Login.jsx'
-import BathroomPage, {loader as bathroomLoader} from './BathroomPage.jsx';
-import AddReviewForm, {action as AddReview} from './AddReviewForm.jsx';
-import AddBathroom, {action as addBrAction} from './AddBathroom';
-import EditBathroom,{ loader as loader } from './EditBathroom';
-import EditReview, {loader as editReviewLoader} from './EditReview';
+import BathroomPage, { loader as bathroomLoader } from './BathroomPage.jsx';
+import AddReviewForm, { action as AddReview } from './AddReviewForm.jsx';
+import AddBathroom, { action as addBrAction } from './AddBathroom';
+import EditBathroom, { loader as loader } from './EditBathroom';
+import EditReview, { loader as editReviewLoader } from './EditReview';
+import Profile, { loader as UserBathroomLoader } from './Auth/Profile.jsx';
 
-import Profile, {loader as UserBathroomLoader} from './Auth/Profile.jsx';
-
-import {action as logoutAction} from './Auth/Logout.jsx';
-
-
-
+import { action as logoutAction } from './Auth/Logout.jsx';
 
 import ProtectedRoute from "./Auth/ProtectedRoute";
 //import{loader as NavBarLoader} from "./NavBar.jsx";
 
-
-
 const router = createBrowserRouter([
   {
-    
     path: "/",
     element: <Navbar />,
     errorElement: <ErrorPage />,
 
- 
-
     children: [
       {
         path: "",
-         element: <BathroomList />,
-      
+        element: <BathroomList />,
       },
       {
         path: "/login",
         element: <Login />,
-   
       },
       {
         path: "signup",
         element: <Signup />,
- 
       },
       {
         path: "/about",
         element:
-          
-        <About />,
-       
-       
+          <About />,
       },
       {
         path: "/editBathroom/:editId",
         element: <EditBathroom />,
         loader: loader,
-        
+
       },
       {
         path: "/editReview/:editId",
-        element: <EditReview/>,
+        element: <EditReview />,
         loader: editReviewLoader,
       },
       {
         path: "/addBathroom",
         element: (<ProtectedRoute>
           <AddBathroom />
-           </ProtectedRoute>
+        </ProtectedRoute>
         ),
         action: addBrAction,
       },
@@ -91,45 +76,33 @@ const router = createBrowserRouter([
         loader: bathroomLoader
       },
       {
-        path:"/bathrooms/:id/addReview",
-        element:(
-        <ProtectedRoute>
-        <AddReviewForm/>
-        </ProtectedRoute>
+        path: "/bathrooms/:id/addReview",
+        element: (
+          <ProtectedRoute>
+            <AddReviewForm />
+          </ProtectedRoute>
         ),
-        action : AddReview
+        action: AddReview
       },
       {
         index: true,
-          path:"/profile",
-
-         element:(
+        path: "/profile",
+        element: (
           <ProtectedRoute>
-          <Profile/>,
-        </ProtectedRoute>
-       ),        
-
-           loader: UserBathroomLoader
+            <Profile />,
+          </ProtectedRoute>
+        ),
+        loader: UserBathroomLoader
       },
-      
-
     ],
   },
 
 ]);
 
-
-
-
 ReactDOM.createRoot(document.getElementById('root')).render(
-  
-  
-<AuthProvider>
+
+  <AuthProvider>
     <RouterProvider router={router} />
-    </AuthProvider>
+  </AuthProvider>
 
 )
-
-
-
-
