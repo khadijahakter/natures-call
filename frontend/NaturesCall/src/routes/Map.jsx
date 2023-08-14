@@ -37,7 +37,7 @@ const destiantionRef = useRef()
   
  
 
-  const [center, setCenter] = useState({ lat: 40.587400, lng: -74.148660 });
+  const [center, setCenter] = useState({ lat: 40.712772, lng: -74.006058});
 
 
 
