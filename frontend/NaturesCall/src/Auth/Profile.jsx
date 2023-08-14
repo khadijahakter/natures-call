@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link, useLoaderData, useNavigate } from "react-router-dom";
 import './Profile.css';
 import toiletPaperAnimation from '../images/ToiletPaper.mp4';
+import RatingDisplay from "../RatingDisplay.jsx";
 
 export async function loader({ params }) {
   try {
@@ -46,38 +47,36 @@ export default function Profile() {
     const confirmDelete = window.confirm("Are you sure you want to delete this review?");
     if (confirmDelete) {
       setDeleteInProgress(true);
-    try {
-      const response = await fetch(`/api/bathroomActions/userReviews/${reviewId}`, {
-        method: "DELETE",
-        headers: {
-  
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ userId: profileData.user.id }), // Pass the user ID in the body
-      });
-    
-      if (response.ok) {
-        // Update the userBathrooms state to remove the deleted bathroom
-        setUpdatedProfileData(prevData => ({
-          ...prevData,
-          reviewsData: reviewsData.filter(review => review.id !== reviewId),
-          // Make sure to update other properties if needed
-        }));
-      
-    
-        
-        // You can navigate to a different page or refresh the data here
-        navigate('/profile');
-      } else {
-        console.error("Failed to delete bathroom");
+      try {
+        const response = await fetch(`/api/bathroomActions/userReviews/${reviewId}`, {
+          method: "DELETE",
+          headers: {
+
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ userId: profileData.user.id }), // Pass the user ID in the body
+        });
+
+        if (response.ok) {
+          // Update the userBathrooms state to remove the deleted bathroom
+          setUpdatedProfileData(prevData => ({
+            ...prevData,
+            reviewsData: reviewsData.filter(review => review.id !== reviewId),
+            // Make sure to update other properties if needed
+          }));
+
+          // You can navigate to a different page or refresh the data here
+          navigate('/profile');
+        } else {
+          console.error("Failed to delete bathroom");
+        }
+      } catch (error) {
+        console.error("Error deleting bathroom:", error);
       }
-    } catch (error) {
-      console.error("Error deleting bathroom:", error);
+      setDeleteInProgress(false);
     }
-    setDeleteInProgress(false);
-  }
   };
-  
+
   const handleDeleteBathroom = async (bathroomId) => {
     const confirmDelete = window.confirm("Are you sure you want to delete this bathroom?");
     if (confirmDelete) {
@@ -165,58 +164,65 @@ export default function Profile() {
     <div className="page-container">
 
       <div className="main-content">
-        <Link to="/" className="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">
-          Back To Home
-        </Link>
-
-        <h1 className="profile-header">Welcome Back, {profileData.user.name}</h1>
-
-        <div className="bathrooms-reviews-container">
-          <div className="bathrooms-container">
-            <h2 className="bathroom-header"> Your Bathrooms </h2>
+        <h1 className="profile-header">Welcome Back, {profileData.user.name}!</h1>
+        <div className="bathrooms-reviews-container w-full">
+          <div className="reviews-container w-full">
+            <h2 className="review-header">Bathrooms</h2>
             {userBathrooms.map((bathroom) => (
-              <div key={bathroom.id} className="bathroom-item">
-                <p>Name: <Link className="bathroom-link" to={`/bathrooms/${bathroom.id}`}>{bathroom.name}</Link></p>
-                <p>Address: {bathroom.address}</p>
-                <p>Rating: {bathroom.rating !== null ? bathroom.rating + " stars" : "No rating yet"}</p>
-                <p>Content: {bathroom.content !== null ? bathroom.content : "No content available"}</p>
-                <p>Date Created: {formatDate(bathroom.createdAt)}</p>
-                {bathroom.updatedAt !== bathroom.createdAt && (
-                  <p>Date Updated: {formatDate(bathroom.updatedAt)}</p>
-                )}
-                <hr />
+              <div key={bathroom.id} className="review-item p-4 bg-white shadow-md rounded-md">
+                <h2 className="text-2xl mb-2 font-bold text-shadow-effect">
+                  <Link className="bathroom-link mb-2 font-bold text-shadow-effect" to={`/bathrooms/${bathroom.id}`}>{bathroom.name}</Link>
+                </h2>
+                <p className="mb-2">{bathroom.address}</p>
+                <p className="text-s text-gray-600 mb-2" style={{ color: '#0F3D5F' }}>
+                {bathroom.rating ? <RatingDisplay rating={bathroom.rating} /> : "No rating yet"}
+                </p>
+                <p className="text-s text-gray-600 mb-2" style={{ color: '#0F3D5F' }}>
+                  {bathroom.content !== null ? bathroom.content : "No content available"}
+                </p>
+                <p className="text-xs text-right text-gray-500 mb-2">{formatDate(bathroom.createdAt)}</p>
+                {/* {bathroom.updatedAt !== bathroom.createdAt &&  */}
+                 {/* (
+                  <p className="text-xs text-right text-gray-500">Date Updated: {formatDate(bathroom.updatedAt)}</p>
+                )
+              } */}
+
+                <hr className="mt-4" />
                 <div className="button-container">
-                  <button className="edit-button"><Link to={`/editBathroom/${bathroom.id}`}> Edit | </Link></button>
+                  <button className="edit-button">
+                    <Link to={`/editBathroom/${bathroom.id}`}> Edit </Link>
+                  </button>
                   <button onClick={() => handleDeleteBathroom(bathroom.id)} disabled={deleteInProgress}>
                     {deleteInProgress ? "Deleting..." : "Delete"}
                   </button>
                 </div>
               </div>
             ))}
+
           </div>
 
-          <div className="reviews-container">
-            <h2 className="review-header"> Your Reviews </h2>
+
+          <div className="reviews-container w-full">
+            <h2 className="review-header"> Reviews </h2>
             {reviewsData.map((review) => (
-    <div key={review.id} className="review-item p-4 bg-white shadow-md rounded-md">
-        <h2 className="text-2xl font-bold mb-2">
-            <Link className="bathroom-link text-blue-600 hover:text-blue-800" to={`/bathrooms/${review.BathroomId}`}>{getBathroomNameById(review.BathroomId)}</Link>
-        </h2>
-        <p className="mb-2">Rating: {review.rating} stars</p>
-        <p className="text-sm text-gray-600 mb-2 font-bold" style={{ color: '#0F3D5F' }}>{review.content}</p>
-        <p className="text-xs text-right text-gray-500">{formatDate(review.createdAt)}</p>
-        <hr className="mt-4" />
-        <div className="button-container">
-          <button  className="edit-button">
-            <Link to={`/editReview/${review.id}`}> Edit </Link></button>
-            <button onClick={() => handleDeleteReview(review.id)} disabled={deleteInProgress}>
-  {deleteInProgress ? "Deleting..." : "Delete"}
-</button>
-</div>
-        
-       
-    </div>
-))}
+              <div key={review.id} className="review-item p-4 bg-white shadow-md rounded-md">
+                <h2 className="text-2xl font-bold mb-2">
+                  <Link className="bathroom-link text-blue-600 hover:text-blue-800" to={`/bathrooms/${review.BathroomId}`}>{getBathroomNameById(review.BathroomId)}</Link>
+                </h2>
+                <p className="mb-2"><RatingDisplay rating={review.rating} /></p>
+                <p className="text-s text-gray-600 mb-2" style={{ color: '#0F3D5F' }}>{review.content}</p>
+                <p className="text-xs text-right text-gray-500">{formatDate(review.createdAt)}</p>
+                <hr className="mt-4" />
+                <div className="button-container">
+                  <button className="edit-button">
+                    <Link to={`/editReview/${review.id}`}> Edit </Link></button>
+                  <button onClick={() => handleDeleteReview(review.id)} disabled={deleteInProgress}>
+                    {deleteInProgress ? "Deleting..." : "Delete"}
+                  </button>
+                </div>
+
+              </div>
+            ))}
 
           </div>
         </div>
@@ -262,7 +268,6 @@ export default function Profile() {
             <p>{reviewsData.length}</p>
             <p>{profileData.user.createdAt}</p>
           </div>
-
 
         </div>
         <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>

@@ -11,8 +11,8 @@ import {TbLocation} from 'react-icons/tb'
 import customMarkerIcon from "./bathroomMarker(unclicked).png"; 
 
 const center = {
-  lat: 40.587400,
-  lng: -74.148660
+  lat: 40.7128,
+  lng: 74.0060
 };
 
 const libraries = ["places"];
@@ -38,7 +38,7 @@ const destiantionRef = useRef()
   
  
 
-  const [center, setCenter] = useState({ lat: 40.587400, lng: -74.148660 });
+  const [center, setCenter] = useState({ lat: 40.712772, lng: -74.006058});
 
 
 
