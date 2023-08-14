@@ -101,8 +101,8 @@ const Signup = () => {
           <div className="w-full lg:w-1/2 flex flex-col items-center justify-center p-12 bg-no-repeat bg-cover bg-center" style={{ backgroundImage: "url('https://images.unsplash.com/photo-1550617376-7e405ef1c728?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cmVzdHJvb218ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=500&q=60')" }}>
           </div>
           <div className="w-full lg:w-1/2 py-16 px-12">
-            <h2 className="text-3xl mb-4">Sign Up</h2>
-            <p className="mb-4">
+            <h2 style={{ fontWeight: 'bold', fontSize: '2rem', marginBottom: '1rem', color: 'gray' }}>Sign Up</h2>
+            <p className="mb-4 text-gray-600 font-weight: bold">
               Create your account. It's free and only takes a minute.
             </p>
             <Form onSubmit={handleSubmit} className="selection:bg-blue-200 flex flex-col gap-2">

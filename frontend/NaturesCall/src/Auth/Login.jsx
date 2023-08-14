@@ -87,8 +87,8 @@ return (
         <div className="w-full lg:w-1/2 flex flex-col items-center justify-center p-12 bg-no-repeat bg-cover bg-center" style={{ backgroundImage: "url('https://images.unsplash.com/photo-1672192951477-8e74f2af3369?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8ODR8fHJlc3Ryb29tfGVufDB8fDB8fHww&auto=format&fit=crop&w=600&q=60')" }}>
         </div>
         <div className="w-full lg:w-1/2 py-16 px-12">
-          <h2 className="text-3xl mb-4">Login</h2>
-          <p className="mb-4">
+        <h2 style={{ fontWeight: 'bold', fontSize: '2rem', marginBottom: '1rem', color: 'gray' }}>Login</h2>
+          <p className="mb-4 text-gray-600 font-weight: bold">
             Login to your account.
           </p>
           <Form method="post" className="selection:bg-blue-200 flex flex-col gap-2"  onSubmit={handleSubmit}>

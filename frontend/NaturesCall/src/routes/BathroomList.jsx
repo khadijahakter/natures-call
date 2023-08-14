@@ -14,8 +14,11 @@ export default function BathroomList() {
   const [lat, setLat]=useState(null);
   const [long, setLong]=useState(null);
   const [displayBathrooms, setDisplayBathrooms] = useState([]);
-  const [selected, setSelected] = useState(null);
-  const [bathroomCount, setBathroomCount] = useState(0);
+const [bathroomCount,setBathroomCount]=useState(null);
+  const [selectedAmenity, setSelectedAmenity] = useState(null);
+
+  const [selectedBathroom, setSelectedBathroom] = useState(null);
+
   async function fetchBathrooms() {
     const data={
       lat,
@@ -61,6 +64,7 @@ export default function BathroomList() {
            
         </p>
       </div>
+
       <div className="flex h-screen">
         {!displayBathrooms.length ? (
           <div className="w-full h-full">
@@ -77,13 +81,59 @@ export default function BathroomList() {
         ) : (
           <>
             <div className=" overflow-scroll Bathroomlist-bg w-1/4 h-full bg-opacity-50 p-4  overflow-y-auto ">
+            
+<div className="flex flex-row items-center mb-2 bg-sky-800 opacity-60 rounded">
+    <label 
+        htmlFor="amenities" 
+        className="font-semibold text-sm px-4 text-gray-400"
+    >
+        Filter:
+    </label>
+    <select 
+        id="amenities" 
+        name="amenities" 
+        onChange={(e) => setSelectedAmenity(e.target.value === 'none' ? null : e.target.value)}
+        className="m-1 mr-4 text-sm bg-cyan-950 block w-full rounded shadow-sm focus:ring-2 focus:outline-none opacity-80"
+    >
+        <option value="none">None</option>
+        <option value="wheelchair">Wheelchair Accessible</option>
+        <option value="unisex">Unisex</option>
+        <option value="emergencyCord">Emergency Cord</option>
+        <option value="emergencyButton">Emergency Button</option>
+        <option value="petFriendly">Pet Friendly</option>
+        <option value="requiresKey">Requires Key</option>
+        <option value="handDryer">Hand Dryer</option>
+        <option value="feminineProducts">Feminine Products</option>
+        <option value="toiletCovers">Toilet Covers</option>
+        <option value="bidet">Bidet</option>
+        <option value="singleStall">Single Stall</option>
+        <option value="multipleStall">Multiple Stall</option>
+        <option value="changingTable">Changing Table</option>
+        <option value="trashCan">Trash Can</option>
+        <option value="goodFlooring">Good Flooring</option>
+        <option value="airFreshener">Air Freshener</option>
+        <option value="automatic">Automatic</option>
+        <option value="coatHook">Coat Hook</option>
+        <option value="brailleSign">Braille Sign</option>
+        <option value="hotWater">Hot Water</option>
+        <option value="firstAid">First Aid</option>
+        <option value="sharpsDisposal">Sharps Disposal</option>
+    </select>
+</div>
+
+
               <ul className=" flex flex-col space-y-4 text-white">
-                {displayBathrooms.map(bathroom => (
-                  <Link to={`/bathrooms/${bathroom.id}`} key={bathroom.id}>
+                {displayBathrooms.filter(bathroom => !selectedAmenity || bathroom[selectedAmenity] > 3)
+                .map(bathroom => (
+
+
+                  
                     <li className="Bathroom-card flex flex-col  p-4 rounded-lg bg-opacity-30 transform transition duration-200 ease-in-out hover:scale-105">
                      
                       <div>
-                      <h3 className="text-xl font-bold text-sky-900">{bathroom.name}</h3>
+                        <Link to={`/bathrooms/${bathroom.id}`} key={bathroom.id}>
+                      <h3 className="text-xl font-bold text-sky-900">{bathroom.name}</h3> 
+                       </Link>
                       <p className="text-sm text-gray-600 py-1 ">
                               {/* <strong className="font-medium">Rating: </strong>
                               {bathroom.rating ? bathroom.rating : "Na"} */}
@@ -96,16 +146,16 @@ export default function BathroomList() {
                         {bathroom.address}
                       </p>
       
-                     
+                      <button onClick={()=>{ setSelectedBathroom(bathroom)}}>Direction</button>
                     </li>
-                  </Link>
+                
                 ))}
               </ul>
             </div>
 
             <div className="w-3/4 h-full ">
               <div className="">
-                <Map displayBathrooms={displayBathrooms} lat={lat} long={long} setLat={setLat} setLong={setLong} />
+                <Map displayBathrooms={displayBathrooms} lat={lat} long={long} setLat={setLat} setLong={setLong} selectedBathroom={selectedBathroom}/>
               </div>
             </div>
           </>
