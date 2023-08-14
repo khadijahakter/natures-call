@@ -127,6 +127,7 @@ const destiantionRef = useRef()
   useEffect(() => {
     if(selectedBathroom){
       calculateRoute()
+      // console.log(origin.current.value + " dir:" + direction.current.value)
     }
   }, [selectedBathroom]);
   
@@ -194,7 +195,9 @@ const blueMapStyles = [
 
 
 
-console.log("hannah", displayBathrooms);
+// console.log("hannah", displayBathrooms);
+
+
 
 return isLoaded ? (
   
@@ -207,9 +210,6 @@ return isLoaded ? (
     className="bg-cyan-700 hover:bg-cyan-500 text-white font-bold  py-2 px-4 rounded-r">
         Find Nearby Bathrooms
       </button>
-
-
-
 
 
 

@@ -155,7 +155,7 @@ const [bathroomCount,setBathroomCount]=useState(null);
 
             <div className="w-3/4 h-full ">
               <div className="">
-                <Map displayBathrooms={displayBathrooms} lat={lat} long={long} setLat={setLat} setLong={setLong} />
+                <Map displayBathrooms={displayBathrooms} lat={lat} long={long} setLat={setLat} setLong={setLong} selectedBathroom={selectedBathroom}/>
               </div>
             </div>
           </>
