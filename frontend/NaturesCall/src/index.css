@@ -27,6 +27,9 @@
   opacity: 1;
 }
 
+.transition-all {
+  transition: all 0.5s ease;
+}
 
 
 .star {
@@ -62,9 +65,14 @@ background-image: url('./images/smlessBTHRM.jpg');
 }
 
 .search{
-  box-shadow: 10px 10px 20px rgba(22, 4, 43, 0.352);
+  box-shadow: 10px 10px 20px rgba(22, 4, 43, 0.23);
   font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 
+}
+
+.shad{
+    box-shadow: 10px 10px 20px rgba(22, 4, 43, 0.352);
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 
 .addBinput{

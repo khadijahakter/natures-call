@@ -51,6 +51,7 @@ export async function loader({ params }) {
 export default function BathroomPage() {
   const { Bathroom, Reviews, userData, allUsers } = useLoaderData();
   const [showFullList, setShowFullList] = useState(false);
+  const columnSize = showFullList ? 'h-auto' : 'h-auto';
 
   const {
     sourceid,
@@ -88,102 +89,102 @@ export default function BathroomPage() {
   const amenities = [
     {
         name: 'Wheelchair Accessible',
-        icon: <PiWheelchairFill size={20} className={wheelchair ? "text-sky-900" : "text-white"} />,
+        icon: <PiWheelchairFill size={25} className={wheelchair ? "text-stone-500" : "text-stone-100"} />,
         value: wheelchair
     },
     {
         name: 'Unisex',
-        icon: <PiGenderNeuterLight size={25} className={unisex ? "text-sky-900" : "text-white"}/>,
+        icon: <PiGenderNeuterLight size={25} className={unisex ? "text-stone-500" : "text-stone-100"}/>,
         value: unisex
     },
     {
         name: 'Emergency cord',
-        icon: <GrEmergency size={25} className={emergencyCord ? "text-sky-900" : "text-white"}/>,
+        icon: <GrEmergency size={25} className={emergencyCord ? "text-stone-500" : "text-stone-100"}/>,
         value: emergencyCord
     },
     {
       name: 'Changing Table',
-      icon: <MdBabyChangingStation size={20} className={changingTable ? "text-sky-900" : "text-white"} />,
+      icon: <MdBabyChangingStation size={25} className={changingTable ? "text-stone-500" : "text-stone-100"} />,
       value: changingTable
   },
   {
       name: 'Emergency Button',
-      icon: <GiButtonFinger size={20} className={emergencyButton ? "text-sky-900" : "text-white"} />,
+      icon: <GiButtonFinger size={25} className={emergencyButton ? "text-stone-500" : "text-stone-100"} />,
       value: emergencyButton
   }, 
   {
     name: 'Pet Friendly',
-    icon: <MdPets size={20} className={petFriendly ? "text-sky-900" : "text-white"} />,
+    icon: <MdPets size={25} className={petFriendly ? "text-stone-500" : "text-stone-100"} />,
     value: petFriendly
 },
 {
     name: 'Requires Key',
-    icon: <ImKey size={20} className={requiresKey ? "text-sky-900" : "text-white"} />,
+    icon: <ImKey size={25} className={requiresKey ? "text-stone-500" : "text-stone-100"} />,
     value: requiresKey
 },
 {
   name: 'Hand Dryer',
-  icon: <MdOutlineAir size={20} className={handDryer ? "text-sky-900" : "text-white"} />,
+  icon: <MdOutlineAir size={25} className={handDryer ? "text-stone-500" : "text-stone-100"} />,
   value: handDryer
 },
 {
   name: 'Feminine Products',
-  icon: <LiaFemaleSolid size={20} className={feminineProducts ? "text-sky-900" : "text-white"} />,
+  icon: <LiaFemaleSolid size={25} className={feminineProducts ? "text-stone-500" : "text-stone-100"} />,
   value: feminineProducts
 },
 {
   name: 'Toilet Covers',
-  icon: <MdAirlineSeatLegroomNormal size={20} className={toiletCovers ? "text-sky-900" : "text-white"} />,
+  icon: <MdAirlineSeatLegroomNormal size={25} className={toiletCovers ? "text-stone-500" : "text-stone-100"} />,
   value: toiletCovers
 },
 {
   name: 'Bidet',
-  icon: <GiSplashyStream size={20} className={bidet ? "text-sky-900" : "text-white"} />,
+  icon: <GiSplashyStream size={25} className={bidet ? "text-stone-500" : "text-stone-100"} />,
   value: bidet
 },
 {
   name: 'Single Stall',
-  icon: <LiaToiletSolid size={20} className={singleStall ? "text-sky-900" : "text-white"} />,
+  icon: <LiaToiletSolid size={25} className={singleStall ? "text-stone-500" : "text-stone-100"} />,
   value: singleStall
 },
 {
   name: 'Multiple Stalls',
-  icon: <HiUserGroup size={20} className={multipleStall ? "text-sky-900" : "text-white"} />,
+  icon: <HiUserGroup size={25} className={multipleStall ? "text-stone-500" : "text-stone-100"} />,
   value: multipleStall
 },
 {
   name: 'Trash Can',
-  icon: <BsFillTrash3Fill size={20} className={trashCan ? "text-sky-900" : "text-white"} />,
+  icon: <BsFillTrash3Fill size={25} className={trashCan ? "text-stone-500" : "text-stone-100"} />,
   value: trashCan
 },
 {
   name: 'Good Flooring',
-  icon: <GiWoodBeam size={20} className={goodFlooring ? "text-sky-900" : "text-white"} />,
+  icon: <GiWoodBeam size={25} className={goodFlooring ? "text-stone-500" : "text-stone-100"} />,
   value: goodFlooring
 },
 {
   name: 'Coat Hook',
-  icon: <PiCoatHangerBold size={20} className={coatHook ? "text-sky-900" : "text-white"} />,
+  icon: <PiCoatHangerBold size={25} className={coatHook ? "text-stone-500" : "text-stone-100"} />,
   value: coatHook
 },
 {
   name: 'Braille Sign',
-  icon: <BiBraille size={20} className={brailleSign ? "text-sky-900" : "text-white"} />,
+  icon: <BiBraille size={25} className={brailleSign ? "text-stone-500" : "text-stone-100"} />,
   value: brailleSign
 },
 {
   name: 'Hot Water',
-  icon: <PiThermometerHotFill size={20} className={hotWater ? "text-sky-900" : "text-white"} />,
+  icon: <PiThermometerHotFill size={25} className={hotWater ? "text-stone-500" : "text-stone-100"} />,
   value: hotWater
 },
 {
   name: 'First Aid Kit',
-  icon: <PiFirstAidKit size={20} className={firstAid ? "text-sky-900" : "text-white"} />,
+  icon: <PiFirstAidKit size={25} className={firstAid ? "text-stone-500" : "text-stone-100"} />,
   value: firstAid
 },
 {
   name: 'Sharps Disposal',
-  icon: <PiSyringe size={20} className={sharpsDisposal ? "text-sky-900" : "text-white"} />,
+  icon: <PiSyringe size={25} className={sharpsDisposal ? "text-stone-500" : "text-stone-100"} />,
   value: sharpsDisposal
 },
 
@@ -205,7 +206,7 @@ export default function BathroomPage() {
 
           <div className="flex flex-col  flex-grow">
 
-            <div className="flex-col items-center justify-center bg-sky-700 bg-opacity-60 rounded" >
+            <div className="shad flex-col items-center justify-center bg-sky-700 bg-opacity-60 rounded" >
             <div className="flex flex-col items-center space-x-4 justify-center ">
 
               <h1 className="text-7xl font-bold py-7 tracking-wide">{name}</h1> 
@@ -220,9 +221,9 @@ export default function BathroomPage() {
 
             {/* <img src={photo} alt={name} className="w-full h-64 object-cover mb-4 rounded" /> */}
 
-            <div className="flex flex-row items-center px-2 py-4 space-x-4">
+            <div className=" flex flex-row items-center mb-4 px-2 py-2 space-x-4 rounded">
 
-              <p className="text-lg mb-2">
+              <p className="text-lg ">
                 {wheelchair ?
                   <span className="bg-sky-700 rounded-full p-2 inline-flex items-center justify-center">
                     <PiWheelchairFill size={45} color="white" />
@@ -234,7 +235,7 @@ export default function BathroomPage() {
                   </span>}
               </p>
 
-              <p className="text-lg mb-2">
+              <p className="text-lg ">
                 {unisex ?
                   <span className="bg-sky-700 rounded-full p-2 inline-flex items-center justify-center">
                     <PiGenderNeuterLight size={45} />
@@ -246,7 +247,7 @@ export default function BathroomPage() {
                   </span>}
               </p>
 
-              <p className="text-lg mb-2">
+              <p className="text-lg ">
                 {emergencyCord ?
                   <span className="bg-sky-700 rounded-full p-2 inline-flex items-center justify-center">
                     <GrEmergency size={45} />
@@ -257,7 +258,7 @@ export default function BathroomPage() {
                   </span>}
               </p>
 
-              <p className="text-lg mb-2">
+              <p className="text-lg ">
                 {changingTable ?
                   <span className="bg-sky-700 rounded-full p-2 inline-flex items-center justify-center">
                     <MdBabyChangingStation size={45} />
@@ -277,6 +278,16 @@ export default function BathroomPage() {
                 <div className="flex-col flex-grow items-start">
 
                   <div className="space-y-4 ">
+
+                  <div className="py-5 ">
+                      <Link to
+                        ={`/bathrooms/${id}/addReview`}
+                        className="bg-sky-900 text-white px-4 py-2 rounded-md hover:bg-teal-600 "
+                      >
+                        Add a Review
+                      </Link>
+                    </div>
+                    
                     <h2 className="text-2xl font-bold mt-8 mb-4 ">Reviews</h2>
 
                     {Reviews.map((review) => {
@@ -284,7 +295,7 @@ export default function BathroomPage() {
                       const reviewUser = allUsers.find(user => user.id === review.UserId);
                       console.log("reviewUser", reviewUser);
                       return (
-                        <div key={review.id} className="bg-lime-950 p-4 mx-2 rounded-lg bg-opacity-70">
+                        <div key={review.id} className="shad bg-lime-950 p-4 mx-2 rounded-lg bg-opacity-70">
                           <div className="flex items-center space-x-4"> {/* Display user photo and other info */}
                             <img src={reviewUser.photo} alt={`${reviewUser.name}'s Profile Pic`} className="w-8 h-8 rounded-full" />
                             <h3 className="text-xl font-bold">{reviewUser.name}</h3>
@@ -296,14 +307,7 @@ export default function BathroomPage() {
                       );
                     })}
 
-                    <div className="py-5 ">
-                      <Link to
-                        ={`/bathrooms/${id}/addReview`}
-                        className="bg-sky-900 text-white px-4 py-2 rounded-md hover:bg-teal-600 "
-                      >
-                        Add a Review
-                      </Link>
-                    </div>
+                 
 
                   </div>
                 </div>
@@ -324,13 +328,14 @@ export default function BathroomPage() {
 
           </div>
 
-          <div className="flex flex-col mx-2 px-4 py-6 space-y-4 max-w-sm w-full md:w-1/4 bg-sky-800 rounded-lg bg-opacity-60 text-white shadow-lg p-2">
+          <div className={`flex shad flex-col mx-2 px-4 py-6 space-y-4 max-w-sm w-full md:w-1/4 bg-sky-800 rounded-lg bg-opacity-60 text-white p-2 transition-all duration-500 ${columnSize}`}>
+          <h1 className="text-3xl font-semibold"> Amenities :</h1>
           <div>
             {showFullList ? (
                 <div>
                     {amenities.map((amenity, index) => (
-                        <p key={index} className="text-sm md:text-lg mb-2 flex flex-wrap items-center space-x-2">
-                            <span className={amenity.value ? "bg-white mr-2 rounded-full p-2 inline-flex items-center justify-center" : "bg-gray-400 mr-2 rounded-full p-2 inline-flex items-center justify-center opacity-60"}>
+                        <p key={index} className="text-sm md:text-lg  text-blue-900 mb-2 flex flex-wrap items-center space-x-2 bg-stone-200 rounded p-1">
+                            <span className={amenity.value ? "bg-white mr-2 rounded-full p-2 inline-flex items-center justify-center" : "bg-stone-400 mr-2 rounded-full p-2 inline-flex items-center justify-center opacity-60"}>
                                 {amenity.icon}
                             </span>
                             {amenity.name}:
@@ -347,9 +352,9 @@ export default function BathroomPage() {
                 </div>
             ) : (
                 <div>
-                    {amenities.slice(0, 5).map((amenity, index) => (
-                        <p key={index} className="text-sm md:text-lg mb-2 flex flex-wrap items-center space-x-2">
-                            <span className={amenity.value ? "bg-white mr-2 rounded-full p-2 inline-flex items-center justify-center" : "bg-gray-400 mr-2 rounded-full p-2 inline-flex items-center justify-center opacity-60"}>
+                    {amenities.slice(0, 7).map((amenity, index) => (
+                        <p key={index} className="text-sm md:text-lg shad text-blue-900 mb-2 flex flex-wrap items-center space-x-2 bg-stone-200 rounded p-1">
+                            <span className={amenity.value ? "bg-stone-100 border border-gray-300 mr-2 rounded-full p-2 inline-flex items-center justify-center" : "bg-stone-400 border border-gray-500 mr-2 rounded-full p-2 inline-flex items-center justify-center opacity-60"}>
                                 {amenity.icon}
                             </span>
                             {amenity.name}:
