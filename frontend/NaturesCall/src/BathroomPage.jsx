@@ -172,7 +172,9 @@ export default function BathroomPage() {
 
                   <div className="space-y-4 ">
                     <h2 className="text-2xl font-bold mt-8 mb-4 ">Reviews</h2>
-
+                    <h6 className="text-2xl font-bold mt-8 mb-4">
+            {Reviews.length} {Reviews.length === 1 ? 'Review' : 'Reviews'}
+          </h6>
                     {Reviews.map((review) => {
                       // Find the user associated with the review
                       const reviewUser = allUsers.find(user => user.id === review.UserId);
