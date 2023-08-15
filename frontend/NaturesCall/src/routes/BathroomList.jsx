@@ -16,7 +16,7 @@ export default function BathroomList() {
   const [displayBathrooms, setDisplayBathrooms] = useState([]);
 const [bathroomCount,setBathroomCount]=useState(null);
   const [selectedAmenity, setSelectedAmenity] = useState(null);
-
+  const [loaded, setLoaded] = useState(false);
   const [selectedBathroom, setSelectedBathroom] = useState(null);
 
   async function fetchBathrooms() {
@@ -49,8 +49,8 @@ const [bathroomCount,setBathroomCount]=useState(null);
 
   useEffect(() => {
     if(lat&&long){
-      fetchBathrooms();
-    }
+      fetchBathrooms();  
+      }
   }, [lat,long]);
 
   return (
@@ -122,7 +122,7 @@ const [bathroomCount,setBathroomCount]=useState(null);
 </div>
 
 
-              <ul className=" flex flex-col space-y-4 text-white">
+<ul className={`flex flex-col space-y-4 text-white `}>
                 {displayBathrooms.filter(bathroom => !selectedAmenity || bathroom[selectedAmenity] > 3)
                 .map(bathroom => (
 
