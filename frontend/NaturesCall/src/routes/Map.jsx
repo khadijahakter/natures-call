@@ -207,9 +207,6 @@ return isLoaded ? (
   
     <div className= "relative w-full ">
    
-
-
-
     <div className="search absolute top-2 left-1/4 z-10 p-2 rounded w-2/4 bg-cyan-300 bg-opacity-40 overflow-hidden ">
     <div className="flex items-center justify-between bg-cyan-700 rounded ">
 
@@ -243,9 +240,7 @@ return isLoaded ? (
 
 
       <div style={{position: 'relative', width: '100%', height: '100%'}}>
-      <text>Distance: {distance} </text>
-          <text>Duration: {duration} </text>
-          <button onClick={clearRoute}>Clear Routes</button>
+ 
           <GoogleMap
       mapContainerStyle={containerStyle}
       center={center}
@@ -310,6 +305,10 @@ return isLoaded ? (
           Add Bathroom</button></Link>
         </div>
       </div>
+
+      <text>Distance: {distance} </text>
+          <text>Duration: {duration} </text>
+          <button onClick={clearRoute}>Clear Routes</button>
 
     </div>
   </>

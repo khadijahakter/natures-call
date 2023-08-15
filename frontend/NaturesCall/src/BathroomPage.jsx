@@ -3,27 +3,15 @@ import { Link, NavLink, useLoaderData, useParams } from "react-router-dom";
 import { Outlet } from "react-router-dom";
 import RatingDisplay from "./RatingDisplay";
 import BathroomList from "./routes/BathroomList";
-import { PiGenderNeuterLight, PiSyringe, PiWheelchairFill, PiCoatHangerBold, PiThermometerHotFill, PiFirstAidKit } from "react-icons/pi"
-import { GrEmergency } from "react-icons/gr"
-import { MdBabyChangingStation } from "react-icons/md"
-import { GiButtonFinger } from 'react-icons/gi';
-import { BiLike } from 'react-icons/bi'
-import { MdPets } from 'react-icons/md';
+import {   PiGenderNeuterLight,  PiSyringe,   PiWheelchairFill,  PiCoatHangerBold,   PiThermometerHotFill,  PiFirstAidKit } from "react-icons/pi";
+import { MdBabyChangingStation,  MdPets, MdOutlineAir,  MdAirlineSeatLegroomNormal,  MdSensors } from "react-icons/md";
+import {  GiButtonFinger, GiSplashyStream, GiWoodBeam } from 'react-icons/gi';
+import {  BiLike, BiSprayCan,  BiBraille } from 'react-icons/bi';
+import { GrEmergency } from "react-icons/gr";
 import { ImKey } from 'react-icons/im';
-import { MdOutlineAir } from 'react-icons/md';
-import { LiaFemaleSolid, LiaToiletSolid } from 'react-icons/lia'
-import { MdAirlineSeatLegroomNormal } from 'react-icons/md';
-import { GiSplashyStream } from 'react-icons/gi';
+import { LiaFemaleSolid, LiaToiletSolid } from 'react-icons/lia';
 import { HiUserGroup } from 'react-icons/hi';
 import { BsFillTrash3Fill } from "react-icons/bs";
-import { GiWoodBeam } from 'react-icons/gi';
-import { BiSprayCan } from 'react-icons/bi';
-import { MdSensors } from "react-icons/md";
-import { BiBraille } from "react-icons/bi";
-
-
-
-
 
 
 //loader for single bathroom element
