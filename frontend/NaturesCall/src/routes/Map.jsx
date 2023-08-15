@@ -306,9 +306,17 @@ return isLoaded ? (
         </div>
       </div>
 
-      <text>Distance: {distance} </text>
-          <text>Duration: {duration} </text>
-          <button onClick={clearRoute}>Clear Routes</button>
+{
+  directionsResponse && (
+<div className="absolute bottom-7 left-5 z-10 bg-cyan-200 rounded flex p-2 bg-opacity-80 " >
+    <div className="flex flex-col text-stone-100 py-7 bg-cyan-700 p-1 bg-opacity-80">
+      <text>Distance: {distance}</text>
+      <text>Duration: {duration}</text>
+      <button onClick={clearRoute}> Clear Routes</button>
+    </div>
+</div>
+  )
+}
 
     </div>
   </>
