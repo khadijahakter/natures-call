@@ -6,9 +6,7 @@ import { GoogleMap, useJsApiLoader, Marker,Autocomplete,
 import './MapStyles.css';
 import StarRating from "./StarRating"; 
 import {TbLocation} from 'react-icons/tb'
-
-
-import customMarkerIcon from "./bathroomMarker(unclicked).png"; 
+// import customMarkerIcon from "./images/bathroomMarker(unclicked).png"; 
 
 const center = {
   lat: 40.7128,

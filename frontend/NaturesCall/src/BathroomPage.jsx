@@ -287,7 +287,7 @@ export default function BathroomPage() {
                         Add a Review
                       </Link>
                     </div>
-                    
+
                     <h2 className="text-2xl font-bold mt-8 mb-4 ">Reviews</h2>
 
                     {Reviews.map((review) => {
@@ -353,7 +353,7 @@ export default function BathroomPage() {
             ) : (
                 <div>
                     {amenities.slice(0, 7).map((amenity, index) => (
-                        <p key={index} className="text-sm md:text-lg shad text-blue-900 mb-2 flex flex-wrap items-center space-x-2 bg-stone-200 rounded p-1">
+                        <p key={index} className="text-sm md:text-lg shad text-blue-900 mb-2 flex flex-wrap items-center space-x-2 bg-stone-200 bg-opacity-80 rounded p-1">
                             <span className={amenity.value ? "bg-stone-100 border border-gray-300 mr-2 rounded-full p-2 inline-flex items-center justify-center" : "bg-stone-400 border border-gray-500 mr-2 rounded-full p-2 inline-flex items-center justify-center opacity-60"}>
                                 {amenity.icon}
                             </span>
