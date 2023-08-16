@@ -26,7 +26,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js",
-    "deploy": "npm install && npm install --prefix client && npm run build --prefix client --max-old-space-size=512 && npm start"
+    "deploy": "npm install && npm install --prefix client && npm run build --prefix client  && npm start"
   },
   "keywords": [],
   "author": "",
