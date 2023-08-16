@@ -10,7 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@esbuild/darwin-x64": "^0.19.2",
+    
     "@react-google-maps/api": "^2.19.2",
     "axios": "^1.4.0",
     "dotenv": "^16.3.1",
