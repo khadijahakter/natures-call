@@ -56,14 +56,6 @@ const [bathroomCount,setBathroomCount]=useState(null);
   return (
    
     <>
-    {/* found bathroom count displayer */}
-       <div className="bathroom-count-container">
-        <p className="bathroom-count">
-       
-        {bathroomCount} Bathrooms Found
-           
-        </p>
-      </div>
 
       <div className="flex h-screen">
         {!displayBathrooms.length ? (
@@ -81,8 +73,19 @@ const [bathroomCount,setBathroomCount]=useState(null);
         ) : (
           <>
             <div className=" overflow-scroll Bathroomlist-bg w-1/4 h-full bg-opacity-50 p-4  overflow-y-auto ">
-            
+
+
+    {/* found bathroom count displayer */}
+       <div className="bathroom-count-container">
+        <p className="bathroom-count">
+       
+        {bathroomCount} Bathrooms Found
+          
+        </p>
+      </div>
+
 <div className="flex flex-row items-center mb-2 bg-sky-800 opacity-60 rounded">
+
     <label 
         htmlFor="amenities" 
         className="font-semibold text-sm px-4 text-gray-400"
