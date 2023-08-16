@@ -485,12 +485,10 @@ app.get("/bathrooms/:bathroomId/reviews", async (req, res) => {
 // Assuming you have Sequelize imported and the Bathroom model defined
 
 const { Op, literal } = require("sequelize");//op contains operators for queries, literal inserts raw sql into sequelize
-
 app.post("/nearby", async (req, res) => {
   const userLat = parseFloat(req.body.lat);
   const userLong = parseFloat(req.body.long);
-  const maxDistance = 5;// this is kilometers
-
+  const maxDistance = 5; // this is kilometers
   try {
     const userBathrooms = await Bathroom.findAll({
       where: {
@@ -507,15 +505,16 @@ app.post("/nearby", async (req, res) => {
           ],
         },
       },
+      order: [
+        Sequelize.literal(`SQRT(POW(CAST(lat AS NUMERIC) - ${userLat}, 2) + POW(CAST(lng AS NUMERIC) - ${userLong}, 2)) ASC`) // Orders by proximity
+      ]
     });
-
     res.status(200).json(userBathrooms);
   } catch (err) {
     console.error(err);
     res.status(500).send({ message: err.message });
   }
 });
-
 
 
 //creating review for specific bathroom
@@ -779,7 +778,7 @@ app.use("/api/userActions", UserActionRouter);
 app.use("/api/bathroomActions", BathroomActionRouter);
 
 // fetch data from api
-//getAllBathrooms();
+// getAllBathrooms();
 // -- cronjob scheduling --
 cron.schedule('0 0 1,15 * *', () => {
   getAllBathrooms(); 
