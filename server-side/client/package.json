@@ -5,12 +5,11 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "node --max_old_space_size=16384 ./node_modules/vite/bin/vite.js",
+    "build": "vite build",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
   },
   "dependencies": {
-    
     "@react-google-maps/api": "^2.19.2",
     "axios": "^1.4.0",
     "dotenv": "^16.3.1",
@@ -21,6 +20,7 @@
     "react-icons": "^4.10.1",
     "react-router-dom": "^6.14.2",
     "react-transition-group": "^4.4.5",
+    "server-side": "file:..",
     "vite": "^4.4.7"
   },
   "devDependencies": {
@@ -34,6 +34,5 @@
     "eslint-plugin-react-refresh": "^0.4.3",
     "postcss": "^8.4.27",
     "tailwindcss": "^3.3.3"
-    
   }
 }
