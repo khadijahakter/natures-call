@@ -15,6 +15,14 @@ const authRouter = require("./routes/auth");
 const ProfileRouter = require("./routes/userProfileData");
 const UserActionRouter = require("./routes/userActions");
 const BathroomActionRouter = require("./routes/bathroomActions");
+
+// ...
+const path = require("path");
+// ...
+// all other route handlers
+
+
+
 app.use(
   cors({
     origin: "http://localhost:5173",
@@ -215,9 +223,7 @@ app.post("/signups", async (req, res) => {
   }
 
 });
-app.get("/", (req, res) => {
-  res.send("Welcome to Nature's Call!");
-});
+
 
 //get the user name and email by userID
 app.get("/users/:userId", async (req, res) => {
@@ -779,6 +785,11 @@ cron.schedule('0 0 1,15 * *', () => {
   getAllBathrooms(); 
 });
 
+app.use(express.static(path.join(__dirname, "client/dist")));
+
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "client/dist", "index.html"));
+});
 
 
 app.listen(port, () => {

@@ -1,0 +1,26 @@
+/* MapStyles.css */
+
+.info-window {
+    color: black; /* Change text color to black */
+    padding: 10px;
+  }
+  
+  .rating {
+    display: flex;
+    align-items: center;
+    margin-top: 5px;
+  }
+  
+  .star {
+    font-size: 20px;
+    margin-right: 2px;
+  }
+  
+  .yellow {
+    color: gold;
+  }
+  
+  .gray {
+    color: gray;
+  }
+  
