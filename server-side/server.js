@@ -781,7 +781,8 @@ app.use("/api/bathroomActions", BathroomActionRouter);
 // getAllBathrooms();
 // -- cronjob scheduling --
 cron.schedule('0 0 1,15 * *', () => {
-  getAllBathrooms(); 
+  getAllBathrooms();
+   
 });
 
 app.use(express.static(path.join(__dirname, "client/dist")));

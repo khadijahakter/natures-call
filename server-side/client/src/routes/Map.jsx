@@ -5,13 +5,12 @@ import { GoogleMap, useJsApiLoader, Marker,Autocomplete,
   DirectionsRenderer, InfoWindow} from "@react-google-maps/api";
 import './MapStyles.css';
 import StarRating from "./StarRating"; 
-
-
-import customMarkerIcon from "./bathroomMarker(unclicked).png"; 
+import {TbLocation} from 'react-icons/tb'
+// import customMarkerIcon from "./images/bathroomMarker(unclicked).png"; 
 
 const center = {
-  lat: 40.587400,
-  lng: -74.148660
+  lat: 40.7128,
+  lng: 74.0060
 };
 
 const libraries = ["places"];
@@ -37,7 +36,7 @@ const destiantionRef = useRef()
   
  
 
-  const [center, setCenter] = useState({ lat: 40.587400, lng: -74.148660 });
+  const [center, setCenter] = useState({ lat: 40.712772, lng: -74.006058});
 
 
 
@@ -207,18 +206,16 @@ return isLoaded ? (
   <>
   
     <div className= "relative w-full ">
+   
+    <div className="search absolute top-2 left-1/4 z-10 p-2 rounded w-2/4 bg-cyan-300 bg-opacity-40 overflow-hidden ">
+    <div className="flex items-center justify-between bg-cyan-700 rounded ">
+
     <button 
     onClick={getUserLocation} 
-   //  onClick={handleFindNearbyClick}
     className="bg-cyan-700 hover:bg-cyan-500 text-white font-bold  py-2 px-4 rounded-r">
-        Find Nearby Bathrooms
+      <TbLocation/>
       </button>
-
-
-
-    <div className="search absolute top-2 left-1/4 z-10 p-2 rounded w-2/4 bg-cyan-300 bg-opacity-40 overflow-hidden ">
-    <div className="flex items-center bg-cyan-700 rounded ">
-      <Autocomplete>
+      <Autocomplete className="flex-1 mx-2 bg-cyan-900 ">
       <input
   type="text"
   value={address}
@@ -230,7 +227,7 @@ return isLoaded ? (
     }
   }}
   placeholder="Enter address"
-  className="px-4 py-2 flex-grow text-white bg-cyan-900 bg-opacity-90"
+  className="px-8 py-2 flex-grow text-white bg-cyan-900 bg-opacity-90"
 />
       </Autocomplete>
       <button onClick={onGeocode} className="bg-cyan-700 hover:bg-cyan-500 text-white font-bold  py-2 px-4 rounded-r">
@@ -243,9 +240,7 @@ return isLoaded ? (
 
 
       <div style={{position: 'relative', width: '100%', height: '100%'}}>
-      <text>Distance: {distance} </text>
-          <text>Duration: {duration} </text>
-          <button onClick={clearRoute}>Clear Routes</button>
+ 
           <GoogleMap
       mapContainerStyle={containerStyle}
       center={center}
@@ -311,6 +306,18 @@ return isLoaded ? (
         </div>
       </div>
 
+{
+  directionsResponse && (
+<div className="absolute bottom-7 left-5 z-10 bg-cyan-200 rounded flex p-2 bg-opacity-80 " >
+    <div className="flex flex-col text-stone-100 py-7 bg-cyan-700 p-1 bg-opacity-80">
+      <text>Distance: {distance}</text>
+      <text>Duration: {duration}</text>
+      <button onClick={clearRoute}> Clear Routes</button>
+    </div>
+</div>
+  )
+}
+
     </div>
   </>
 ) : <>
@@ -322,5 +329,4 @@ return isLoaded ? (
 
 
 // export default React.memo(App);
-
 
