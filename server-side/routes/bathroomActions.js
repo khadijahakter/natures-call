@@ -15,7 +15,9 @@ const { Op } = require("sequelize");
               }
             });
         
-            const newSourceId = `usercreated${bathroomsCount + 1}`;
+            const timestamp = new Date().getTime(); // Get the current timestamp
+            const randomValue = Math.floor(Math.random() * 1000); // Generate a random number between 0 and 999
+            const newSourceId = `usercreated_${timestamp}_${randomValue}`;
 
              const newbathroom = await Bathroom.create({
              sourceid: newSourceId,
