@@ -56,11 +56,11 @@ export default function AddReviewForm() {
     };
     return (
 
-        <Form method="post" className="p-8 bg-blue-300 text-black rounded" onSubmit={handleSubmit}>
-            <Link to={`/bathrooms/${id}`} className="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">
-                Back To Bathroom Page
+        <Form method="post" className="p-8 bg-sky-100 text-black rounded" onSubmit={handleSubmit}>
+            <Link to={`/bathrooms/${id}`} className="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-stone-500 md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">
+                Back
             </Link>
-            <h1 className="text-2xl font-bold text-center mb-8">Create Review</h1>
+            <h1 className="text-5xl font-bold text-center mb-8 tracking-widest text-sky-950">Create Review</h1>
 
             <fieldset>
                 <div className="flex flex-col gap-4 mb-4">
@@ -68,7 +68,7 @@ export default function AddReviewForm() {
                         {[1, 2, 3, 4, 5].map((star) => (
                             <span
                                 key={star}
-                                style={{ fontSize: "60px", margin: "0 5px", cursor: "pointer", color: rating >= star ? "gold" : "initial" }}
+                                style={{ fontSize: "60px", margin: "0 5px", cursor: "pointer", color: rating >= star ? "gold" : "gray" }}
                                 className={`star ${rating >= star ? "filled" : ""}`}
                                 onClick={() => handleRating(star)}
                             >
@@ -86,7 +86,7 @@ export default function AddReviewForm() {
                     <textarea
                         id="content"
                         name="content"
-                        className="border-2 border-blue-500 p-2 rounded"
+                        className="border-2 border-blue-500 p-2 rounded bg-sky-950 text-stone-200"
                         rows="4"
                         placeholder="Enter your review here"
                     />
@@ -96,7 +96,7 @@ export default function AddReviewForm() {
         
             <div className="grid grid-cols-2 gap-4"> 
             
-              <fieldset className="mb-8 p-6 border rounded-lg shadow-md bg-white">
+              <fieldset className="mb-8 p-6 border rounded-lg shad bg-stone-100 text-cyan-950">
                 <p className="text-lg font-semibold mb-2">Is it wheelchair accessible?</p>
                 <div className="flex items-center space-x-4">
                     <input type="radio" id="wheelchairYes" name="wheelchair" value="1" />
@@ -109,7 +109,7 @@ export default function AddReviewForm() {
                     <label htmlFor="wheelchairUnknown">Unknown</label>
                 </div>
             </fieldset>
-                <fieldset className="mb-8 p-6 border rounded-lg shadow-md bg-white">
+                <fieldset className="mb-8 p-6 border rounded-lg shad bg-stone-100 text-cyan-950">
                     <p className="text-lg font-semibold mb-2">Is it Unisex?</p>
                     <div className="flex items-center space-x-4">
                         <input type="radio" id="unisexYes" name="unisex" value="1" />
@@ -124,7 +124,7 @@ export default function AddReviewForm() {
                 </fieldset>
 
 
-                <fieldset className="mb-8 p-6 border rounded-lg shadow-md bg-white">
+                <fieldset className="mb-8 p-6 border rounded-lg shad bg-stone-100 text-cyan-950">
                     <p className="text-lg font-semibold mb-2">Does it have an Emergency Cord?</p>
                     <div className="flex items-center space-x-4">
                         <input type="radio" id="emergencyCordYes" name="emergencyCord" value="1" />
@@ -139,7 +139,7 @@ export default function AddReviewForm() {
                 </fieldset>
 
 
-                <fieldset className="mb-8 p-6 border rounded-lg shadow-md bg-white">
+                <fieldset className="mb-8 p-6 border rounded-lg shad bg-stone-100 text-cyan-950">
                     <p className="text-lg font-semibold mb-2">Does it have an Emergency Button?</p>
                     <div className="flex items-center space-x-4">
                         <input type="radio" id="emergencyButtonYes" name="emergencyButton" value="1" />
@@ -154,7 +154,7 @@ export default function AddReviewForm() {
                 </fieldset>
 
 
-                <fieldset className="mb-8 p-6 border rounded-lg shadow-md bg-white">
+                <fieldset className="mb-8 p-6 border rounded-lg shad bg-stone-100 text-cyan-950">
                     <p className="text-lg font-semibold mb-2">Is it Pet Friendly?</p>
                     <div className="flex items-center space-x-4">
                         <input type="radio" id="petFriendlyYes" name="petFriendly" value="1" />
@@ -168,7 +168,7 @@ export default function AddReviewForm() {
                     </div>
                 </fieldset>
 
-                <fieldset className="mb-8 p-6 border rounded-lg shadow-md bg-white">
+                <fieldset className="mb-8 p-6 border rounded-lg shad bg-stone-100 text-cyan-950">
                     <p className="text-lg font-semibold mb-2">Does it require a key?</p>
                     <div className="flex items-center space-x-4">
                         <input type="radio" id="requiresKeyYes" name="requiresKey" value="1" />
@@ -182,7 +182,7 @@ export default function AddReviewForm() {
                     </div>
                 </fieldset>
 
-                <fieldset className="mb-8 p-6 border rounded-lg shadow-md bg-white">
+                <fieldset className="mb-8 p-6 border rounded-lg shad bg-stone-100 text-cyan-950">
                     <p className="text-lg font-semibold mb-2">Does it have a hand dryer?</p>
                     <div className="flex items-center space-x-4">
                         <input type="radio" id="handDryerYes" name="handDryer" value="1" />
@@ -196,7 +196,7 @@ export default function AddReviewForm() {
                     </div>
                 </fieldset>
 
-                <fieldset className="mb-8 p-6 border rounded-lg shadow-md bg-white">
+                <fieldset className="mb-8 p-6 border rounded-lg shad bg-stone-100 text-cyan-950">
                     <p className="text-lg font-semibold mb-2">Does it have feminine products?</p>
                     <div className="flex items-center space-x-4">
                         <input type="radio" id="feminineProductsYes" name="feminineProducts" value="1" />
@@ -211,7 +211,7 @@ export default function AddReviewForm() {
                 </fieldset>
 
                 {/* // For toilet covers */}
-                <fieldset className="mb-8 p-6 border rounded-lg shadow-md bg-white">
+                <fieldset className="mb-8 p-6 border rounded-lg shad bg-stone-100 text-cyan-950">
                     <p className="text-lg font-semibold mb-2">Does it have toilet covers?</p>
                     <div className="flex items-center space-x-4">
                         <input type="radio" id="toiletCoversYes" name="toiletCovers" value="1" />
@@ -226,7 +226,7 @@ export default function AddReviewForm() {
                 </fieldset>
 
                 {/* // For bidet */}
-                <fieldset className="mb-8 p-6 border rounded-lg shadow-md bg-white">
+                <fieldset className="mb-8 p-6 border rounded-lg shad bg-stone-100 text-cyan-950">
                     <p className="text-lg font-semibold mb-2">Does it have a bidet?</p>
                     <div className="flex items-center space-x-4">
                         <input type="radio" id="bidetYes" name="bidet" value="1" />
@@ -241,7 +241,7 @@ export default function AddReviewForm() {
                 </fieldset>
 
                 {/* // For single stall */}
-                <fieldset className="mb-8 p-6 border rounded-lg shadow-md bg-white">
+                <fieldset className="mb-8 p-6 border rounded-lg shad bg-stone-100 text-cyan-950">
                     <p className="text-lg font-semibold mb-2">Is it a single stall restroom?</p>
                     <div className="flex items-center space-x-4">
                         <input type="radio" id="singleStallYes" name="singleStall" value="1" />
@@ -256,7 +256,7 @@ export default function AddReviewForm() {
                 </fieldset>
 
                 {/* // Is it a multiple stall restroom? */}
-                <fieldset className="mb-8 p-6 border rounded-lg shadow-md bg-white">
+                <fieldset className="mb-8 p-6 border rounded-lg shad bg-stone-100 text-cyan-950">
                     <p className="text-lg font-semibold mb-2">Is it a multiple stall restroom?</p>
                     <div className="flex items-center space-x-4">
                         <input type="radio" id="multipleStallYes" name="multipleStall" value="1" />
@@ -271,7 +271,7 @@ export default function AddReviewForm() {
                 </fieldset>
 
                 {/* // Does it have a changing table? */}
-                <fieldset className="mb-8 p-6 border rounded-lg shadow-md bg-white">
+                <fieldset className="mb-8 p-6 border rounded-lg shad bg-stone-100 text-cyan-950">
                     <p className="text-lg font-semibold mb-2">Does it have a changing table?</p>
                     <div className="flex items-center space-x-4">
                         <input type="radio" id="changingTableYes" name="changingTable" value="1" />
@@ -286,7 +286,7 @@ export default function AddReviewForm() {
                 </fieldset>
 
                 {/* // Does it have a trash can? */}
-                <fieldset className="mb-8 p-6 border rounded-lg shadow-md bg-white">
+                <fieldset className="mb-8 p-6 border rounded-lg shad bg-stone-100 text-cyan-950">
                     <p className="text-lg font-semibold mb-2">Does it have a trash can?</p>
                     <div className="flex items-center space-x-4">
                         <input type="radio" id="trashCanYes" name="trashCan" value="1" />
@@ -301,7 +301,7 @@ export default function AddReviewForm() {
                 </fieldset>
 
                 {/* Good Flooring */}
-                <fieldset className="mb-8 p-6 border rounded-lg shadow-md bg-white">
+                <fieldset className="mb-8 p-6 border rounded-lg shad bg-stone-100 text-cyan-950">
                     <p className="text-lg font-semibold mb-2">Does it have good flooring?</p>
                     <div className="flex items-center space-x-4">
                         <input type="radio" id="goodFlooringYes" name="goodFlooring" value="1" />
@@ -316,7 +316,7 @@ export default function AddReviewForm() {
                 </fieldset>
 
                 {/* Air Freshener */}
-                <fieldset className="mb-8 p-6 border rounded-lg shadow-md bg-white">
+                <fieldset className="mb-8 p-6 border rounded-lg shad bg-stone-100 text-cyan-950">
                     <p className="text-lg font-semibold mb-2">Is there an air freshener?</p>
                     <div className="flex items-center space-x-4">
                         <input type="radio" id="airFreshenerYes" name="airFreshener" value="1" />
@@ -331,7 +331,7 @@ export default function AddReviewForm() {
                 </fieldset>
 
                 {/* Automatic */}
-                <fieldset className="mb-8 p-6 border rounded-lg shadow-md bg-white">
+                <fieldset className="mb-8 p-6 border rounded-lg shad bg-stone-100 text-cyan-950">
                     <p className="text-lg font-semibold mb-2">Is the restroom automatic (e.g., automatic flush, faucet)?</p>
                     <div className="flex items-center space-x-4">
                         <input type="radio" id="automaticYes" name="automatic" value="1" />
@@ -346,7 +346,7 @@ export default function AddReviewForm() {
                 </fieldset>
 
                 {/* // Does it have a coat hook? */}
-                <fieldset className="mb-8 p-6 border rounded-lg shadow-md bg-white">
+                <fieldset className="mb-8 p-6 border rounded-lg shad bg-stone-100 text-cyan-950">
                     <p className="text-lg font-semibold mb-2">Does it have a coat hook?</p>
                     <div className="flex items-center space-x-4">
                         <input type="radio" id="coatHookYes" name="coatHook" value="1" />
@@ -361,7 +361,7 @@ export default function AddReviewForm() {
                 </fieldset>
 
                 {/* // Does it have a braille sign? */}
-                <fieldset className="mb-8 p-6 border rounded-lg shadow-md bg-white">
+                <fieldset className="mb-8 p-6 border rounded-lg shad bg-stone-100 text-cyan-950">
                     <p className="text-lg font-semibold mb-2">Does it have a braille sign?</p>
                     <div className="flex items-center space-x-4">
                         <input type="radio" id="brailleSignYes" name="brailleSign" value="1" />
@@ -376,7 +376,7 @@ export default function AddReviewForm() {
                 </fieldset>
 
                 {/* // Does it have hot water? */}
-                <fieldset className="mb-8 p-6 border rounded-lg shadow-md bg-white">
+                <fieldset className="mb-8 p-6 border rounded-lg shad bg-stone-100 text-cyan-950">
                     <p className="text-lg font-semibold mb-2">Does it have hot water?</p>
                     <div className="flex items-center space-x-4">
                         <input type="radio" id="hotWaterYes" name="hotWater" value="1" />
@@ -390,7 +390,7 @@ export default function AddReviewForm() {
                     </div>
                 </fieldset>
 
-                <fieldset className="mb-8 p-6 border rounded-lg shadow-md bg-white">
+                <fieldset className="mb-8 p-6 border rounded-lg shad bg-stone-100 text-cyan-950">
                     <p className="text-lg font-semibold mb-2">Is there a first aid kit available?</p>
                     <div className="flex items-center space-x-4">
                         <input type="radio" id="firstAidYes" name="firstAid" value="1" />
@@ -404,7 +404,7 @@ export default function AddReviewForm() {
                     </div>
                 </fieldset>
 
-                <fieldset className="mb-8 p-6 border rounded-lg shadow-md bg-white">
+                <fieldset className="mb-8 p-6 border rounded-lg shad bg-stone-100 text-cyan-950">
                     <p className="text-lg font-semibold mb-2">Is there a sharps disposal available?</p>
                     <div className="flex items-center space-x-4">
                         <input type="radio" id="sharpsDisposalYes" name="sharpsDisposal" value="1" />
@@ -421,7 +421,7 @@ export default function AddReviewForm() {
 
             <button
                 type="submit"
-                className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded mt-4 w-full"
+                className="bg-sky-500 hover:bg-blue-600 text-white py-2 px-4 rounded mt-4 w-full"
             >
                 Submit Review
             </button>
