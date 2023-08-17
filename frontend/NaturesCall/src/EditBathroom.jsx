@@ -99,7 +99,7 @@ export default function EditBathroom() {
             <textarea
               id="address"
               name="address"
-              className="border-2 border-blue-500 p-2 rounded"
+              className="border-2 border-blue-500 p-2 rounded text-stone-200"
               rows="1"
               placeholder="Enter the address here"
               onChange={handleInput}
@@ -113,7 +113,7 @@ export default function EditBathroom() {
             <textarea
               id="name"
               name="name"
-              className="border-2 border-blue-500 p-2 rounded"
+              className="border-2 border-blue-500 p-2 rounded text-stone-200"
               rows="1"
               placeholder="Enter the name here"
               onChange={handleInput}
@@ -188,7 +188,7 @@ export default function EditBathroom() {
             <textarea
               id="content"
               name="content"
-              className="border-2 border-blue-500 p-2 rounded"
+              className="border-2 border-blue-500 p-2 rounded text-stone-200"
               rows="1"
               placeholder="Enter the description here"
               onChange={handleInput}
