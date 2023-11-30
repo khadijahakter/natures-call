@@ -1,32 +1,36 @@
 # Nature's Call 🍃
 
-A robust bathroom locator web application, making every call of nature a pleasant experience.
+Embark on a revolutionary bathroom-finding experience with Nature's Call, a robust web application that transforms every call of nature into a pleasant journey.
 
 ## 🛠 Technologies Used
 
-- **PostgreSQL**: Employed as the relational database for efficient data storage and retrieval.
-- **React + Vite**: The backbone for the front-end, ensuring a responsive and dynamic user interface.
-- **Node.js & Express**: The foundation of our backend server, providing routing, middleware support, and more.
-- **Cron Job**: Utilized for scheduled tasks.
-- **JavaScript**: The primary programming language for the development.
-- **Sequelize**: A promise-based Node.js ORM that works with Postgres, making database interactions easier and more intuitive.
+- **PostgreSQL**: Our reliable relational database, ensuring efficient data storage and retrieval.
+- **React + Vite**: The dynamic duo shaping our frontend, delivering a responsive and seamless user interface.
+- **Node.js & Express**: The backbone of our backend, providing robust routing, middleware support, and more.
+- **Cron Job**: A strategic player for scheduled tasks, optimizing our app's functionality.
+- **JavaScript**: The language that breathes life into our project.
+- **Sequelize**: A promise-based Node.js ORM, simplifying interactions with Postgres and enhancing database management.
   
 ## ✨ Features & Achievements
 
-- **Team Collaboration**: Worked hand-in-hand with a team of 3 talented members, collectively brainstorming, designing, and implementing features.
-- **Google Places API Integration**: Integrated Google Places API to effectively showcase nearby bathroom locations based on users' input addresses.
-- **Comprehensive Bathroom Details**: Enabled users to access in-depth information about each bathroom location. This includes amenities, reviews, ratings, and more.
-- **User Authentication**: Implemented a robust authentication system using bcrypt for password hashing and cookies for sessions, allowing users to create accounts and sign in securely.
+- **Team Collaboration**: Orchestrated seamless collaboration with a talented team of 3, collectively brainstorming, designing, and implementing features.
+- **Google Places API Integration**: Integrated the powerful Google Places API to showcase nearby bathroom locations based on users' input addresses.
+- **Comprehensive Bathroom Details**: Delivered a holistic view for users, offering in-depth information on amenities, reviews, ratings, and more.
+- **User Authentication**: Implemented a robust authentication system leveraging bcrypt for secure password hashing and cookies for sessions, enabling users to create accounts and sign in securely.
+- **Agile Software Development**: Navigated the development journey with agile methodology life cycles, ensuring consistent progress through daily standups and GitHub sprint board sprints.
+- **Presentation to Employers**: Successfully presented Nature's Call to potential employers, including Spotify and CUNY Tech Incubator.
 
 ## 🗓 Project Timeline
 
-**August 2023**: Successful launch of Nature's Call.
+**July 2023 - Present**: Crafting the future of bathroom location technology with Nature's Call.
 
 ## 🔧 Getting Started
 
-video link 
+📹 Dive into the [demo video](https://streamable.com/nmahe1) to witness the magic of Nature's Call!
 
 ## 🚀 Future Plans
+ 
+- **Mobile Optimization**: Evolving towards mobile-friendliness for enhanced accessibility.
+- **Times of Operation Feature**: Introducing a feature to display times of operation for listed bathrooms.
 
-- Making app mobile!
-- Times of operation feature.
+Join us on this transformative journey with Nature's Call! 💼✨
