@@ -1,6 +1,6 @@
 # Nature's Call 🍃
 ![Optional description of the image](server-side/client/src/images/DarkModeLogo.png)
-![Optional description of the image](server-side/client/src/images/DarkModeLogo.png)
+![Optional description of the image](server-side/client/src/images/Demo.gif)
 Embark on a revolutionary bathroom-finding experience with Nature's Call, a robust web application that transforms every call of nature into a pleasant journey.
 
 ## 🛠 Technologies Used
